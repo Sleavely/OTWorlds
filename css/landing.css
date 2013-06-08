@@ -20,7 +20,7 @@ html, body{
 	border-left: 1px solid #333;
 	border-right: 1px solid #333;
 	/* landing page is slightly more narrow. */
-	max-width: 600px;
+	max-width: 768px;
 }
 .container > .row:first-of-type{
 	border-top-left-radius: 4px;
