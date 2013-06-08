@@ -5,6 +5,7 @@
 html, body{
 	background-image: url(../img/landing-bg.png);
 	background-size: cover;
+	background-position: center center;
 	background-repeat: no-repeat;
 }
 .container{
@@ -32,7 +33,16 @@ html, body{
 	border-bottom: 1px solid #333;
 }
 h1{
-	font-family: 'Coming soon', cursive;
+	/*font-family: 'Coming soon', cursive;*/
 	font-size: 3em;
 	margin-top: 0.75em;
+}
+.row[id]{
+	padding-bottom: 1em;
+}
+#login .btn a{
+	background-image: url(../img/facebook-logo-29x29.png);
+	background-position: 15px center;
+	background-repeat: no-repeat;
+	padding-left: 70px;
 }
