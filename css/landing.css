@@ -4,10 +4,13 @@
 
 html, body{
 	/* Mountain village by Slec: http://www.xtibia.com/forum/user/357686-slec/ */
-	background-image: url(../img/landing-bg.png);
+	background-image: url(../img/landing-bg-small.png);
 	background-size: cover;
 	background-position: center center;
 	background-repeat: no-repeat;
+}
+html.loaded, .loaded body{
+	background-image: url(../img/landing-bg.png);
 }
 .container{
 	padding-top: 100px;
