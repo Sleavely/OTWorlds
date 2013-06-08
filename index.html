@@ -10,8 +10,27 @@
 	<link rel="stylesheet" href="css/style.css" />
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 	
-	
+	<!-- page specific stuff: -->
 	<link rel="stylesheet" href="css/landing.css" />
+	<script>
+	jQuery(document).ready(function(){
+		
+		moveBox();
+		jQuery(window).resize(moveBox);
+	});
+	function moveBox(){
+		var windowHeight = jQuery(window).height();
+		var boxHeight = 0;
+		jQuery(".row").each(function(){
+			boxHeight += jQuery(this).height();
+		});
+		
+		var availableSpace = windowHeight - boxHeight;
+		if (availableSpace > 0) {
+			jQuery("body > .container").css("paddingTop", availableSpace/2);
+		}
+	}
+	</script>
 </head>
 <body id="page-login">
 	<div class="container">
