@@ -94,8 +94,14 @@
 		});
 	}
 	
-	jQuery("#login .btn").click(function(){
-		FB.login();
+	jQuery(document).ready(function(){
+		jQuery("#login .btn a").click(function(e){
+			e.preventDefault();
+			console.log('Clicked login, initiating login.');
+			FB.login(function(response){
+				console.log(response);
+			});
+		});
 	});
 	</script>
 	<div class="container">
