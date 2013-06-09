@@ -39,7 +39,7 @@
 	window.fbAsyncInit = function() {
 		FB.init({
 			appId      : '391055467680449', // App ID
-			channelUrl : '//otworlds.com/channel.html', // Channel File
+			channelUrl : '//<?php echo ($_SERVER['SERVER_NAME'] == 'localhost' ? 'localhost/otworlds' : 'otworlds.com'); ?>/channel.html', // Channel File
 			status     : true, // check login status
 			cookie     : true, // enable cookies to allow the server to access the session
 			xfbml      : true  // parse XFBML
@@ -55,6 +55,7 @@
 				// The response object is returned with a status field that lets the app know the current
 				// login status of the person. In this case, we're handling the situation where they 
 				// have logged in to the app.
+				console.log(response);
 				testAPI();
 			} else if (response.status === 'not_authorized') {
 				// In this case, the person is logged into Facebook, but not into the app, so we call
@@ -74,6 +75,10 @@
 				FB.login();
 			}
 		});
+		FB.Event.subscribe('auth.login', function(response) {
+			//TODO: use this once the cookie/php issue solved
+			//window.location.reload();
+        });
 	};
 	
 	// Load the SDK asynchronously
@@ -91,6 +96,7 @@
 		FB.api('/me', function(response) {
 			jQuery("#login .btn a").remove();
 			jQuery("#login .btn").html('<a href="#">Logged in as '+ response.name +'</a>');
+			console.log(response);
 		});
 	}
 	
@@ -114,6 +120,11 @@
 		<div class="row" id="login">
 			<div class="center-text twelve columns">
 				<div class="large primary btn"><a href="#">Log in with Facebook</a></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="push_one ten columns">
+				<pre><?php print_r($facebook); ?></pre>
 			</div>
 		</div>
 	</div>
