@@ -45,12 +45,10 @@
 					
 				} catch (FacebookApiException $e) {
 					echo '<pre>'.htmlspecialchars(print_r($e, true)).'</pre>';
-					$user = null;
+					$user_profile = '???';
 				}
 				
 				echo '<pre style="font-family: monospace; font-size: 12px; line-height: 1.2em;">';
-				var_export($user);
-				echo '<br /><br />';
 				var_export($user_profile);
 				?>
 				</pre>
