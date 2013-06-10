@@ -11,7 +11,6 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 	
 	<!-- page specific stuff: -->
-	<link rel="stylesheet" href="css/landing.css" />
 	<script>
 	jQuery(document).ready(function(){
 		
@@ -49,7 +48,7 @@
 					$user = null;
 				}
 				
-				echo '<pre>';
+				echo '<pre style="font-family: monospace; font-size: 12px; line-height: 1.2em;">';
 				var_export($user);
 				echo '<br /><br />';
 				var_export($user_profile);
