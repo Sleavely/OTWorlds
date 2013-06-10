@@ -95,7 +95,7 @@
 	function testAPI() {
 		FB.api('/me', function(response) {
 			jQuery("#login .btn a").remove();
-			jQuery("#login .btn").html('<a href="#">Logged in as '+ response.name +'</a>');
+			jQuery("#login .btn").html('<a href="<?php echo $facebook->getLogoutUrl(); ?>">Logged in as '+ response.name +'</a>');
 			console.log(response);
 		});
 	}
@@ -119,7 +119,7 @@
 		</div>
 		<div class="row" id="login">
 			<div class="center-text twelve columns">
-				<div class="large primary btn"><a href="#">Log in with Facebook</a></div>
+				<div class="large primary btn"><a href="<?php echo $facebook->getLoginUrl(); ?>">Log in with Facebook</a></div>
 			</div>
 		</div>
 		<div class="row">
