@@ -1,5 +1,5 @@
 <?php
-//This comment exists solely to test Bitbucket's post-push POST.
+
 require_once('inc/user.php');
 
 if($user){
