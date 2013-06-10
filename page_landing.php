@@ -55,7 +55,6 @@
 				// The response object is returned with a status field that lets the app know the current
 				// login status of the person. In this case, we're handling the situation where they 
 				// have logged in to the app.
-				console.log(response);
 				testAPI();
 			} else if (response.status === 'not_authorized') {
 				// In this case, the person is logged into Facebook, but not into the app, so we call
@@ -92,7 +91,6 @@
 		FB.api('/me', function(response) {
 			jQuery("#login .btn a").remove();
 			jQuery("#login .btn").html('<a href="<?php echo $facebook->getLogoutUrl(); ?>">Logged in as '+ response.name +'</a>');
-			console.log(response);
 			if(window.location.host != "localhost") window.location.reload();
 		});
 	}
@@ -100,9 +98,7 @@
 	jQuery(document).ready(function(){
 		jQuery("#login .btn a").click(function(e){
 			e.preventDefault();
-			console.log('Clicked login, initiating login.');
 			FB.login(function(response){
-				console.log(response);
 			});
 		});
 	});
