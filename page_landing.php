@@ -122,11 +122,6 @@
 				<div class="large primary btn"><a href="<?php echo $facebook->getLoginUrl(); ?>">Log in with Facebook</a></div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="push_one ten columns">
-				<pre><?php print_r($facebook); ?></pre>
-			</div>
-		</div>
 	</div>
 </body>
 </html>
