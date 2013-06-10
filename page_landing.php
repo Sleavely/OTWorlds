@@ -75,9 +75,6 @@
 				FB.login();
 			}
 		});
-		FB.Event.subscribe('auth.login', function(response) {
-			if(window.location.host != "localhost") window.location.reload();
-        });
 	};
 	
 	// Load the SDK asynchronously
@@ -96,6 +93,7 @@
 			jQuery("#login .btn a").remove();
 			jQuery("#login .btn").html('<a href="<?php echo $facebook->getLogoutUrl(); ?>">Logged in as '+ response.name +'</a>');
 			console.log(response);
+			if(window.location.host != "localhost") window.location.reload();
 		});
 	}
 	
