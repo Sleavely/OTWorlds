@@ -22,6 +22,7 @@ body{
 	text-align: center;
 }
 .container > .row{
+	background-color: #E6E6E6; /* IE8 */
 	background-color: rgba(225, 225, 225, 0.9);
 	border-left: 1px solid #333;
 	border-right: 1px solid #333;
