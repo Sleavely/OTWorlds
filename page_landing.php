@@ -76,8 +76,7 @@
 			}
 		});
 		FB.Event.subscribe('auth.login', function(response) {
-			//TODO: use this once the cookie/php issue solved
-			//window.location.reload();
+			if(window.location.host != "localhost") window.location.reload();
         });
 	};
 	
