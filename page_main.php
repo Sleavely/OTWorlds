@@ -18,42 +18,38 @@
 	</script>
 </head>
 <body id="page-main">
-	<div class="container">
+	<div class="toolbar" id="menu" style="width: 600px; position: fixed; top: 20px; left: 300px; background-color: rgba(255, 255, 255, 0.9); border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 4px; padding: 1em;">
+		Here go some Options
+	</div>
+	<div class="toolbar" id="meta" style="width: 200px; position: fixed; right: 20px; top: 200px; background-color: rgba(255, 255, 255, 0.9); border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 4px; padding: 1em;">
+		Toggle edit mode.
+	</div>
+	<div class="toolbar" id="brushes" style="width: 200px; position: fixed; left: 20px; top: 200px; background-color: rgba(255, 255, 255, 0.9); border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 4px; padding: 1em;">
+		Brushes be crazy!
+	</div>
+	<div style="position: fixed; width: 39%; left: 30%; top: 200px; background-color: rgba(255, 220, 255, 0.9); border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 4px; padding: 1em;">
 		<div class="row" id="hero">
 			<div class="twelve columns">
-				<h1>OTWorlds Mapeditor</h1>
-				<p>Congratulations! You are now logged in!</p>
+				<h1 class="center-text">Welcome<?php
+				if(isset($facebook)){
+					print ', ';
+					$profile = $facebook->api('/me');
+					print htmlentities($profile['first_name'], ENT_COMPAT, 'UTF-8');
+				}
+				?>!</h1>
 			</div>
 		</div>
 		<div class="row">
-			<div class="five columns">
-				<p>Soon enough this page will contain the canvas on which you'll draw a whole new world!</p>
+			<div class="six columns">
+				<p>This page is a work in progress, and will gradually allow you to do cool new things.</p>
 			</div>
-			<div class="five columns">
+			<div class="six columns">
 				<p>To speed up the process you can put some pressure on <a href="http://twitter.com/Sleavely" target="_blank" title="@sleavely on Twitter">@Sleavely</a>.</p>
 			</div>
 		</div>
-		<div class="row">
-			<div class="push_one eleven columns">
-				<p><strong>This is you:</strong></p>
-				<pre>
-				<?php
-				
-				try {
-					// Proceed knowing you have a logged in user who's authenticated.
-					$user_profile = $facebook->api('/me');
-					
-				} catch (FacebookApiException $e) {
-					echo '<pre>'.htmlspecialchars(print_r($e, true)).'</pre>';
-					$user_profile = '???';
-				}
-				
-				echo '<pre style="font-family: monospace; font-size: 12px; line-height: 1.2em;">';
-				var_export($user_profile);
-				?>
-				</pre>
-			</div>
-		</div>
+	</div>
+	<div id="canvas" style="height: 100%; overflow: hidden; background-image: url(http://localhost/mapeditor-frontend/img/transparent.png);">
+		&nbsp;
 	</div>
 </body>
 </html>
