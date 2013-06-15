@@ -48,7 +48,7 @@
 			</div>
 		</div>
 	</div>
-	<div id="canvas" style="height: 100%; overflow: hidden; background-image: url(http://localhost/mapeditor-frontend/img/transparent.png);">
+	<div id="canvas" style="height: 100%; overflow: hidden; background-image: url(img/transparent.png);">
 		&nbsp;
 	</div>
 </body>
