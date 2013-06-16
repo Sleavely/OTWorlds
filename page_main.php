@@ -11,7 +11,10 @@
 	<link rel="stylesheet" href="css/style.css" />
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 	<script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-	<script src="js/jquery.infinitedrag-0.2"></script>
+	<script src="js/jquery.infinitedrag-0.2.js"></script>
+	
+	<script src="js/otworlds.mapeditor.js"></script>
+	<script src="js/otworlds.mapeditor.xmlparser.js"></script>
 	
 	<script src="js/otworlds.init.js"></script>
 </head>
