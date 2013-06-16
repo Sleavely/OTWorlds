@@ -119,7 +119,7 @@
 	<script type="text/javascript">
 	var _gaq = _gaq || [];
 	_gaq.push(['_setAccount', 'UA-2840885-9']);
-	_gaq.push(['_trackPageview']);
+	_gaq.push(['_trackPageview', '/landing']);
 	
 	(function() {
 		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
