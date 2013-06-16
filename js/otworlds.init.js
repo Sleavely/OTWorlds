@@ -24,6 +24,8 @@ jQuery(document).ready(function(){
 			Mapeditor.map.meta.width = data.width;
 			Mapeditor.map.meta.height = data.height;
 			
+			document.title = Mapeditor.map.meta.name + ' - ' + document.title;
+			
 			//add tiles to cache
 			jQuery.each(data.tiles, function(posz, zValue){
 				jQuery.each(zValue, function(posx, xValue){
