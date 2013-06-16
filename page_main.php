@@ -17,11 +17,12 @@
 	$allowed = false;
 	if(isset($facebook)){
 		$profile = $facebook->api('/me');
-		$allowed_ids = array(
-			'1281266716', // joakim.hedlund
-		);
 		
-		if(in_array($profile['id'], $allowed_ids)) $allowed = true;
+		$allowed_usernames = array(
+			'joakim.hedlund',
+			'joran.haagsma',
+		);
+		if(in_array($profile['username'], $allowed_usernames)) $allowed = true;
 		
 	}elseif($_SERVER['HTTP_HOST'] == 'localhost'){
 		$allowed = true;
