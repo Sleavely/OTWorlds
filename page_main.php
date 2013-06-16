@@ -19,6 +19,7 @@
 		$profile = $facebook->api('/me');
 		
 		$allowed_usernames = array(
+			'eliascarlsson',
 			'joakim.hedlund',
 			'joran.haagsma',
 		);
