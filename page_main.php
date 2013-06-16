@@ -13,10 +13,28 @@
 	<script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 	<script src="js/jquery.infinitedrag-0.2.js"></script>
 	
-	<script src="js/otworlds.mapeditor.js"></script>
-	<script src="js/otworlds.mapeditor.xmlparser.js"></script>
-	
-	<script src="js/otworlds.init.js"></script>
+	<?php
+	$allowed = false;
+	if(isset($facebook)){
+		$profile = $facebook->api('/me');
+		$allowed_ids = array(
+			'1281266716', // joakim.hedlund
+		);
+		
+		if(in_array($profile['id'], $allowed_ids)) $allowed = true;
+		
+	}elseif($_SERVER['SERVER_NAME'] == 'localhost'){
+		$allowed = true;
+	}
+	if($allowed){
+	?>
+		<script src="js/otworlds.mapeditor.js"></script>
+		<script src="js/otworlds.mapeditor.xmlparser.js"></script>
+		
+		<script src="js/otworlds.init.js"></script>
+	<?php
+	}
+	?>
 </head>
 <body id="page-main">
 	<div id="viewport">
@@ -37,7 +55,6 @@
 				<h1 class="center-text">Welcome<?php
 				if(isset($facebook)){
 					print ', ';
-					$profile = $facebook->api('/me');
 					print htmlentities($profile['first_name'], ENT_COMPAT, 'UTF-8');
 				}
 				?>!</h1>
