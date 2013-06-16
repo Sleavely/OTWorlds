@@ -50,9 +50,7 @@
 		</div>
 	</div>
 	<div id="viewport">
-		<div id="canvas">
-			&nbsp;
-		</div>
+		<div id="canvas"></div>
 	</div>
 </body>
 </html>
