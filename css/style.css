@@ -8,9 +8,44 @@
 	padding: 1em;
 	position: fixed;
 }
+#brushes.toolbar .brush img{
+	max-width: 32px;
+}
 
 #canvas{
 	background-image: url(../img/transparent.png);
 	height: 100%;
 	overflow: hidden;
+	
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+#canvas.editing{
+	cursor: pointer;
+}
+
+#canvas .item{
+	background-position: bottom right;
+	background-repeat: no-repeat;
+	bottom: 0;
+	display: inline-block;
+	height: 64px;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	right: 0;
+	width: 64px;
+}
+#canvas.editing .tile.hovered:after{
+	background-color: rgba(0, 200, 0, 0.5);
+	box-shadow: inset 0px 0px 1px 1px rgba(255, 255, 0, 0.5);
+	content: '';
+	display: block;
+	height: 32px;
+	left: 0px;
+	position: absolute;
+	top: 0px;
+	width: 32px;
 }
