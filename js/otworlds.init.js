@@ -13,7 +13,7 @@ jQuery(document).ready(function(){
 	
 	//Load the map and fire up the grid
 	jQuery.ajax(Mapeditor.config.urls.backend, {
-		dataType: "jsonp",
+		dataType: "json",
 		data: {
 			'action' : 'init'
 		},
