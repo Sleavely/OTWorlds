@@ -23,11 +23,12 @@
 		
 		if(in_array($profile['id'], $allowed_ids)) $allowed = true;
 		
-	}elseif($_SERVER['SERVER_NAME'] == 'localhost'){
+	}elseif($_SERVER['HTTP_HOST'] == 'localhost'){
 		$allowed = true;
 	}
 	if($allowed){
 	?>
+	
 		<script src="js/otworlds.mapeditor.js"></script>
 		<script src="js/otworlds.mapeditor.xmlparser.js"></script>
 		
