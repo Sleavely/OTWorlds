@@ -22,6 +22,7 @@
 			'eliascarlsson',
 			'joakim.hedlund',
 			'joran.haagsma',
+			'micke.hafner',
 		);
 		if(in_array($profile['username'], $allowed_usernames)) $allowed = true;
 		
