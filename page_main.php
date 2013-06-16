@@ -48,13 +48,13 @@
 		<div id="canvas"></div>
 	</div>
 	<div class="toolbar" id="menu" style="width: 600px; top: 20px; left: 300px;">
-		Here go some Options
+		Map options
 	</div>
 	<div class="toolbar" id="meta" style="width: 200px; right: 20px; top: 200px;">
-		Toggle edit mode.
+		Meta tools
 	</div>
 	<div class="toolbar" id="brushes" style="width: 200px; left: 20px; top: 200px;">
-		Brushes be crazy!
+		Brushes
 	</div>
 	<div style="position: fixed; width: 39%; left: 30%; top: 200px; background-color: rgba(255, 220, 255, 0.9); border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 4px; padding: 1em;">
 		<div class="row" id="hero">
@@ -69,10 +69,10 @@
 		</div>
 		<div class="row">
 			<div class="six columns">
-				<p>This page is a work in progress, and will gradually allow you to do cool new things.</p>
+				<p>Because this is a work in progress, and features are being removed as quickly as they were added, we only allow approved beta-testers to use the editor.</p>
 			</div>
 			<div class="six columns">
-				<p>To speed up the process you can put some pressure on <a href="http://twitter.com/Sleavely" target="_blank" title="@sleavely on Twitter">@Sleavely</a>.</p>
+				<p>If you want to get in on the action or just want to support the project, drop a greeting to <a href="http://twitter.com/Sleavely" target="_blank" title="@sleavely on Twitter">@Sleavely</a>.</p>
 			</div>
 		</div>
 	</div>
