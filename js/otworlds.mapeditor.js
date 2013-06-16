@@ -1,8 +1,8 @@
 ﻿var Mapeditor = {
 	config: {
 		urls: {
-			backend: 'http://localhost/mapeditor-backend/',
-			sprites: 'http://localhost/tibia-spriteExtractor/sprites/%sprite%.gif'
+			backend: 'ajax/',
+			sprites: 'http://cdn.otworlds.com/sprites/%sprite%.gif'
 		}
 	},
 	internals: {
