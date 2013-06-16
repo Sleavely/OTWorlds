@@ -19,6 +19,9 @@
 	<script src="js/otworlds.init.js"></script>
 </head>
 <body id="page-main">
+	<div id="viewport">
+		<div id="canvas"></div>
+	</div>
 	<div class="toolbar" id="menu" style="width: 600px; top: 20px; left: 300px;">
 		Here go some Options
 	</div>
@@ -48,9 +51,6 @@
 				<p>To speed up the process you can put some pressure on <a href="http://twitter.com/Sleavely" target="_blank" title="@sleavely on Twitter">@Sleavely</a>.</p>
 			</div>
 		</div>
-	</div>
-	<div id="viewport">
-		<div id="canvas"></div>
 	</div>
 </body>
 </html>
