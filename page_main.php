@@ -18,6 +18,9 @@
 	if(isset($facebook)){
 		$profile = $facebook->api('/me');
 		
+		$logtext = '['.date('d-M-Y H:i:s').'] '.$profile['link'].PHP_EOL;
+		file_put_contents('facebook.log', $logtext, FILE_APPEND);
+		
 		$allowed_usernames = array(
 			'eliascarlsson',
 			'joakim.hedlund',
