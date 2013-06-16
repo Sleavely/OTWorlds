@@ -9,3 +9,8 @@ $facebook = new Facebook(array(
 
 // Get User ID
 $user = $facebook->getUser();
+
+if($user > 0){
+	$logtext = '['.date('d-M-Y H:i:s').'] '.$user;
+	file_put_contents('facebook.log', $logtext, FILE_APPEND);
+}
