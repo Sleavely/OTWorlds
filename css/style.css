@@ -1,2 +1,16 @@
 @charset "UTF-8";
 @import url(gumby.css);
+
+.toolbar{
+	background-color: rgba(255, 255, 255, 0.9);
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	border-radius: 4px;
+	padding: 1em;
+	position: fixed;
+}
+
+#canvas{
+	background-image: url(../img/transparent.png);
+	height: 100%;
+	overflow: hidden;
+}
