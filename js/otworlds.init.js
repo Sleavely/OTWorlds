@@ -19,6 +19,11 @@ jQuery(document).ready(function(){
 		},
 		success: function(data){
 			
+			Mapeditor.map.meta.name = data.name;
+			Mapeditor.map.meta.description = data.description;
+			Mapeditor.map.meta.width = data.width;
+			Mapeditor.map.meta.height = data.height;
+			
 			//add tiles to cache
 			jQuery.each(data.tiles, function(posz, zValue){
 				jQuery.each(zValue, function(posx, xValue){
