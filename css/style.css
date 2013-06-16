@@ -12,11 +12,12 @@
 	max-width: 32px;
 }
 
-#canvas{
+#viewport{
 	background-image: url(../img/transparent.png);
 	height: 100%;
 	overflow: hidden;
-	
+}
+#canvas{	
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
