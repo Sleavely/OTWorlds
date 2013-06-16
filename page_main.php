@@ -11,11 +11,7 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 	
 	<!-- page specific stuff: -->
-	<script>
-	jQuery(document).ready(function(){
-		
-	});
-	</script>
+	<script src="js/otworlds.init.js"></script>
 </head>
 <body id="page-main">
 	<div class="toolbar" id="menu" style="width: 600px; position: fixed; top: 20px; left: 300px; background-color: rgba(255, 255, 255, 0.9); border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 4px; padding: 1em;">
