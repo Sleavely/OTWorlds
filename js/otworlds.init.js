@@ -42,8 +42,8 @@ jQuery(document).ready(function(){
 						height: 32,
 						range_col: [0, Mapeditor.map.meta.width],
 						range_row: [0, Mapeditor.map.meta.height],
-						start_col: (Mapeditor.map.meta.width/2)-7,
-						start_row: (Mapeditor.map.meta.height/2)-5,
+						start_col: (Mapeditor.map.meta.width/2)-(Math.round((jQuery(window).width() / 32) / 2)),
+						start_row: (Mapeditor.map.meta.height/2) - (Math.round((jQuery(window).height() / 32) / 2)),
 						class_name: 'tile',
 						oncreate: function($element, col, row) {
 							var tileObject = Object.create(Mapeditor.Tile);

@@ -19,7 +19,7 @@ towns = '.htmlentities(print_r($map->getTowns(), true), ENT_COMPAT, 'UTF-8').'
 tiles: '.PHP_EOL.htmlentities(print_r($map->tiles, true), ENT_COMPAT, 'UTF-8').'
 </pre>';
 	*/
-	$mapname = 'gm-isle.otbm';
+	$mapname = 'island2.otbm';
 	$map->loadFile('../maps/'.$mapname);
 	
 	if(!isset($_REQUEST['debug'])){
