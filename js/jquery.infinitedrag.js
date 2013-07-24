@@ -1,6 +1,6 @@
 /*
  * jQuery Infinite Drag
- * Version 0.2
+ * Version 0.6
  * Copyright (c) 2010 Ian Li (http://ianli.com)
  * Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
  *
@@ -11,8 +11,22 @@
  * http://ianli.com/infinitedrag/ for Usage
  *
  * Versions:
- * 0.2 - Added move.
- * 0.1 - Initial implementation.
+ * 0.6
+ * - Added get_tile_dimensions public function - @JoeAO
+ * 0.5
+ * - Improved remove_tiles() - @JoeAO
+ * 0.4b
+ * - V0.4a Test code was actually fixing a problem, just badly. Reapplied and cleaned.
+ * 0.4a
+ * - Fixed bug caused by test code which wasn't deleted
+ * 0.4
+ * - Refactored additions in V0.3 - @JoeAO
+ * 0.3
+ * - Added removal of tiles that aren't visible - @JoeAO
+ * 0.2
+ * - Fixed problem with IE 8.0
+ * 0.1
+ * - Initial implementation
  */
 
 (function($) {
@@ -23,7 +37,7 @@
 		return new InfiniteDrag(draggable, draggable_options, tile_options);
 	};
 	
-	$.infinitedrag.VERSION = 0.2;
+	$.infinitedrag.VERSION = 0.6;
 	
 	/**
 	 * The InfiniteDrag object.
@@ -92,7 +106,7 @@
 				left: x,
 				top: y,
 				width: _to.width,
-				height: _to.height,
+				height: _to.height
 			});
 
 			_to.oncreate($new_tile, i, j);
@@ -117,7 +131,7 @@
 				(-_to.range_col[1] * _to.width) + viewport_offset.left + viewport_draggable_width,
 				(-_to.range_row[1] * _to.height) + viewport_offset.top + viewport_draggable_height,
 				(-_to.range_col[0] * _to.width) + viewport_offset.left,
-				(-_to.range_row[0] * _to.height) + viewport_offset.top
+				(-_to.range_row[0] * _to.height) + viewport_offset.top,
 			];
 			
 			$draggable.draggable("option", "containment", containment);
@@ -135,6 +149,7 @@
 				top: $this.offset().top - $parent.offset().top
 			}
 
+			// - 1 because the previous tile is partially visible
 			var visible_left_col = Math.ceil(-pos.left / _to.width) - 1,
 				visible_top_row = Math.ceil(-pos.top / _to.height) - 1;
 
@@ -147,8 +162,30 @@
 					}
 				}
 			}
-		};
-		
+
+     		remove_tiles(visible_left_col, visible_top_row);
+        };
+
+        // Removes unseen tiles
+        //-----------------------
+        var remove_tiles = function(left, top) {
+            // Finds tiles which can be seen based on window width & height
+            $('.' + _to.class_name).each(function() {
+                // + 1 because the beginning of the last tile is partially visible
+                var maxLeft = (left + viewport_cols) + 1,
+                    maxTop = (top + viewport_rows),
+                    i = $(this).attr('col'),
+                    j = $(this).attr('row'),
+                    remove;
+
+                // Classifies tile which can't be seen as undefined so it can be recreated
+                // Removes DOM element
+                if ((i < left) || (i > maxLeft) || (j < top) || (j > maxTop)) {
+                    grid[i][j] = undefined;
+                    $(this).remove();
+                }
+            });
+        }
 		
 		// Public Methods
 		//-----------------
@@ -165,46 +202,6 @@
 			$draggable.draggable("option", "disabled", value);
 			
 			$draggable.css({ cursor: (value) ? "default" : "move" });
-		};
-		
-		self.move = function(col, row) {
-			var offset = $draggable.offset();
-			var move = {
-				left: col * _to.width,
-				top: row * _to.height
-			};
-			
-			var new_offset = {
-				left: offset.left - move.left,
-				top: offset.top - move.top
-			};
-			
-			if (_do.axis == "x") {
-				new_offset.top = offset.top;
-			} else if (_do.axis == "y") {
-				new_offset.left = offset.left;
-			}
-			
-			var containment = $draggable.draggable("option", "containment");
-			
-			if (containment[0] <= new_offset.left && new_offset.left <= containment[2]
-				&& containment[1] <= new_offset.top && new_offset.top <= containment[3]) {
-				$draggable.offset(new_offset);
-				update_tiles();	
-			} else {
-				// Don't let the tile go beyond the right edge.
-				if (new_offset.left < containment[0]) {
-					new_offset.left = containment[0];
-				}
-				
-				// Don't let the tile go beyond the left edge.
-				if (new_offset.left > containment[2]) {
-					new_offset.left = containment[2];
-				}
-				
-				$draggable.offset(new_offset);
-				update_tiles();
-			}
 		};
 		
 		self.center = function(col, row) {
@@ -231,6 +228,15 @@
 			
 			update_tiles();
 		};
+
+		self.get_tile_dimensions = function() {
+            var tileDims = {
+                width: _to.width,
+                height: _to.height
+            };
+
+            return tileDims;
+        };
 
 		// Setup
 		//--------
