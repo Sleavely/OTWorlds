@@ -35,7 +35,7 @@ jQuery(document).ready(function(){
 				});
 			});
 			
-			Mapeditor.materials.load('xml/materials.xml', function(){
+			Mapeditor.Materials.load('xml/materials.xml', function(){
 				Mapeditor.internals.infinitedrag = jQuery.infinitedrag("#canvas", {},
 					{
 						width: 32,

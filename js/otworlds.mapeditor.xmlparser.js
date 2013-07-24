@@ -1,6 +1,6 @@
-Mapeditor.materials = {};
+Mapeditor.Materials = {};
 
-Mapeditor.materials.load = function(loadUrl, loadCallback, urlScope){
+Mapeditor.Materials.load = function(loadUrl, loadCallback, urlScope){
 	if(loadUrl === undefined) return false;
 	
 	//figure out current URL scope
@@ -18,7 +18,7 @@ Mapeditor.materials.load = function(loadUrl, loadCallback, urlScope){
 		cache: false,
 		dataType : 'xml',
 		error: function(jqXHR, errorString){
-			console.log('Mapeditor.materials.load('+loadUrl+') failed:');
+			console.log('Mapeditor.Materials.load('+loadUrl+') failed:');
 			console.log(errorString);
 			console.log(jqXHR);
 		},
@@ -28,11 +28,11 @@ Mapeditor.materials.load = function(loadUrl, loadCallback, urlScope){
 				//TODO: parse "root" nodes
 				
 				if(this.tagName == "include"){
-					Mapeditor.materials.parseInclude(this, false, urlScope);
+					Mapeditor.Materials.parseInclude(this, false, urlScope);
 					return;
 				}
 				if(this.tagName == "brush"){
-					Mapeditor.materials.parseBrush(this);
+					Mapeditor.Materials.parseBrush(this);
 					return;
 				}
 			});
@@ -41,13 +41,13 @@ Mapeditor.materials.load = function(loadUrl, loadCallback, urlScope){
 	});
 }
 
-Mapeditor.materials.parseInclude = function(node, loadCallback, urlScope){
+Mapeditor.Materials.parseInclude = function(node, loadCallback, urlScope){
 	var $this = jQuery(node);
 	var fileToLoad = $this.attr("file"); //TODO: needs to be aware of relative URLs since we are already in XML folder. OR we need to always use XML folder.
-	Mapeditor.materials.load(fileToLoad, loadCallback, urlScope);
+	Mapeditor.Materials.load(fileToLoad, loadCallback, urlScope);
 }
 
-Mapeditor.materials.parseBrush = function(node){
+Mapeditor.Materials.parseBrush = function(node){
 	var $brush = jQuery(node);
 	if(($brush.attr("server_lookid") || "").length > 0){
 		//dont fetch jQuery object for each of the thousand brushes
