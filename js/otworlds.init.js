@@ -9,9 +9,8 @@ jQuery(document).ready(function(){
 	$canvas = jQuery("#canvas");
 	
 	function showmap(id) {
-		Mapeditor.load(id);
 		jQuery(".toolbar").animate({'opacity': 1}, 300, function(){
-			jQuery(".toolbar").not("#brushes").draggable();
+			Mapeditor.load(id);
 		});
 	}
 	
