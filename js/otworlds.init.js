@@ -8,51 +8,29 @@ jQuery(document).ready(function(){
 	$viewport = jQuery("#viewport");
 	$canvas = jQuery("#canvas");
 	
-	//Calculate positions and dimensions on toolbars
-	
-	
-	//Load the map and fire up the grid
-	jQuery.ajax(Mapeditor.config.urls.backend, {
-		dataType: "json",
-		data: {
-			'action' : 'init'
-		},
-		success: function(data){
-			
-			Mapeditor.map.meta.name = data.name;
-			Mapeditor.map.meta.description = data.description;
-			Mapeditor.map.meta.width = data.width;
-			Mapeditor.map.meta.height = data.height;
-			
-			document.title = Mapeditor.map.meta.name + ' - ' + document.title;
-			
-			//add tiles to cache
-			jQuery.each(data.tiles, function(posz, zValue){
-				jQuery.each(zValue, function(posx, xValue){
-					jQuery.each(xValue, function(posy, tileValue){
-						Mapeditor.map.cacheTile(posx, posy, posz, tileValue);
-					});
+	jQuery('#welcome a[href="#listmaps"]').click(function(){
+		jQuery.ajax(Mapeditor.config.urls.backend, {
+			dataType: "json",
+			data: {
+				'action' : 'listMaps',
+			},
+			success: function(data){
+				var $box = jQuery("#welcome");
+				var list = '<h2>Available maps</h2>';
+				list += '<ul>';
+				jQuery.each(data.maps, function(key, val){
+					list += '<li><a href="#" class="loadmap">'+ val.name +'</a></li>';
 				});
-			});
-			
-			Mapeditor.Materials.load('xml/materials.xml', function(){
-				Mapeditor.internals.infinitedrag = jQuery.infinitedrag("#canvas", {},
-					{
-						width: 32,
-						height: 32,
-						range_col: [0, Mapeditor.map.meta.width],
-						range_row: [0, Mapeditor.map.meta.height],
-						start_col: (Mapeditor.map.meta.width/2)-(Math.round((jQuery(window).width() / 32) / 2)),
-						start_row: (Mapeditor.map.meta.height/2) - (Math.round((jQuery(window).height() / 32) / 2)),
-						class_name: 'tile',
-						oncreate: function($element, col, row) {
-							var tileObject = Object.create(Mapeditor.Tile);
-							tileObject.load(col, row, Mapeditor.internals.currentFloor, $element);
-						}
-					}
-				);
-			});
-		}
+				list += '</ul>';
+				$box.html(list);
+			}
+		});
+	});
+	
+	jQuery("#welcome").delegate('a.loadmap', 'click', function(){
+		var $this = jQuery(this);
+		Mapeditor.load($this.text());
+		jQuery(".toolbar").animate({'opacity': 1}, 300);
 	});
 	
 	//Keep track of whether we need to lookup ".tile.hovered" all the time
