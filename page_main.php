@@ -80,7 +80,7 @@
 		<?php if($allowed){ ?>
 		<div class="row">
 			<div class="push_six six columns center-text">
-				<div class="large danger btn"><a href="#listmaps">Get started</a></div>
+				<div class="large danger btn"><a href="#welcome-listmaps">Get started</a></div>
 			</div>
 		</div>
 		<?php } ?>

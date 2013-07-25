@@ -42,13 +42,13 @@
 			}
 		}
 	},
-	load: function(name){
+	load: function(id){
 		//Load the map and fire up the grid
 		jQuery.ajax(Mapeditor.config.urls.backend, {
 			dataType: "json",
 			data: {
 				'action' : 'init',
-				'map' : name
+				'map' : id
 			},
 			success: function(data){
 				
