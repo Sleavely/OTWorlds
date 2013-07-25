@@ -6,10 +6,9 @@
 	<title>OTWorlds Mapeditor</title>
 	
 	<link rel="shortcut icon" href="img/spellbook-16x16.png" type="image/x-icon" />
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 	<link rel="stylesheet" href="css/style.css" />
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-	<script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<script src="js/jquery.ui/jquery-ui-1.10.3.custom.min.js"></script>
 	<script src="js/jquery.infinitedrag/javascripts/jquery.infinitedrag.js"></script>
 	
 	<?php
