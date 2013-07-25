@@ -30,7 +30,12 @@ jQuery(document).ready(function(){
 	jQuery("#welcome").delegate('a.loadmap', 'click', function(){
 		var $this = jQuery(this);
 		Mapeditor.load($this.text());
-		jQuery(".toolbar").animate({'opacity': 1}, 300);
+		jQuery(".toolbar").animate({'opacity': 1}, 300, function(){
+			jQuery(".toolbar").not("#brushes").draggable();
+		});
+		jQuery("#welcome").animate({'opacity': 0}, 300, function(){
+			jQuery("#welcome").remove();
+		});
 	});
 	
 	//Keep track of whether we need to lookup ".tile.hovered" all the time

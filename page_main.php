@@ -45,7 +45,7 @@
 	<div id="viewport">
 		<div id="canvas"></div>
 	</div>
-	<div class="toolbar" id="menu" style="width: 600px; top: 20px; left: 300px; opacity: 0;">
+	<div class="toolbar" id="menu" style="width: 600px; top: 20px; left: 400px; opacity: 0;">
 		<ul>
 			<li>File</li><li>Edit</li><li>Map</li><li>Options</li><li>Help</li>
 		</ul>
@@ -53,8 +53,10 @@
 	<div class="toolbar" id="meta" style="width: 200px; right: 20px; top: 200px; opacity: 0;">
 		Meta tools
 	</div>
-	<div class="toolbar" id="brushes" style="width: 200px; left: 20px; top: 200px; opacity: 0;">
-		Brushes
+	<div class="toolbar" id="brushes" style="width: 200px; left: 0px; top: 0px; bottom: 0px; opacity: 0;">
+		<ul>
+			<li>Brushes</li>
+		</ul>
 	</div>
 	<div id="welcome">
 		<div class="row" id="hero">
