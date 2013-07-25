@@ -53,9 +53,8 @@
 	<div class="toolbar" id="meta" style="width: 200px; right: 20px; top: 200px; opacity: 0;">
 		Meta tools
 	</div>
-	<div class="toolbar" id="brushes" style="width: 200px; left: 0px; top: 0px; bottom: 0px; opacity: 0;">
-		<ul>
-			<li>Brushes</li>
+	<div class="toolbar" id="brushes" style="width: 250px; left: 0px; top: 0px; bottom: 0px; opacity: 0; overflow-y: scroll;">
+		<ul id="itemlist">
 		</ul>
 	</div>
 	<div id="welcome">

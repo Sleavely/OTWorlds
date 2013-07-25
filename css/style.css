@@ -25,10 +25,22 @@
 	border: none;
 	border-right: 1px solid rgba(0, 0, 0, 0.3);
 	border-radius: 0px;
-	
+	font-size: 0.75em;
+}
+#brushes.toolbar li{
+	padding: 0.3em;
+}
+#brushes.toolbar li:hover,
+#brushes.toolbar li:hover a{
+	background-color: #F3F3F3;
+	color:  blue;
+	cursor: pointer;
 }
 #brushes.toolbar .brush img{
-	max-width: 32px;
+	margin: 0 1em;
+	max-width: none;
+	vertical-align: middle;
+	width: 32px;
 }
 
 #welcome{
