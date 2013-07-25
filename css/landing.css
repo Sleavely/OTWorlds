@@ -44,6 +44,12 @@ h1{
 	font-size: 3em;
 	margin-top: 0.75em;
 }
+.error{
+	color: #cc0000;
+	font-size: 1.1em;
+	margin: 0 auto;
+	max-width: 33em;
+}
 .row[id]{
 	padding-bottom: 1em;
 }
