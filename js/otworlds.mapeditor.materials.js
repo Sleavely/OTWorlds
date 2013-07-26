@@ -15,7 +15,7 @@ Mapeditor.Materials.load = function(loadUrl, loadCallback, urlScope){
 	}
 	
 	jQuery.ajax(loadUrl, {
-		cache: false,
+		cache: true,
 		dataType : 'xml',
 		error: function(jqXHR, errorString){
 			console.log('Mapeditor.Materials.load('+loadUrl+') failed:');
@@ -29,6 +29,10 @@ Mapeditor.Materials.load = function(loadUrl, loadCallback, urlScope){
 				
 				if(this.tagName == "include"){
 					Mapeditor.Materials.parseInclude(this, false, urlScope);
+					return;
+				}
+				if(this.tagName == "tileset"){
+					Mapeditor.Materials.parseTileset(this);
 					return;
 				}
 				if(this.tagName == "brush"){
@@ -49,12 +53,31 @@ Mapeditor.Materials.parseInclude = function(node, loadCallback, urlScope){
 
 Mapeditor.Materials.parseBrush = function(node){
 	var $brush = jQuery(node);
-	if(($brush.attr("server_lookid") || "").length > 0){
-		//dont fetch jQuery object for each of the thousand brushes
-		if(!window.$itemlist) window.$itemlist = jQuery("#itemlist");
-		var brushName = $brush.attr("name");
-		var brushItemid = $brush.attr("server_lookid");
-		var newBrush = '<li><a><img src="'+ Mapeditor.config.urls.sprites.replace('%sprite%', brushItemid) +'" /> '+ brushName +'</a></li>';
-		window.$itemlist.append(newBrush);
+	if((($brush.attr("server_lookid") || "").length > 0) && (($brush.attr("name") || "").length > 0)){
+		Mapeditor.Materials.Brushes = Mapeditor.Materials.Brushes || {};
+		
+		Mapeditor.Materials.Brushes[$brush.attr("name")] = {
+			'name': $brush.attr("name"),
+			'server_lookid': $brush.attr("server_lookid")
+		};
+	}
+}
+
+Mapeditor.Materials.parseTileset = function(node){
+	var $tileset = jQuery(node);
+	if ($tileset.attr('name') == 'Nature') {
+		$tileset.children().each(function(){
+			if (this.tagName == 'terrain') {
+				//TODO: this is currently statically the Nature terrain-tileset
+				var brushesToPrint = '';
+				jQuery(this).children().each(function(){
+					if (this.tagName == 'brush') {
+						var brush = Mapeditor.Materials.Brushes[jQuery(this).attr('name')];
+						brushesToPrint += '<li><a class="brush"><img src="'+ Mapeditor.config.urls.sprites.replace('%sprite%', brush.server_lookid) +'" /> '+ brush.name +'</a></li>'
+					}
+				});
+				jQuery("#itemlist").append(brushesToPrint);
+			}
+		});
 	}
 }

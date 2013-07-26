@@ -5,11 +5,53 @@
 	background-color: rgba(255, 255, 255, 0.9);
 	border: 1px solid rgba(0, 0, 0, 0.3);
 	border-radius: 4px;
-	padding: 1em;
 	position: fixed;
 }
+.toolbar ul{
+	margin: 0;
+}
+.toolbar li{
+	padding: 1em;
+}
+#menu.toolbar li{
+	display: inline-block;
+	border-right:  1px solid rgba(0, 0, 0, 0.3);
+}
+#menu.toolbar li:hover{
+	background: linear-gradient(to bottom, rgba(200, 200, 200, 0.6) 0%, rgba(255,255,255,0) 100%);
+	cursor: pointer;
+}
+#brushes.toolbar{
+	border: none;
+	border-right: 1px solid rgba(0, 0, 0, 0.3);
+	border-radius: 0px;
+	font-size: 0.75em;
+}
+#brushes.toolbar li{
+	padding: 0.3em;
+}
+#brushes.toolbar li:hover,
+#brushes.toolbar li:hover a{
+	background-color: #F3F3F3;
+	color:  blue;
+	cursor: pointer;
+}
 #brushes.toolbar .brush img{
-	max-width: 32px;
+	margin: 0 1em;
+	max-width: none;
+	vertical-align: middle;
+	width: 32px;
+}
+
+#welcome{
+	background-color: rgba(200, 200, 200, 0.9);
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	border-radius: 4px;
+	left: 30%;
+	padding: 1em;
+	position: fixed;
+	top: 200px;
+	width: 39%;
 }
 
 #viewport{

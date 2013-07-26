@@ -45,16 +45,19 @@
 	<div id="viewport">
 		<div id="canvas"></div>
 	</div>
-	<div class="toolbar" id="menu" style="width: 600px; top: 20px; left: 300px;">
-		Map options
+	<div class="toolbar" id="menu" style="width: 600px; top: 20px; left: 400px; opacity: 0;">
+		<ul>
+			<li>File</li><li>Edit</li><li>Map</li><li>Options</li><li>Help</li>
+		</ul>
 	</div>
-	<div class="toolbar" id="meta" style="width: 200px; right: 20px; top: 200px;">
+	<div class="toolbar" id="meta" style="width: 200px; right: 20px; top: 200px; opacity: 0;">
 		Meta tools
 	</div>
-	<div class="toolbar" id="brushes" style="width: 200px; left: 20px; top: 200px;">
-		Brushes
+	<div class="toolbar" id="brushes" style="width: 250px; left: 0px; top: 0px; bottom: 0px; opacity: 0; overflow-y: scroll;">
+		<ul id="itemlist">
+		</ul>
 	</div>
-	<div style="position: fixed; width: 39%; left: 30%; top: 200px; background-color: rgba(255, 220, 255, 0.9); border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 4px; padding: 1em;">
+	<div id="welcome">
 		<div class="row" id="hero">
 			<div class="twelve columns">
 				<h1 class="center-text">Welcome<?php
@@ -73,6 +76,13 @@
 				<p>If you want to get in on the action or just want to support the project, drop a greeting to <a href="http://twitter.com/Sleavely" target="_blank" title="@sleavely on Twitter">@Sleavely</a>.</p>
 			</div>
 		</div>
+		<?php if($allowed){ ?>
+		<div class="row">
+			<div class="push_six six columns center-text">
+				<div class="large danger btn"><a href="#welcome-listmaps">Get started</a></div>
+			</div>
+		</div>
+		<?php } ?>
 	</div>
 	<script type="text/javascript">
 	var _gaq = _gaq || [];
