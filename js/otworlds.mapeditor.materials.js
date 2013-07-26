@@ -15,7 +15,7 @@ Mapeditor.Materials.load = function(loadUrl, loadCallback, urlScope){
 	}
 	
 	jQuery.ajax(loadUrl, {
-		cache: false,
+		cache: true,
 		dataType : 'xml',
 		error: function(jqXHR, errorString){
 			console.log('Mapeditor.Materials.load('+loadUrl+') failed:');
