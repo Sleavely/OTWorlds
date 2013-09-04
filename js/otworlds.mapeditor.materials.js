@@ -1,4 +1,5 @@
 Mapeditor.Materials = {};
+Mapeditor.Materials.Brushes = Mapeditor.Materials.Brushes || {};
 
 Mapeditor.Materials.load = function(loadUrl, loadCallback, urlScope){
 	if(loadUrl === undefined) return false;
@@ -23,6 +24,7 @@ Mapeditor.Materials.load = function(loadUrl, loadCallback, urlScope){
 			console.log(jqXHR);
 		},
 		success: function(xmldoc){
+		  //TODO: reorder the xmldoc so that brushes are parsed first, otherwise tilesets crash
 			jQuery('materials', xmldoc).children().each(function(){
 				
 				//TODO: parse "root" nodes
@@ -32,7 +34,10 @@ Mapeditor.Materials.load = function(loadUrl, loadCallback, urlScope){
 					return;
 				}
 				if(this.tagName == "tileset"){
-					Mapeditor.Materials.parseTileset(this);
+						var tileset = this;
+						setTimeout(function(tileset){
+						  Mapeditor.Materials.parseTileset(tileset);
+						}, 3000, this);
 					return;
 				}
 				if(this.tagName == "brush"){
