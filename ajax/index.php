@@ -10,7 +10,12 @@ try{
 		//TODO: verify that user is logged in (and part of beta group?)
 		if(isset($_REQUEST['action'])){
 			if($_REQUEST['action'] == 'listMaps'){
-				$output['maps'] = $db->query('SELECT * FROM maps')->fetch_all(MYSQLI_ASSOC);
+				
+				$output['maps'] = array();
+				$maps_query = $db->query('SELECT * FROM maps');
+				while($map = $maps_query->fetch_assoc()){
+					$output['maps'][] = $map;
+				}
 				
 			}elseif($_REQUEST['action'] == 'init' && isset($_REQUEST['map'])){
 				
