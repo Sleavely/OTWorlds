@@ -7,6 +7,7 @@ try{
 	
 	if(!isset($_REQUEST['debug'])){
 		
+		//TODO: verify that user is logged in (and part of beta group?)
 		if(isset($_REQUEST['action'])){
 			if($_REQUEST['action'] == 'listMaps'){
 				$output['maps'] = $db->query('SELECT * FROM maps')->fetch_all(MYSQLI_ASSOC);
