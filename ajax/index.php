@@ -14,8 +14,10 @@ try{
 				
 			}elseif($_REQUEST['action'] == 'init' && isset($_REQUEST['map'])){
 				
+				$map_id = intval($_REQUEST['map']);
+				
 				//Find the map in DB
-				$map_query = $db->query('SELECT * FROM maps WHERE id = '.intval($_REQUEST['map']));
+				$map_query = $db->query('SELECT * FROM maps WHERE id = '.$map_id);
 				
 				if($map_query->num_rows === 1){
 					$map_result = $map_query->fetch_assoc();
@@ -27,26 +29,55 @@ try{
 					$output['height'] = $map_result['height'];
 					$output['version'] = $map_result['version'];
 					
-					//TODO: Load a grid of tiles and send along
-					$output['tiles'] = array( //posz, posx, posy
-						7 => array(
-							1013 => array(
-								1021 => array(
-									'itemid' => 4664
-								)
-							),
-							1024 => array(
-								1024 => array(
-									'itemid' => 4664
-								)
-							),
-							1072 => array(
-								1027 => array(
-									'itemid' => 4664
-								)
-							)
+					//Figure out where the center of the map is
+					$chunk = array(
+						'center' => array(
+							'z' => 7,
+							'x' => intval( $map_result['width'] / 2 ),
+							'y' => intval( $map_result['height'] / 2 ),
 						)
 					);
+					//Add a radius of tiles to load
+					//TODO: this should be based on the viewport size, but with a maximum possible value
+					$chunk['startx'] = $chunk['center']['x'] - 50;
+					$chunk['starty'] = $chunk['center']['y'] - 50;
+					$chunk['endx'] = $chunk['center']['x'] + 50;
+					$chunk['endy'] = $chunk['center']['y'] + 50;
+					
+					//Load ground floor at the center of the map
+					$tiles_query = $db->query('
+						SELECT *
+						FROM tiles
+						WHERE
+							mapid = '.$map_id.' AND
+							posz = '.$chunk['center']['z'].' AND
+							posx > '.$chunk['startx'].' AND
+							posy > '.$chunk['starty'].' AND
+							posx < '.$chunk['endx'].' AND
+							posy < '.$chunk['endy'].'
+						ORDER BY posz, posx, posy
+					');
+					
+					//posz, posx, posy
+					$output['tiles'] = array();
+					while ($tile = $tiles_query->fetch_assoc()){
+					
+						if(!isset($output['tiles'][$tile['posz']])){
+							$output['tiles'][$tile['posz']] = array();
+						}
+						if(!isset($output['tiles'][$tile['posz']][$tile['posx']])){
+							$output['tiles'][$tile['posz']][$tile['posx']] = array();
+						}
+						if(!isset($output['tiles'][$tile['posz']][$tile['posx']][$tile['posy']])){
+							$output['tiles'][$tile['posz']][$tile['posx']][$tile['posy']] = $tile;
+						}
+						
+						//Remove redundant data
+						unset($output['tiles'][$tile['posz']][$tile['posx']][$tile['posy']]['mapid']);
+						unset($output['tiles'][$tile['posz']][$tile['posx']][$tile['posy']]['posz']);
+						unset($output['tiles'][$tile['posz']][$tile['posx']][$tile['posy']]['posx']);
+						unset($output['tiles'][$tile['posz']][$tile['posx']][$tile['posy']]['posy']);
+					}
 					
 				}else{
 					throw new Exception('Invalid ID.');
