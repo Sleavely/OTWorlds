@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="css/style.css" />
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 	<script src="js/jquery.pep.js"></script>
-	<script src="js/jquery.infinitedrag/javascripts/jquery.infinitedrag.js"></script>
+	<script src="js/jquery.infinitedrag/jquery.infinitedrag.js"></script>
 	
 	<?php
 	$allowed = false;
