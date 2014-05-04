@@ -4,6 +4,7 @@ $output = array();
 try{
 	require_once('../inc/db.php');
 	require_once('../inc/user.php');
+	require_once('../inc/helpers.php');
 	
 	if(!isset($_REQUEST['debug'])){
 		
@@ -28,65 +29,54 @@ try{
 					$map_result = $map_query->fetch_assoc();
 					
 					//Send metadata
+					$output['id'] = $map_result['id'];
 					$output['name'] = $map_result['name'];
 					$output['description'] = $map_result['description'];
 					$output['width'] = $map_result['width'];
 					$output['height'] = $map_result['height'];
 					$output['version'] = $map_result['version'];
+				}else{
+					throw new Exception('Invalid map ID.');
+				}
+				
+			}elseif($_REQUEST['action'] == 'loadtiles' && isset($_REQUEST['map']) && isset($_REQUEST['tiles'])){
+				
+				$map_id = intval($_REQUEST['map']);
+				//Find the map in DB
+				$map_query = $db->query('SELECT * FROM maps WHERE id = '.$map_id);
+				if($map_query->num_rows === 1){
 					
-					//Figure out where the center of the map is
-					$chunk = array(
-						'center' => array(
-							'z' => 7,
-							'x' => intval( $map_result['width'] / 2 ),
-							'y' => intval( $map_result['height'] / 2 ),
-						)
-					);
-					//Add a radius of tiles to load
-					//TODO: this should be based on the viewport size, but with a maximum possible value
-					$chunk['startx'] = $chunk['center']['x'] - 50;
-					$chunk['starty'] = $chunk['center']['y'] - 50;
-					$chunk['endx'] = $chunk['center']['x'] + 50;
-					$chunk['endy'] = $chunk['center']['y'] + 50;
+					if(!is_array($_REQUEST['tiles'])) {
+						throw new Exception('No tile array found.');
+					}
+					$tiles_to_load = array();
+					foreach($_REQUEST['tiles'] as $tile_to_load) {
+						$splittile = explode(',', $tile_to_load);
+						$tiles_to_load[] = '(posz = '.intval($splittile[2]).' AND posx = '.intval($splittile[0]).' AND posy = '.intval($splittile[1]).')';
+					}
+					$tiles_or = implode(' OR ', $tiles_to_load);
 					
-					//Load ground floor at the center of the map
+					//TODO: this query should run once per 50 tiles, to avoid a humongous query crashing the db
 					$tiles_query = $db->query('
 						SELECT *
 						FROM tiles
 						WHERE
 							mapid = '.$map_id.' AND
-							posz = '.$chunk['center']['z'].' AND
-							posx > '.$chunk['startx'].' AND
-							posy > '.$chunk['starty'].' AND
-							posx < '.$chunk['endx'].' AND
-							posy < '.$chunk['endy'].'
+							('.$tiles_or.')
 						ORDER BY posz, posx, posy
 					');
+					$output['tilesor'] = $tiles_or;
 					
 					//posz, posx, posy
 					$output['tiles'] = array();
 					while ($tile = $tiles_query->fetch_assoc()){
-					
-						if(!isset($output['tiles'][$tile['posz']])){
-							$output['tiles'][$tile['posz']] = array();
-						}
-						if(!isset($output['tiles'][$tile['posz']][$tile['posx']])){
-							$output['tiles'][$tile['posz']][$tile['posx']] = array();
-						}
-						if(!isset($output['tiles'][$tile['posz']][$tile['posx']][$tile['posy']])){
-							$output['tiles'][$tile['posz']][$tile['posx']][$tile['posy']] = $tile;
-						}
-						
-						//Remove redundant data
-						unset($output['tiles'][$tile['posz']][$tile['posx']][$tile['posy']]['mapid']);
-						unset($output['tiles'][$tile['posz']][$tile['posx']][$tile['posy']]['posz']);
-						unset($output['tiles'][$tile['posz']][$tile['posx']][$tile['posy']]['posx']);
-						unset($output['tiles'][$tile['posz']][$tile['posx']][$tile['posy']]['posy']);
+						addTileToArray($output['tiles'], $tile);
 					}
 					
 				}else{
-					throw new Exception('Invalid ID.');
+					throw new Exception('Invalid map ID.');
 				}
+				
 			}else{
 				throw new Exception('Invalid action.');
 			}

@@ -9,14 +9,34 @@
 		currentFloor: 7,
 		
 		/**
+		 * Queue a tile for batch download
+		 */
+		downloadTile: function(posx, posy, posz){
+			if(posz === undefined) posz = Mapeditor.internals.currentFloor;
+			Mapeditor.internals.tileAreaQueue.push(posx+','+posy+','+posz);
+			Mapeditor.internals.downloadTileArea();
+		},
+		/**
 		 * Ask the server for a tile area
 		 */
-		downloadTileArea: function(posx, posy, posz){
-			if(posz === undefined) posz = Mapeditor.internals.currentFloor;
-			
-			//TODO: this doesnt work in backend
-			//We will load an area by the size of quadrantSize*quadrantSize to cache
-			var quadrantSize = 32;
+		downloadTileArea: function(){
+			//This method is overridden further down because we need createDebouncer to be loaded
+		},
+		tileAreaQueue: [],
+		/**
+		 * Helper to avoid flooding server with requests
+		 */
+		createDebouncer: function(func, wait, immediate) {
+			var timeout;
+			return function() {
+				var context = this, args = arguments;
+				clearTimeout(timeout);
+				timeout = setTimeout(function() {
+					timeout = null;
+					if (!immediate) func.apply(context, args);
+				}, wait);
+				if (immediate && !timeout) func.apply(context, args);
+			};
 		},
 		figureOutTile: function(e){
 			var $source = jQuery(e.srcElement);
@@ -52,21 +72,13 @@
 			},
 			success: function(data){
 				
+				Mapeditor.map.meta.id = data.id;
 				Mapeditor.map.meta.name = data.name;
 				Mapeditor.map.meta.description = data.description;
 				Mapeditor.map.meta.width = data.width;
 				Mapeditor.map.meta.height = data.height;
 				
 				document.title = Mapeditor.map.meta.name + ' - ' + document.title;
-				
-				//add tiles to cache
-				jQuery.each(data.tiles, function(posz, zValue){
-					jQuery.each(zValue, function(posx, xValue){
-						jQuery.each(xValue, function(posy, tileValue){
-							Mapeditor.map.cacheTile(posx, posy, posz, tileValue);
-						});
-					});
-				});
 				
 				Mapeditor.Materials.load('xml/materials.xml', function(){
 					Mapeditor.Materials.load('xml/tilesets.xml', function(){
@@ -128,7 +140,7 @@
 			
 			//now, do we need to ask the server or not?
 			if(fetchRemote){
-				Mapeditor.internals.downloadTileArea(posx, posy, posz);
+				Mapeditor.internals.downloadTile(posx, posy, posz);
 			}else{
 				//TODO: this should not be inside an 'else' statement, because downloadTileArea() should guarantee that the tile is set, unless something epic happens :(
 				return Mapeditor.map["_"+posz]["_"+posx]["_"+posy];
@@ -136,6 +148,41 @@
 		}
 	}
 };
+
+Mapeditor.internals.downloadTileArea = Mapeditor.internals.createDebouncer(
+	function(){
+		console.log('Requesting '+Mapeditor.internals.tileAreaQueue.length+' tiles.');
+		
+		//TODO: need to implement some kind of caching of non-existing tiles before enabling this: the first request is 86~ KB HTTP-POST data
+		jQuery.ajax(Mapeditor.config.urls.backend, {
+			dataType: "json",
+			type: "POST",
+			data: {
+				'action' : 'loadtiles',
+				'map' : Mapeditor.map.meta.id,
+				'tiles' : Mapeditor.internals.tileAreaQueue
+			},
+			success: function(data){
+				//add tiles to cache
+				jQuery.each(data.tiles, function(posz, zValue){
+					jQuery.each(zValue, function(posx, xValue){
+						jQuery.each(xValue, function(posy, tileValue){
+							Mapeditor.map.cacheTile(posx, posy, posz, tileValue);
+							//TODO: need to refresh the tiles somehow
+							var $tile = jQuery('.tile[col='+posx+'][row='+posy+']');
+							Mapeditor.Tile.load(posx, posy, posz, $tile);
+							//jQuery('.tile[col='+posx+'][row='+posy+']').getTile().setItemid(tileValue.itemid);
+						});
+					});
+				});
+			}
+		});
+		
+		//Clear the queue as soon as the request has been sent
+		Mapeditor.internals.tileAreaQueue = [];
+	},
+	500
+);
 
 jQuery.fn.getTile = function(){
 	var $this = this;
