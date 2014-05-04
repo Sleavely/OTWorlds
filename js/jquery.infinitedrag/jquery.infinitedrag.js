@@ -59,15 +59,21 @@
 		var $draggable = $(draggable);
 		var $viewport = $draggable.parent();
 		$draggable.css({
-			position: "relative",
-			cursor: "move"
+			position: "relative"
 		});
 
 		// Draggable options
 		var _do = {
-			shouldEase: false
+			shouldEase: false,
+			cursor: true
 		};
 		$.extend(_do, draggable_options);
+
+		if (_do.cursor) {
+			$draggable.css({
+				cursor: "move"
+			});
+		}
 
 		// Tile options (DEFAULT)
 		var _to = {
@@ -286,9 +292,11 @@
 
 			$draggable.draggable("option", "disabled", value);
 
-			$draggable.css({
-				cursor: (value) ? "default" : "move"
-			});
+			if (_do.cursor) {
+				$draggable.css({
+					cursor: (value) ? "default" : "move"
+				});
+			}
 		};
 
 		self.center = function(col, row) {
