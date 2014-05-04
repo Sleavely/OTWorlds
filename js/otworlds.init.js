@@ -54,6 +54,15 @@ jQuery(document).ready(function(){
 			var $target = Mapeditor.internals.figureOutTile(e);
 			$target.addClass('hovered');
 			hoveredElements++;
-		} 
+		}
 	}, '.tile');
+	jQuery(window).keyup(function(e) {
+		//Spacebar
+		if (e.which == 32) {
+			$canvas.toggleClass('editing');
+			Mapeditor.map.isEditing = !Mapeditor.map.isEditing;
+			console.log('Toggling canvasmode. Now '+(Mapeditor.map.isEditing ? 'editing' : 'viewing'));
+		}
+	});
+	
 });

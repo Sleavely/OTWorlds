@@ -80,7 +80,7 @@
 				document.title = Mapeditor.map.meta.name + ' - ' + document.title;
 				
 				Mapeditor.Materials.load('xml/materials.xml', function(){
-					Mapeditor.internals.infinitedrag = jQuery.infinitedrag("#canvas", {},
+					Mapeditor.internals.infinitedrag = jQuery.infinitedrag("#canvas", {cursor: false},
 						{
 							width: 32,
 							height: 32,

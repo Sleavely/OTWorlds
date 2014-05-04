@@ -67,6 +67,9 @@
 	-ms-user-select: none;
 	user-select: none;
 }
+#canvas{
+	cursor: move;
+}
 #canvas.editing{
 	cursor: pointer;
 }
