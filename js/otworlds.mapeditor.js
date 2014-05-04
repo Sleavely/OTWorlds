@@ -39,7 +39,7 @@
 			};
 		},
 		figureOutTile: function(e){
-			var $source = jQuery(e.srcElement);
+			var $source = jQuery(e.currentTarget);
 			if($source.hasClass("item")){
 				var $parent = $source.parent();
 				var posx = $parent.attr("col");
