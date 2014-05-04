@@ -81,7 +81,7 @@ Mapeditor.Materials.parseTileset = function(node){
 						brushesToPrint += '<li><a class="brush"><img src="'+ Mapeditor.config.urls.sprites.replace('%sprite%', brush.server_lookid) +'" /> '+ brush.name +'</a></li>'
 					}
 				});
-				jQuery("#itemlist").append(brushesToPrint);
+				jQuery("#itemlist").html(brushesToPrint);
 			}
 		});
 	}
