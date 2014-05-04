@@ -6,13 +6,12 @@
 		}
 	},
 	internals: {
-		currentFloor: 7,
 		
 		/**
 		 * Queue a tile for batch download
 		 */
 		downloadTile: function(posx, posy, posz){
-			if(posz === undefined) posz = Mapeditor.internals.currentFloor;
+			if(posz === undefined) posz = Mapeditor.map.currentFloor;
 			Mapeditor.internals.tileAreaQueue.push(posx+','+posy+','+posz);
 			Mapeditor.internals.downloadTileArea();
 		},
@@ -92,7 +91,7 @@
 							class_name: 'tile',
 							oncreate: function($element, col, row) {
 								var tileObject = Object.create(Mapeditor.Tile);
-								tileObject.load(col, row, Mapeditor.internals.currentFloor, $element);
+								tileObject.load(col, row, Mapeditor.map.currentFloor, $element);
 							}
 						}
 					);
@@ -101,6 +100,8 @@
 		});
 	},
 	map: {
+		currentFloor: 7,
+		isEditing: false,
 		meta: {
 		},
 		//Z axis, then X axis, then Y axis, just like OTBM by Remere's
