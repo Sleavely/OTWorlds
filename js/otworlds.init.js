@@ -65,8 +65,8 @@ jQuery(document).ready(function(){
 				
 				var Tile = $target.getTile();
 				Tile.setItemid( Mapeditor.Materials.Brushes[activeBrush].server_lookid );
-				console.log(Tile);
-				console.log('Painting '+Mapeditor.Materials.Brushes[activeBrush].name+' on ');
+				
+				console.log('Painting '+Mapeditor.Materials.Brushes[activeBrush].name+' on '+$target.attr('col')+', '+$target.attr('row')+', '+Mapeditor.map.currentFloor);
 			}
 		}
 	}, '.tile');
