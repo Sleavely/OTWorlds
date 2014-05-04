@@ -83,6 +83,10 @@ jQuery(document).ready(function(){
 				jQuery('.active').removeClass('active');
 				$this.addClass('active');
 				Mapeditor.Materials.Brushes.active = $this.data('name');
+				
+				if (!Mapeditor.isEditing) {
+					Mapeditor.toggleEdit();
+				}
 			}
 		}
 	}, '.brush')
