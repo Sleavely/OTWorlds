@@ -143,6 +143,7 @@
 	toggleEdit: function(){
 		$canvas.toggleClass('editing');
 		Mapeditor.isEditing = !Mapeditor.isEditing;
+		Mapeditor.internals.infinitedrag.disabled(Mapeditor.isEditing);
 		console.log('Toggling canvasmode. Now '+(Mapeditor.isEditing ? 'editing' : 'viewing'));
 	}
 };
