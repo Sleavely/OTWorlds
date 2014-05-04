@@ -81,23 +81,21 @@
 				document.title = Mapeditor.map.meta.name + ' - ' + document.title;
 				
 				Mapeditor.Materials.load('xml/materials.xml', function(){
-					Mapeditor.Materials.load('xml/tilesets.xml', function(){
-						Mapeditor.internals.infinitedrag = jQuery.infinitedrag("#canvas", {},
-							{
-								width: 32,
-								height: 32,
-								range_col: [0, Mapeditor.map.meta.width],
-								range_row: [0, Mapeditor.map.meta.height],
-								start_col: (Mapeditor.map.meta.width/2)-(Math.round((jQuery(window).width() / 32) / 2)),
-								start_row: (Mapeditor.map.meta.height/2) - (Math.round((jQuery(window).height() / 32) / 2)),
-								class_name: 'tile',
-								oncreate: function($element, col, row) {
-									var tileObject = Object.create(Mapeditor.Tile);
-									tileObject.load(col, row, Mapeditor.internals.currentFloor, $element);
-								}
+					Mapeditor.internals.infinitedrag = jQuery.infinitedrag("#canvas", {},
+						{
+							width: 32,
+							height: 32,
+							range_col: [0, Mapeditor.map.meta.width],
+							range_row: [0, Mapeditor.map.meta.height],
+							start_col: (Mapeditor.map.meta.width/2)-(Math.round((jQuery(window).width() / 32) / 2)),
+							start_row: (Mapeditor.map.meta.height/2) - (Math.round((jQuery(window).height() / 32) / 2)),
+							class_name: 'tile',
+							oncreate: function($element, col, row) {
+								var tileObject = Object.create(Mapeditor.Tile);
+								tileObject.load(col, row, Mapeditor.internals.currentFloor, $element);
 							}
-						);
-					});
+						}
+					);
 				});
 			}
 		});
