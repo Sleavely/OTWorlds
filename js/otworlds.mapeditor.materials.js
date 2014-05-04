@@ -78,10 +78,13 @@ Mapeditor.Materials.parseTileset = function(node){
 				jQuery(this).children().each(function(){
 					if (this.tagName == 'brush') {
 						var brush = Mapeditor.Materials.Brushes[jQuery(this).attr('name')];
-						brushesToPrint += '<li><a class="brush"><img src="'+ Mapeditor.config.urls.sprites.replace('%sprite%', brush.server_lookid) +'" /> '+ brush.name +'</a></li>'
+						brushesToPrint += '<li class="brush" data-name="'+ brush.name +'"><a><img src="'+ Mapeditor.config.urls.sprites.replace('%sprite%', brush.server_lookid) +'" /> '+ brush.name +'</a></li>'
 					}
 				});
 				jQuery("#itemlist").html(brushesToPrint);
+				
+				//Activate the first brush
+				jQuery("#itemlist .brush").eq(0).click();
 			}
 		});
 	}

@@ -15,12 +15,6 @@
 			Mapeditor.internals.tileAreaQueue.push(posx+','+posy+','+posz);
 			Mapeditor.internals.downloadTileArea();
 		},
-		/**
-		 * Ask the server for a tile area
-		 */
-		downloadTileArea: function(){
-			//This method is overridden further down because we need createDebouncer to be loaded
-		},
 		tileAreaQueue: [],
 		/**
 		 * Helper to avoid flooding server with requests
@@ -101,7 +95,6 @@
 	},
 	map: {
 		currentFloor: 7,
-		isEditing: false,
 		meta: {
 		},
 		//Z axis, then X axis, then Y axis, just like OTBM by Remere's
@@ -145,9 +138,18 @@
 				return Mapeditor.map["_"+posz]["_"+posx]["_"+posy];
 			}
 		}
+	},
+	isEditing: false,
+	toggleEdit: function(){
+		$canvas.toggleClass('editing');
+		Mapeditor.isEditing = !Mapeditor.isEditing;
+		console.log('Toggling canvasmode. Now '+(Mapeditor.isEditing ? 'editing' : 'viewing'));
 	}
 };
 
+/**
+ * Ask the server for a tile area
+ */
 Mapeditor.internals.downloadTileArea = Mapeditor.internals.createDebouncer(
 	function(){
 		console.log('Requesting '+Mapeditor.internals.tileAreaQueue.length+' tiles.');

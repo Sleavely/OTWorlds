@@ -30,11 +30,20 @@
 #brushes.toolbar li{
 	padding: 0.3em;
 }
-#brushes.toolbar li:hover,
-#brushes.toolbar li:hover a{
+#brushes.toolbar li.active{
+	background-color: rgba(255, 255, 0, 0.5);
+}
+#brushes.toolbar li:hover{
 	background-color: #F3F3F3;
-	color:  blue;
 	cursor: pointer;
+}
+#brushes.toolbar li a{
+	display: inline-block;
+	height: 100%;
+	width: 100%;
+}
+#brushes.toolbar li:hover a{
+	color:  blue;
 }
 #brushes.toolbar .brush img{
 	margin: 0 1em;

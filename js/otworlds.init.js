@@ -50,19 +50,41 @@ jQuery(document).ready(function(){
 	var hoveredElements = 0;
 	$viewport.on({
 		mousemove: function(e) {
-			if(hoveredElements > 0) jQuery(".tile.hovered").removeClass('hovered');
-			var $target = Mapeditor.internals.figureOutTile(e);
-			$target.addClass('hovered');
-			hoveredElements++;
+			if (Mapeditor.isEditing) {
+				if(hoveredElements > 0) jQuery(".tile.hovered").removeClass('hovered');
+				var $target = Mapeditor.internals.figureOutTile(e);
+				$target.addClass('hovered');
+				hoveredElements++;
+			}
+		},
+		//Painting when editing is active
+		click: function(e) {
+			if (Mapeditor.isEditing) {
+				var activeBrush = Mapeditor.Materials.Brushes.active;
+				var $target = Mapeditor.internals.figureOutTile(e);
+				
+				var Tile = $target.getTile();
+				Tile.setItemid( Mapeditor.Materials.Brushes[activeBrush].server_lookid );
+				console.log(Tile);
+				console.log('Painting '+Mapeditor.Materials.Brushes[activeBrush].name+' on ');
+			}
 		}
 	}, '.tile');
 	jQuery(window).keyup(function(e) {
 		//Spacebar
 		if (e.which == 32) {
-			$canvas.toggleClass('editing');
-			Mapeditor.map.isEditing = !Mapeditor.map.isEditing;
-			console.log('Toggling canvasmode. Now '+(Mapeditor.map.isEditing ? 'editing' : 'viewing'));
+			Mapeditor.toggleEdit();
 		}
 	});
+	jQuery('#brushes').on({
+		click: function(e) {
+			var $this = jQuery(this);
+			if (!$this.hasClass('active')) {
+				jQuery('.active').removeClass('active');
+				$this.addClass('active');
+				Mapeditor.Materials.Brushes.active = $this.data('name');
+			}
+		}
+	}, '.brush')
 	
 });
