@@ -31,19 +31,24 @@
 	padding: 0.3em;
 }
 #brushes.toolbar li.active{
-	background-color: rgba(255, 255, 0, 0.5);
+	background-color: rgba(200, 200, 20, 0.40);
+}
+#brushes.toolbar li.active:hover{
+	background-color: #D3D383;
 }
 #brushes.toolbar li:hover{
 	background-color: #F3F3F3;
 	cursor: pointer;
 }
 #brushes.toolbar li a{
+	color: #888888;
 	display: inline-block;
 	height: 100%;
 	width: 100%;
 }
+#brushes.toolbar li.active a,
 #brushes.toolbar li:hover a{
-	color:  blue;
+	color: #4A6FE5;
 }
 #brushes.toolbar .brush img{
 	margin: 0 1em;
