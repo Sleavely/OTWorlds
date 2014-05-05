@@ -153,34 +153,41 @@
  */
 Mapeditor.internals.downloadTileArea = Mapeditor.internals.createDebouncer(
 	function(){
-		console.log('Requesting '+Mapeditor.internals.tileAreaQueue.length+' tiles.');
+		console.log('Requesting '+Mapeditor.internals.tileAreaQueue.length+' tiles'+(Mapeditor.internals.tileAreaQueue.length > 500 ? ' in chunks of 500' : '')+'.');
 		
-		//TODO: need to implement some kind of caching of non-existing tiles before enabling this: the first request is 86~ KB HTTP-POST data
-		jQuery.ajax(Mapeditor.config.urls.backend, {
-			dataType: "json",
-			type: "POST",
-			data: {
-				'action' : 'loadtiles',
-				'map' : Mapeditor.map.meta.id,
-				'tiles' : Mapeditor.internals.tileAreaQueue
-			},
-			success: function(data){
-				//add tiles to cache
-				jQuery.each(data.tiles, function(posz, zValue){
-					jQuery.each(zValue, function(posx, xValue){
-						jQuery.each(xValue, function(posy, tileValue){
-							Mapeditor.map.cacheTile(posx, posy, posz, tileValue);
-							//TODO: need to refresh the tiles somehow
-							var $tile = jQuery('.tile[col='+posx+'][row='+posy+']');
-							Mapeditor.Tile.load(posx, posy, posz, $tile);
-							//jQuery('.tile[col='+posx+'][row='+posy+']').getTile().setItemid(tileValue.itemid);
+		//Split requests into chunks of 500 tiles at a time
+		var limitedArray = [];
+		while (Mapeditor.internals.tileAreaQueue.length) {
+			limitedArray = Mapeditor.internals.tileAreaQueue.splice(0, 500);
+			
+			//TODO: need to implement some kind of caching of non-existing tiles before enabling this: the first request is 86~ KB HTTP-POST data
+			jQuery.ajax(Mapeditor.config.urls.backend, {
+				dataType: "json",
+				type: "POST",
+				data: {
+					'action' : 'loadtiles',
+					'map' : Mapeditor.map.meta.id,
+					'tiles' : limitedArray
+				},
+				success: function(data){
+					//add tiles to cache
+					jQuery.each(data.tiles, function(posz, zValue){
+						jQuery.each(zValue, function(posx, xValue){
+							jQuery.each(xValue, function(posy, tileValue){
+								Mapeditor.map.cacheTile(posx, posy, posz, tileValue);
+								//TODO: need to refresh the tiles somehow
+								var $tile = jQuery('.tile[col='+posx+'][row='+posy+']');
+								Mapeditor.Tile.load(posx, posy, posz, $tile);
+								//jQuery('.tile[col='+posx+'][row='+posy+']').getTile().setItemid(tileValue.itemid);
+							});
 						});
 					});
-				});
-			}
-		});
+				}
+			});
+			limitedArray = [];
+		}
 		
-		//Clear the queue as soon as the request has been sent
+		//Clear the queue as soon as the requests has been sent
 		Mapeditor.internals.tileAreaQueue = [];
 	},
 	500
