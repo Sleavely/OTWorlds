@@ -16,8 +16,11 @@ jQuery(document).ready(function(){
 	
 	if (window.location.hash.substr(1, 5) == 'mapid') {
 		jQuery("#welcome").remove();
+		_gaq.push(['_trackPageview', '/maps/'+window.location.hash.substr(7)]);
 		showmap(window.location.hash.substr(7));
 	}else{
+		_gaq.push(['_trackPageview', '/welcome']);
+		
 		jQuery('#welcome a[href="#welcome-listmaps"]').click(function(){
 			jQuery.ajax(Mapeditor.config.urls.backend, {
 				dataType: "json",
@@ -33,6 +36,7 @@ jQuery(document).ready(function(){
 					});
 					list += '</ul>';
 					$box.html(list);
+					_gaq.push(['_trackPageview', '/maps']);
 				}
 			});
 		});
