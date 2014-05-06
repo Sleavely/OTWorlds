@@ -78,6 +78,8 @@ jQuery(document).ready(function(){
 		//Spacebar
 		if (e.which == 32) {
 			Mapeditor.toggleEdit();
+			e.preventDefault();
+			e.stopPropagation();
 		}
 	});
 	jQuery('#brushes').on({
