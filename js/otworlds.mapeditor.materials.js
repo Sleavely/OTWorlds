@@ -63,7 +63,8 @@ Mapeditor.Materials.parseBrush = function(node){
 		
 		Mapeditor.Materials.Brushes[$brush.attr("name")] = {
 			'name': $brush.attr("name"),
-			'server_lookid': $brush.attr("server_lookid")
+			'server_lookid': $brush.attr("server_lookid"),
+			'type': $brush.attr("type")
 		};
 	}
 }
@@ -78,7 +79,10 @@ Mapeditor.Materials.parseTileset = function(node){
 				jQuery(this).children().each(function(){
 					if (this.tagName == 'brush') {
 						var brush = Mapeditor.Materials.Brushes[jQuery(this).attr('name')];
-						brushesToPrint += '<li class="brush" data-name="'+ brush.name +'"><a><img src="'+ Mapeditor.config.urls.sprites.replace('%sprite%', brush.server_lookid) +'" /> '+ brush.name +'</a></li>'
+						if (brush.type == 'ground') {
+							//oh my god there is so much horrible code here :(((
+							brushesToPrint += '<li class="brush" data-name="'+ brush.name +'"><a><img src="'+ Mapeditor.config.urls.sprites.replace('%sprite%', brush.server_lookid) +'" /> '+ brush.name +'</a></li>'
+						}
 					}
 				});
 				jQuery("#itemlist").html(brushesToPrint);
