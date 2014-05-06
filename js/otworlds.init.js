@@ -11,12 +11,12 @@ jQuery(document).ready(function(){
 	function showmap(id) {
 		jQuery(".toolbar").animate({'opacity': 1}, 300, function(){
 			Mapeditor.load(id);
+			_gaq.push(['_trackPageview', '/maps/'+id]);
 		});
 	}
 	
 	if (window.location.hash.substr(1, 5) == 'mapid') {
 		jQuery("#welcome").remove();
-		_gaq.push(['_trackPageview', '/maps/'+window.location.hash.substr(7)]);
 		showmap(window.location.hash.substr(7));
 	}else{
 		_gaq.push(['_trackPageview', '/welcome']);
