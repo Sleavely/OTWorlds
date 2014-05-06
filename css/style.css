@@ -2,9 +2,8 @@
 @import url(gumby.css);
 
 .toolbar{
-	background-color: rgba(255, 255, 255, 0.9);
+	background-color: #f9f9f9;
 	border: 1px solid rgba(0, 0, 0, 0.3);
-	border-radius: 4px;
 	position: fixed;
 }
 .toolbar ul{
@@ -15,7 +14,7 @@
 }
 #menu.toolbar li{
 	display: inline-block;
-	border-right:  1px solid rgba(0, 0, 0, 0.3);
+	border-right: 1px solid rgba(0, 0, 0, 0.3);
 }
 #menu.toolbar li:hover{
 	background: linear-gradient(to bottom, rgba(200, 200, 200, 0.6) 0%, rgba(255,255,255,0) 100%);
@@ -28,13 +27,26 @@
 	font-size: 0.75em;
 }
 #brushes.toolbar li{
+	border-bottom: 1px solid #e5e5e5;
+	border-top: 1px solid #fcfcfc;
 	padding: 0.3em;
+	position: relative;
 }
 #brushes.toolbar li.active{
-	background-color: rgba(200, 200, 20, 0.40);
+	background-color: #F3F3F3;
+}
+#brushes.toolbar li.active:before{
+	background-color: #0b6cbc;
+	content: "";
+	display: inline-block;
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 4px;
 }
 #brushes.toolbar li.active:hover{
-	background-color: #D3D383;
+	background-color: #E3E3E3;
 }
 #brushes.toolbar li:hover{
 	background-color: #F3F3F3;
