@@ -12,14 +12,6 @@
 .toolbar li{
 	padding: 1em;
 }
-#menu.toolbar li{
-	display: inline-block;
-	border-right: 1px solid rgba(0, 0, 0, 0.3);
-}
-#menu.toolbar li:hover{
-	background: linear-gradient(to bottom, rgba(200, 200, 200, 0.6) 0%, rgba(255,255,255,0) 100%);
-	cursor: pointer;
-}
 #brushes.toolbar{
 	border: none;
 	border-right: 1px solid rgba(0, 0, 0, 0.3);
