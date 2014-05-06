@@ -1,6 +1,10 @@
 @charset "UTF-8";
 @import url(gumby.css);
 
+html, body{
+	overflow: hidden;
+}
+
 .toolbar{
 	background-color: #f9f9f9;
 	border: 1px solid rgba(0, 0, 0, 0.3);
