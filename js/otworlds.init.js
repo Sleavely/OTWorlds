@@ -52,6 +52,7 @@ jQuery(document).ready(function(){
 	
 	//Keep track of whether we need to lookup ".tile.hovered" all the time
 	var hoveredElements = 0;
+	var mouseIsPressed = false;
 	$viewport.on({
 		mousemove: function(e) {
 			if (Mapeditor.isEditing) {
@@ -59,6 +60,16 @@ jQuery(document).ready(function(){
 				var $target = Mapeditor.internals.figureOutTile(e);
 				$target.addClass('hovered');
 				hoveredElements++;
+				
+				if (Mapeditor.isEditing && mouseIsPressed) {
+				var activeBrush = Mapeditor.Materials.Brushes.active;
+				var $target = Mapeditor.internals.figureOutTile(e);
+				
+				var Tile = $target.getTile();
+				Tile.setItemid( Mapeditor.Materials.Brushes[activeBrush].server_lookid );
+				
+				console.log('Painting '+Mapeditor.Materials.Brushes[activeBrush].name+' on '+$target.attr('col')+', '+$target.attr('row')+', '+Mapeditor.map.currentFloor);
+			}
 			}
 		},
 		//Painting when editing is active
@@ -71,6 +82,16 @@ jQuery(document).ready(function(){
 				Tile.setItemid( Mapeditor.Materials.Brushes[activeBrush].server_lookid );
 				
 				console.log('Painting '+Mapeditor.Materials.Brushes[activeBrush].name+' on '+$target.attr('col')+', '+$target.attr('row')+', '+Mapeditor.map.currentFloor);
+			}
+		},
+		mousedown: function(e) {
+			if (e.which == 1) {
+				mouseIsPressed = true;
+			}
+		},
+		mouseup: function(e) {
+			if (e.which == 1) {
+				mouseIsPressed = false;
 			}
 		}
 	}, '.tile');
