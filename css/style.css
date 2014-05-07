@@ -66,14 +66,19 @@ html, body{
 }
 
 #welcome{
-	background-color: rgba(200, 200, 200, 0.9);
-	border: 1px solid rgba(0, 0, 0, 0.3);
-	border-radius: 4px;
-	left: 30%;
-	padding: 1em;
+	background-color: rgba(40, 40, 40, 0.6);
+	bottom: 0;
+	left: 0;
 	position: fixed;
-	top: 200px;
-	width: 39%;
+	right: 0;
+	top: 0;
+}
+#welcome > div{
+	background-color: #E8E8E8;
+	border: 1px solid rgb(30, 30, 30);
+	border-radius: 4px;
+	margin: 10% 10% auto 10%;
+	padding: 1em;
 }
 
 #viewport{

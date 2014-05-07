@@ -77,31 +77,33 @@
 		</ul>
 	</div>
 	<div id="welcome">
-		<div class="row" id="hero">
-			<div class="twelve columns">
-				<h1 class="center-text">Welcome<?php
-				if(isset($facebook)){
-					print ', ';
-					print htmlentities($profile['first_name'], ENT_COMPAT, 'UTF-8');
-				}
-				?>!</h1>
+		<div>
+			<div class="row" id="hero">
+				<div class="twelve columns">
+					<h1 class="center-text">Welcome<?php
+					if(isset($facebook)){
+						print ', ';
+						print htmlentities($profile['first_name'], ENT_COMPAT, 'UTF-8');
+					}
+					?>!</h1>
+				</div>
 			</div>
+			<div class="row">
+				<div class="six columns">
+					<p>Because this is a work in progress, and features are being removed as quickly as they were added, we only allow approved beta-testers to use the editor.</p>
+				</div>
+				<div class="six columns">
+					<p>If you want to get in on the action or just want to support the project, drop a greeting to <a href="http://twitter.com/Sleavely" target="_blank" title="@sleavely on Twitter">@Sleavely</a>.</p>
+				</div>
+			</div>
+			<?php if($allowed){ ?>
+			<div class="row">
+				<div class="push_six six columns center-text">
+					<div class="large danger btn"><a href="#welcome-listmaps">Get started</a></div>
+				</div>
+			</div>
+			<?php } ?>
 		</div>
-		<div class="row">
-			<div class="six columns">
-				<p>Because this is a work in progress, and features are being removed as quickly as they were added, we only allow approved beta-testers to use the editor.</p>
-			</div>
-			<div class="six columns">
-				<p>If you want to get in on the action or just want to support the project, drop a greeting to <a href="http://twitter.com/Sleavely" target="_blank" title="@sleavely on Twitter">@Sleavely</a>.</p>
-			</div>
-		</div>
-		<?php if($allowed){ ?>
-		<div class="row">
-			<div class="push_six six columns center-text">
-				<div class="large danger btn"><a href="#welcome-listmaps">Get started</a></div>
-			</div>
-		</div>
-		<?php } ?>
 	</div>
 	<script type="text/javascript">
 	var _gaq = _gaq || [];

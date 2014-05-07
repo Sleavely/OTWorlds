@@ -28,7 +28,7 @@ jQuery(document).ready(function(){
 					'action' : 'listMaps',
 				},
 				success: function(data){
-					var $box = jQuery("#welcome");
+					var $box = jQuery("#welcome > div");
 					var list = '<h2>Available maps</h2>';
 					list += '<ul>';
 					jQuery.each(data.maps, function(key, val){
