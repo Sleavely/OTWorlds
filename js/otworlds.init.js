@@ -53,6 +53,17 @@ jQuery(document).ready(function(){
 	//Keep track of whether we need to lookup ".tile.hovered" all the time
 	var hoveredElements = 0;
 	var mouseIsPressed = false;
+	var lastPainted = {
+		brush: {
+			name: 'null',
+			'server_lookid': 0
+		},
+		pos: {
+			x: 0,
+			y: 0,
+			z: 0
+		}
+	};
 	$viewport.on({
 		mousemove: function(e) {
 			if (Mapeditor.isEditing) {
@@ -62,14 +73,30 @@ jQuery(document).ready(function(){
 				hoveredElements++;
 				
 				if (Mapeditor.isEditing && mouseIsPressed) {
-				var activeBrush = Mapeditor.Materials.Brushes.active;
-				var $target = Mapeditor.internals.figureOutTile(e);
-				
-				var Tile = $target.getTile();
-				Tile.setItemid( Mapeditor.Materials.Brushes[activeBrush].server_lookid );
-				
-				console.log('Painting '+Mapeditor.Materials.Brushes[activeBrush].name+' on '+$target.attr('col')+', '+$target.attr('row')+', '+Mapeditor.map.currentFloor);
-			}
+					var activeBrush = Mapeditor.Materials.Brushes[ Mapeditor.Materials.Brushes.active ];
+					var Tile = $target.getTile();
+					
+					//Make sure we are not painting the same tile twice to avoid layout thrashing
+					if (
+						Mapeditor.map.currentFloor == lastPainted.pos.z
+						&& Tile.x == lastPainted.pos.x
+						&& Tile.y == lastPainted.pos.y
+						&& Tile.z == lastPainted.pos.z
+						&& activeBrush.name == lastPainted.brush.name
+						&& activeBrush.server_lookid == lastPainted.brush.server_lookid
+					) {
+						return;
+					}
+					
+					Tile.setItemid( activeBrush.server_lookid );
+					lastPainted.brush.name = activeBrush.name;
+					lastPainted.brush.server_lookid = activeBrush.server_lookid;
+					lastPainted.pos.x = Tile.x;
+					lastPainted.pos.y = Tile.y;
+					lastPainted.pos.z = Tile.z;
+					
+					console.log('Painting '+activeBrush.name+' on '+Tile.x+', '+Tile.y+', '+Mapeditor.map.currentFloor);
+				}
 			}
 		},
 		//Painting when editing is active
