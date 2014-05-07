@@ -209,6 +209,9 @@ Mapeditor.Tile.load = function(posx, posy, posz, $element){
 	if(tileData){
 		this.refresh(tileData);
 	}
+	this.x = posx;
+	this.y = posy;
+	this.z = posz;
 	
 	this.$element.data("tile", this);
 }
