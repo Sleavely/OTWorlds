@@ -42,6 +42,33 @@
 	?>
 </head>
 <body id="page-main">
+	<div id="menubar" style="background-color: #f5f5f5;
+	background-image: -webkit-linear-gradient(top,#f5f5f5,#eee);
+	background-image: -moz-linear-gradient(top,#f5f5f5,#eee);
+	background-image: -ms-linear-gradient(top,#f5f5f5,#eee);
+	background-image: -o-linear-gradient(top,#f5f5f5,#eee);
+	background-image: linear-gradient(top,#f5f5f5,#eee);
+	border-bottom: 1px solid #d9d9d9;
+	border-top: 1px solid #d9d9d9;
+	min-height: 35px;
+	padding: 0 30px 0 280px;
+	">
+		<span style="font-size: 14px; line-height: 33px;">Testmap.otqm</span>
+		<span style="font-size: 13px; line-height: 33px; margin-left: 0.5em; padding-left: 0.5em; border-left: 1px solid #ddd;"><i class="icon-download"></i>Download OTBM</span>
+		<span style="font-size: 13px; line-height: 33px; margin-left: 0.5em; padding-left: 0.5em; border-left: 1px solid #ddd;"><i class="icon-share"></i>Share</span>
+		<span style="font-size: 13px; line-height: 33px; margin-left: 0.5em; padding-left: 0.5em; border-left: 1px solid #ddd;"><a href="http://html2canvas.hertzen.com/examples.html" target="_blank"><i class="icon-camera"></i>Screenshot</a></span>
+		<span style="font-size: 12px; line-height: 33px; float: right;">
+			<a href="#">
+				<i class="icon-logout"></i>Logout
+				<?php
+				if(isset($facebook)){
+					print htmlentities($profile['username'], ENT_COMPAT, 'UTF-8');
+				}
+				?>
+			</a>
+		</span>
+		<span style="font-size: 12px; line-height: 33px; margin-right: 0.5em; padding-right: 0.5em; border-right: 1px solid #ddd; float: right;"><i class="icon-help-circled"></i>Help</span>
+	</div>
 	<div id="viewport">
 		<div id="canvas"></div>
 	</div>
