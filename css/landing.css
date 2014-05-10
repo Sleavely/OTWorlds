@@ -53,9 +53,17 @@ h1{
 .row[id]{
 	padding-bottom: 1em;
 }
+#login .btn{
+	height: auto;
+	text-align: left;
+}
 #login .btn a{
 	background-image: url(../img/facebook-logo-29x29.png);
-	background-position: 15px center;
+	background-position: 15px 15px;
 	background-repeat: no-repeat;
 	padding-left: 70px;
+}
+#login .btn a p{
+	font-size: 12px;
+	max-width: 25em;
 }

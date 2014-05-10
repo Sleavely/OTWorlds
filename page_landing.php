@@ -90,7 +90,7 @@
 		function testAPI() {
 			FB.api('/me', function(response) {
 				jQuery("#login .btn a").remove();
-				jQuery("#login .btn").html('<a href="<?php echo $facebook->getLogoutUrl(); ?>">Logged in as '+ response.name +'</a>');
+				jQuery("#login .btn").html('<a>Logged in as '+ response.name +'</a>');
 				if(window.location.host != "localhost") window.location.reload();
 			});
 		}
@@ -116,10 +116,25 @@
 				?>
 			</div>
 		</div>
+		<div class="center-text row" id="links">
+			<div class="twelve columns">
+				<div class="pill-left medium info btn icon-left icon-quote">
+					<a href="http://opentibia.net/topic/173113-mapeditor-otworlds/" target="_blank">Discussion forum</a>
+				</div>
+				<div class="pill-right medium danger btn icon-left icon-video">
+					<a href="https://youtu.be/Q_KEVnJ1ugU" target="_blank">YouTube demo (1:08)</a>
+				</div>
+			</div>
+		</div>
 		<?php if(!isset($exception)){ ?>
 		<div class="row" id="login">
 			<div class="center-text twelve columns">
-				<div class="large primary btn"><a href="<?php echo $facebook->getLoginUrl(); ?>">Log in with Facebook</a></div>
+				<div class="large primary btn">
+					<a href="<?php echo $facebook->getLoginUrl(); ?>">
+						Log in with Facebook
+						<p>Only your name and an ID to find your maps is used. We do not request your email or friends list.</p>
+					</a>
+				</div>
 			</div>
 		</div>
 		<?php } ?>
