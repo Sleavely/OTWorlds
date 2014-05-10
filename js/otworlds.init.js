@@ -66,16 +66,14 @@ jQuery(document).ready(function(){
 	};
 	$viewport.on({
 		mousemove: function(e) {
-			console.log('move');
 			if (Mapeditor.isEditing) {
 				if(hoveredElements > 0) jQuery(".tile.hovered").removeClass('hovered');
-				var $target = Mapeditor.internals.figureOutTile(e);
-				$target.addClass('hovered');
+				var Tile = Mapeditor.internals.figureOutTile(e);
+				Tile.$element.addClass('hovered');
 				if(!hoveredElements) hoveredElements++;
 				
 				if (Mapeditor.isEditing && mouseIsPressed) {
 					var activeBrush = Mapeditor.Materials.Brushes[ Mapeditor.Materials.Brushes.active ];
-					var Tile = $target.getTile();
 					
 					Mapeditor.paint(Tile, activeBrush);
 				}
@@ -83,11 +81,9 @@ jQuery(document).ready(function(){
 		},
 		//Painting when editing is active
 		click: function(e) {
-			console.log('click');
 			if (Mapeditor.isEditing) {
 				var activeBrush = Mapeditor.Materials.Brushes[ Mapeditor.Materials.Brushes.active ];
-				var $target = Mapeditor.internals.figureOutTile(e);
-				var Tile = $target.getTile();
+				var Tile = Mapeditor.internals.figureOutTile(e);
 				
 				Mapeditor.paint(Tile, activeBrush);
 			}

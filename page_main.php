@@ -34,7 +34,9 @@
 	?>
 	
 		<script src="js/otworlds.mapeditor.js"></script>
-		<script src="js/otworlds.mapeditor.materials.js"></script>
+		<script src="js/otworlds.materials.js"></script>
+		<script src="js/otworlds.tile.js"></script>
+		<script src="js/otworlds.tiles.js"></script>
 		
 		<script src="js/otworlds.init.js"></script>
 	<?php

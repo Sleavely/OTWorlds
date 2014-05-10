@@ -8,15 +8,6 @@
 	internals: {
 		
 		/**
-		 * Queue a tile for batch download
-		 */
-		downloadTile: function(posx, posy, posz){
-			if(posz === undefined) posz = Mapeditor.map.currentFloor;
-			Mapeditor.internals.tileAreaQueue.push(posx+','+posy+','+posz);
-			Mapeditor.internals.downloadTileArea();
-		},
-		tileAreaQueue: [],
-		/**
 		 * Helper to avoid flooding server with requests
 		 */
 		createDebouncer: function(func, wait, immediate) {
@@ -33,25 +24,28 @@
 		},
 		figureOutTile: function(e){
 			var $source = jQuery(e.currentTarget);
+			var posx, posy;
 			if($source.hasClass("item")){
 				var $parent = $source.parent();
-				var posx = $parent.attr("col");
-				var posy = $parent.attr("row");
+				posx = $parent.attr("col");
+				posy = $parent.attr("row");
 				if(e.offsetY <= 32){
 					if(e.offsetX <= 32){
-						return jQuery(".tile[col="+ (posx-1) +"][row="+ (posy-1) +"]");
+						return Mapeditor.Tiles.find(posx-1, posy-1, Mapeditor.map.currentFloor);
 					}else{
-						return jQuery(".tile[col="+ posx +"][row="+ (posy-1) +"]");
+						return Mapeditor.Tiles.find(posx, posy-1, Mapeditor.map.currentFloor);
 					}
 				}else{
 					if(e.offsetX <= 32){
-						return jQuery(".tile[col="+ (posx-1) +"][row="+ posy +"]");
+						return Mapeditor.Tiles.find(posx-1, posy, Mapeditor.map.currentFloor);
 					}else{
-						return $parent;
+						return Mapeditor.Tiles.find(posx, posy, Mapeditor.map.currentFloor);;
 					}
 				}
 			}else{
-				return $source;
+				posx = $source.attr("col");
+				posy = $source.attr("row");
+				return Mapeditor.Tiles.find(posx, posy, Mapeditor.map.currentFloor);
 			}
 		}
 	},
@@ -84,8 +78,22 @@
 							start_row: (Mapeditor.map.meta.height/2) - (Math.round((jQuery(window).height() / 32) / 2)),
 							class_name: 'tile',
 							oncreate: function($element, col, row) {
-								var tileObject = Object.create(Mapeditor.Tile);
-								tileObject.load(col, row, Mapeditor.map.currentFloor, $element);
+								//See if the tile is already stored from earlier.
+								//This can happen if we've switched floors or use the garbage collector in Infinitedrag.
+								var Tile = Mapeditor.Tiles.find(col, row, Mapeditor.map.currentFloor);
+								if (Tile) {
+									//The element is probably new.
+									//(Otherwise why the fuck is the oncreate callback run?)
+									Tile.$element = $element;
+								} else {
+									Tile = Object.create(Mapeditor.Tile);
+									Tile.x = col;
+									Tile.y = row;
+									Tile.z = Mapeditor.map.currentFloor;
+									Tile.$element = $element;
+									Mapeditor.Tiles.add(Tile);
+								}
+								Tile.load();
 							}
 						}
 					);
@@ -101,6 +109,7 @@
 		_7 : {
 			_100 : {
 				_100: {
+					//TODO: this should be a Tile() object
 					itemid: 4526,
 					items: [
 						{
@@ -110,34 +119,6 @@
 				}
 			}
 		},
-		/**
-		 * Save a tile to cache
-		 */
-		cacheTile: function(posx, posy, posz, tile){
-			if(Mapeditor.map["_"+posz] === undefined) Mapeditor.map["_"+posz] = {};
-			if(Mapeditor.map["_"+posz]["_"+posx] === undefined) Mapeditor.map["_"+posz]["_"+posx] = {};
-			Mapeditor.map["_"+posz]["_"+posx]["_"+posy] = tile;
-		},
-		getTile: function(posx, posy, posz){
-			//assume Tile is cached
-			var fetchRemote = false;
-			
-			if(Mapeditor.map["_"+posz] === undefined){
-				fetchRemote = true;
-			}else if(Mapeditor.map["_"+posz]["_"+posx] === undefined){
-				fetchRemote = true;
-			}else{
-				if(Mapeditor.map["_"+posz]["_"+posx]["_"+posy] === undefined) fetchRemote = true;
-			}
-			
-			//now, do we need to ask the server or not?
-			if(fetchRemote){
-				Mapeditor.internals.downloadTile(posx, posy, posz);
-			}else{
-				//TODO: this should not be inside an 'else' statement, because downloadTileArea() should guarantee that the tile is set, unless something epic happens :(
-				return Mapeditor.map["_"+posz]["_"+posx]["_"+posy];
-			}
-		}
 	},
 	isEditing: false,
 	toggleEdit: function(){
@@ -174,103 +155,14 @@
 			return;
 		}
 		
-		Tile.setItemid( Brush.server_lookid );
+		Tile.itemid = Brush.server_lookid;
 		Mapeditor.lastPainted.brush.name = Brush.name;
 		Mapeditor.lastPainted.brush.server_lookid = Brush.server_lookid;
 		Mapeditor.lastPainted.pos.x = Tile.x;
 		Mapeditor.lastPainted.pos.y = Tile.y;
 		Mapeditor.lastPainted.pos.z = Tile.z;
+		Tile.draw();
 		
 		console.log('Painting '+Brush.name+' on '+Tile.x+', '+Tile.y+', '+Mapeditor.map.currentFloor);
 	}
 };
-
-/**
- * Ask the server for a tile area
- */
-Mapeditor.internals.downloadTileArea = Mapeditor.internals.createDebouncer(
-	function(){
-		console.log('Requesting '+Mapeditor.internals.tileAreaQueue.length+' tiles'+(Mapeditor.internals.tileAreaQueue.length > 500 ? ' in chunks of 500' : '')+'.');
-		
-		//Split requests into chunks of 500 tiles at a time
-		var limitedArray = [];
-		while (Mapeditor.internals.tileAreaQueue.length) {
-			limitedArray = Mapeditor.internals.tileAreaQueue.splice(0, 500);
-			
-			//TODO: need to implement some kind of caching of non-existing tiles before enabling this: the first request is 86~ KB HTTP-POST data
-			jQuery.ajax(Mapeditor.config.urls.backend, {
-				dataType: "json",
-				type: "POST",
-				data: {
-					'action' : 'loadtiles',
-					'map' : Mapeditor.map.meta.id,
-					'tiles' : limitedArray
-				},
-				success: function(data){
-					//add tiles to cache
-					jQuery.each(data.tiles, function(posz, zValue){
-						jQuery.each(zValue, function(posx, xValue){
-							jQuery.each(xValue, function(posy, tileValue){
-								Mapeditor.map.cacheTile(posx, posy, posz, tileValue);
-								//TODO: need to refresh the tiles somehow
-								var $tile = jQuery('.tile[col='+posx+'][row='+posy+']');
-								Mapeditor.Tile.load(posx, posy, posz, $tile);
-								//jQuery('.tile[col='+posx+'][row='+posy+']').getTile().setItemid(tileValue.itemid);
-							});
-						});
-					});
-				}
-			});
-			limitedArray = [];
-		}
-		
-		//Clear the queue as soon as the requests has been sent
-		Mapeditor.internals.tileAreaQueue = [];
-	},
-	500
-);
-
-jQuery.fn.getTile = function(){
-	var $this = this;
-	return $this.data("tile");
-}
-
-Mapeditor.Tile = function(){};
-Mapeditor.Tile.addItem = function(item){
-	item.$element.appendTo(this.$element);
-}
-Mapeditor.Tile.load = function(posx, posy, posz, $element){
-	this.$element = $element;
-	
-	var tileData = Mapeditor.map.getTile(posx, posy, posz);
-	if(tileData){
-		this.refresh(tileData);
-	}
-	this.x = posx;
-	this.y = posy;
-	this.z = posz;
-	
-	this.$element.data("tile", this);
-}
-Mapeditor.Tile.refresh = function(tileData){
-	var _this = this;
-	if(tileData === undefined) tileData = _this;
-	
-	if(tileData.itemid) this.setItemid(tileData.itemid);
-	if(tileData.items){
-		jQuery.each(tileData.items, function(itemIndex, itemValue){
-			var $child = jQuery('<div />');
-			$child.addClass('item');
-			$child.css("background-image", "url("+ Mapeditor.config.urls.sprites.replace('%sprite%', itemValue.itemid) +")");
-			$child.appendTo(_this.$element);
-		});
-	}
-}
-Mapeditor.Tile.setItemid = function(newItemid){
-	this.itemid = newItemid;
-	this.$element.css("background-image", "url("+ Mapeditor.config.urls.sprites.replace('%sprite%', newItemid) +")");
-}
-
-
-Mapeditor.Item = function(){};
-//TODO: add property handling for things such as ActionID and count
