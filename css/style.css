@@ -83,7 +83,8 @@ html, body{
 
 #viewport{
 	background-image: url(../img/transparent.png);
-	height: 100%;
+	height: calc(100% - 36px);
+	margin-left: 250px;
 	overflow: hidden;
 	position: relative;
 }
