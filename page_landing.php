@@ -121,7 +121,7 @@
 				<div class="pill-left medium info btn icon-left icon-quote">
 					<a href="http://opentibia.net/topic/173113-mapeditor-otworlds/" target="_blank">Discussion forum</a>
 				</div>
-				<div class="pill-right medium danger btn icon-left icon-video">
+				<div class="pill-right medium danger btn icon-left icon-play">
 					<a href="https://youtu.be/Q_KEVnJ1ugU" target="_blank">YouTube demo (1:08)</a>
 				</div>
 			</div>
