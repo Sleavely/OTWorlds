@@ -66,49 +66,30 @@ jQuery(document).ready(function(){
 	};
 	$viewport.on({
 		mousemove: function(e) {
+			console.log('move');
 			if (Mapeditor.isEditing) {
 				if(hoveredElements > 0) jQuery(".tile.hovered").removeClass('hovered');
 				var $target = Mapeditor.internals.figureOutTile(e);
 				$target.addClass('hovered');
-				hoveredElements++;
+				if(!hoveredElements) hoveredElements++;
 				
 				if (Mapeditor.isEditing && mouseIsPressed) {
 					var activeBrush = Mapeditor.Materials.Brushes[ Mapeditor.Materials.Brushes.active ];
 					var Tile = $target.getTile();
 					
-					//Make sure we are not painting the same tile twice to avoid layout thrashing
-					if (
-						Mapeditor.map.currentFloor == lastPainted.pos.z
-						&& Tile.x == lastPainted.pos.x
-						&& Tile.y == lastPainted.pos.y
-						&& Tile.z == lastPainted.pos.z
-						&& activeBrush.name == lastPainted.brush.name
-						&& activeBrush.server_lookid == lastPainted.brush.server_lookid
-					) {
-						return;
-					}
-					
-					Tile.setItemid( activeBrush.server_lookid );
-					lastPainted.brush.name = activeBrush.name;
-					lastPainted.brush.server_lookid = activeBrush.server_lookid;
-					lastPainted.pos.x = Tile.x;
-					lastPainted.pos.y = Tile.y;
-					lastPainted.pos.z = Tile.z;
-					
-					console.log('Painting '+activeBrush.name+' on '+Tile.x+', '+Tile.y+', '+Mapeditor.map.currentFloor);
+					Mapeditor.paint(Tile, activeBrush);
 				}
 			}
 		},
 		//Painting when editing is active
 		click: function(e) {
+			console.log('click');
 			if (Mapeditor.isEditing) {
-				var activeBrush = Mapeditor.Materials.Brushes.active;
+				var activeBrush = Mapeditor.Materials.Brushes[ Mapeditor.Materials.Brushes.active ];
 				var $target = Mapeditor.internals.figureOutTile(e);
-				
 				var Tile = $target.getTile();
-				Tile.setItemid( Mapeditor.Materials.Brushes[activeBrush].server_lookid );
 				
-				console.log('Painting '+Mapeditor.Materials.Brushes[activeBrush].name+' on '+$target.attr('col')+', '+$target.attr('row')+', '+Mapeditor.map.currentFloor);
+				Mapeditor.paint(Tile, activeBrush);
 			}
 		},
 		mousedown: function(e) {

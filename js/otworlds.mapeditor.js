@@ -145,6 +145,43 @@
 		Mapeditor.isEditing = !Mapeditor.isEditing;
 		Mapeditor.internals.infinitedrag.disabled(Mapeditor.isEditing);
 		console.log('Toggling canvasmode. Now '+(Mapeditor.isEditing ? 'editing' : 'viewing'));
+	},
+	lastPainted: {
+		brush: {
+			name: 'null',
+			'server_lookid': 0
+		},
+		pos: {
+			x: 0,
+			y: 0,
+			z: 0
+		}
+	},
+	/**
+	 * @param {object} Tile
+	 * @param {object} Brush
+	 */
+	paint: function(Tile, Brush){
+		//Make sure we are not painting the same tile twice to avoid layout thrashing
+		if (
+			Mapeditor.map.currentFloor == Mapeditor.lastPainted.pos.z
+			&& Tile.x == Mapeditor.lastPainted.pos.x
+			&& Tile.y == Mapeditor.lastPainted.pos.y
+			&& Tile.z == Mapeditor.lastPainted.pos.z
+			&& Brush.name == Mapeditor.lastPainted.brush.name
+			&& Brush.server_lookid == Mapeditor.lastPainted.brush.server_lookid
+		) {
+			return;
+		}
+		
+		Tile.setItemid( Brush.server_lookid );
+		Mapeditor.lastPainted.brush.name = Brush.name;
+		Mapeditor.lastPainted.brush.server_lookid = Brush.server_lookid;
+		Mapeditor.lastPainted.pos.x = Tile.x;
+		Mapeditor.lastPainted.pos.y = Tile.y;
+		Mapeditor.lastPainted.pos.z = Tile.z;
+		
+		console.log('Painting '+Brush.name+' on '+Tile.x+', '+Tile.y+', '+Mapeditor.map.currentFloor);
 	}
 };
 
