@@ -44,7 +44,7 @@
 	?>
 </head>
 <body id="page-main">
-	<div id="menubar" style="background-color: #f5f5f5;
+	<div id="menu" style="background-color: #f5f5f5;
 	background-image: -webkit-linear-gradient(top,#f5f5f5,#eee);
 	background-image: -moz-linear-gradient(top,#f5f5f5,#eee);
 	background-image: -ms-linear-gradient(top,#f5f5f5,#eee);
@@ -55,7 +55,7 @@
 	min-height: 35px;
 	padding: 0 30px 0 280px;
 	">
-		<span style="font-size: 14px; line-height: 33px;">Testmap.otqm</span>
+		<span style="font-size: 14px; line-height: 33px;" class="mapname">Testmap.otqm</span>
 		<span style="font-size: 13px; line-height: 33px; margin-left: 0.5em; padding-left: 0.5em; border-left: 1px solid #ddd;"><i class="icon-download"></i>Download OTBM</span>
 		<span style="font-size: 13px; line-height: 33px; margin-left: 0.5em; padding-left: 0.5em; border-left: 1px solid #ddd;"><i class="icon-share"></i>Share</span>
 		<span style="font-size: 13px; line-height: 33px; margin-left: 0.5em; padding-left: 0.5em; border-left: 1px solid #ddd;"><a href="http://html2canvas.hertzen.com/examples.html" target="_blank"><i class="icon-camera"></i>Screenshot</a></span>

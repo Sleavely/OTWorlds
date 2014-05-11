@@ -50,6 +50,9 @@
 		}
 	},
 	load: function(id){
+		//Clean out any maps that may be loaded already.
+		Mapeditor.reset();
+		
 		//Load the map and fire up the grid
 		jQuery.ajax(Mapeditor.config.urls.backend, {
 			dataType: "json",
@@ -58,46 +61,48 @@
 				'map' : id
 			},
 			success: function(data){
-				
-				Mapeditor.map.meta.id = data.id;
-				Mapeditor.map.meta.name = data.name;
-				Mapeditor.map.meta.description = data.description;
-				Mapeditor.map.meta.width = data.width;
-				Mapeditor.map.meta.height = data.height;
-				
-				document.title = Mapeditor.map.meta.name + ' - ' + document.title;
-				
-				Mapeditor.Materials.load('xml/materials.xml', function(){
-					Mapeditor.internals.infinitedrag = jQuery.infinitedrag("#canvas", {cursor: false},
-						{
-							width: 32,
-							height: 32,
-							range_col: [0, Mapeditor.map.meta.width],
-							range_row: [0, Mapeditor.map.meta.height],
-							start_col: (Mapeditor.map.meta.width/2)-(Math.round((jQuery(window).width() / 32) / 2)),
-							start_row: (Mapeditor.map.meta.height/2) - (Math.round((jQuery(window).height() / 32) / 2)),
-							class_name: 'tile',
-							oncreate: function($element, col, row) {
-								//See if the tile is already stored from earlier.
-								//This can happen if we've switched floors or use the garbage collector in Infinitedrag.
-								var Tile = Mapeditor.Tiles.find(col, row, Mapeditor.map.currentFloor);
-								if (Tile) {
-									//The element is probably new.
-									//(Otherwise why the fuck is the oncreate callback run?)
-									Tile.$element = $element;
-								} else {
-									Tile = Object.create(Mapeditor.Tile);
-									Tile.x = col;
-									Tile.y = row;
-									Tile.z = Mapeditor.map.currentFloor;
-									Tile.$element = $element;
-									Mapeditor.Tiles.add(Tile);
+				if (data.id) {
+					Mapeditor.map.meta.id = data.id;
+					Mapeditor.map.meta.name = data.name;
+					Mapeditor.map.meta.description = data.description;
+					Mapeditor.map.meta.width = data.width;
+					Mapeditor.map.meta.height = data.height;
+					
+					document.title = Mapeditor.map.meta.name + ' - ' + document.title;
+					jQuery('#menu .mapname').text(Mapeditor.map.meta.name);
+					
+					Mapeditor.Materials.load('xml/materials.xml', function(){
+						Mapeditor.internals.infinitedrag = jQuery.infinitedrag("#canvas", {cursor: false},
+							{
+								width: 32,
+								height: 32,
+								range_col: [0, Mapeditor.map.meta.width],
+								range_row: [0, Mapeditor.map.meta.height],
+								start_col: (Mapeditor.map.meta.width/2)-(Math.round((jQuery(window).width() / 32) / 2)),
+								start_row: (Mapeditor.map.meta.height/2) - (Math.round((jQuery(window).height() / 32) / 2)),
+								class_name: 'tile',
+								oncreate: function($element, col, row) {
+									//See if the tile is already stored from earlier.
+									//This can happen if we've switched floors or use the garbage collector in Infinitedrag.
+									var Tile = Mapeditor.Tiles.find(col, row, Mapeditor.map.currentFloor);
+									if (Tile) {
+										//The element is probably new.
+										//(Otherwise why the fuck is the oncreate callback run?)
+										Tile.$element = $element;
+									} else {
+										Tile = Object.create(Mapeditor.Tile);
+										Tile.x = col;
+										Tile.y = row;
+										Tile.z = Mapeditor.map.currentFloor;
+										Tile.$element = $element;
+										Mapeditor.Tiles.add(Tile);
+									}
+									Tile.load();
 								}
-								Tile.load();
 							}
-						}
-					);
-				});
+						);
+					});
+				}
 			}
 		});
 	},
@@ -119,6 +124,16 @@
 				}
 			}
 		},
+	},
+	reset: function(){
+		Mapeditor.map.currentFloor = 7;
+		Mapeditor.map.meta = {};
+		for (var i = 0; i < 17; i++) {
+			if(Mapeditor.map["_"+i] !== undefined) delete Mapeditor.map["_"+i];
+		}
+		jQuery(".tile, #brushes .brush").remove();
+		Mapeditor.internals.infinitedrag = {};
+		Mapeditor.Materials.Brushes = {};
 	},
 	isEditing: false,
 	toggleEdit: function(){
