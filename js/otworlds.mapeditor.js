@@ -68,7 +68,7 @@
 					Mapeditor.map.meta.width = data.width;
 					Mapeditor.map.meta.height = data.height;
 					
-					document.title = Mapeditor.map.meta.name + ' - ' + document.title;
+					document.title = Mapeditor.map.meta.name + ' - OTWorlds Mapeditor';
 					jQuery('#menu .mapname').text(Mapeditor.map.meta.name);
 					
 					Mapeditor.Materials.load('xml/materials.xml', function(){
