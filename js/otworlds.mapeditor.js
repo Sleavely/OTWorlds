@@ -129,7 +129,7 @@
 		Mapeditor.map.currentFloor = 7;
 		Mapeditor.map.meta = {};
 		for (var i = 0; i < 17; i++) {
-			if(Mapeditor.map["_"+i] !== undefined) delete Mapeditor.map["_"+i];
+			if(Mapeditor.map["_"+i] !== undefined) Mapeditor.map["_"+i] = undefined;
 		}
 		jQuery(".tile, #brushes .brush").remove();
 		Mapeditor.internals.infinitedrag = {};
