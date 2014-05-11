@@ -88,7 +88,8 @@ Mapeditor.Materials.parseTileset = function(node){
 				jQuery("#itemlist").html(brushesToPrint);
 				
 				//Activate the first brush
-				jQuery("#itemlist .brush").eq(0).click();
+				var startBrush = jQuery("#itemlist .brush").eq(0).addClass('active').data('name');
+				Mapeditor.Materials.Brushes.active = startBrush;
 			}
 		});
 	}
