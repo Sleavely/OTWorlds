@@ -5,22 +5,42 @@ html, body{
 	overflow: hidden;
 }
 
-.toolbar{
-	background-color: #f9f9f9;
-	border: 1px solid rgba(0, 0, 0, 0.3);
-	position: fixed;
-}
 .toolbar ul{
 	margin: 0;
 }
-.toolbar li{
-	padding: 1em;
+
+#menu.toolbar{
+	background-color: #f5f5f5;
+	background-image: -webkit-linear-gradient(top,#f5f5f5,#eee);
+	background-image: -moz-linear-gradient(top,#f5f5f5,#eee);
+	background-image: -ms-linear-gradient(top,#f5f5f5,#eee);
+	background-image: -o-linear-gradient(top,#f5f5f5,#eee);
+	background-image: linear-gradient(top,#f5f5f5,#eee);
+	border-bottom: 1px solid #d9d9d9;
+	border-top: 1px solid #d9d9d9;
+	min-height: 36px;
+	padding: 0 30px 0 280px;
 }
+#menu.toolbar a{
+	border-left: 1px solid #dddddd;
+	display: inline-block;
+	font-size: 13px;
+	height: 36px;
+	line-height: 36px;
+	padding-left: 0.5em;
+	padding-right: 1em;
+}
+#menu.toolbar a:hover{
+	border-bottom: 2px solid #4A6FE5;
+}
+
 #brushes.toolbar{
+	background-color: #f9f9f9;
 	border: none;
 	border-right: 1px solid rgba(0, 0, 0, 0.3);
 	border-radius: 0px;
 	font-size: 0.75em;
+	position: fixed;
 }
 #brushes.toolbar li{
 	border-bottom: 1px solid #e5e5e5;

@@ -44,22 +44,16 @@
 	?>
 </head>
 <body id="page-main">
-	<div id="menu" style="background-color: #f5f5f5;
-	background-image: -webkit-linear-gradient(top,#f5f5f5,#eee);
-	background-image: -moz-linear-gradient(top,#f5f5f5,#eee);
-	background-image: -ms-linear-gradient(top,#f5f5f5,#eee);
-	background-image: -o-linear-gradient(top,#f5f5f5,#eee);
-	background-image: linear-gradient(top,#f5f5f5,#eee);
-	border-bottom: 1px solid #d9d9d9;
-	border-top: 1px solid #d9d9d9;
-	min-height: 35px;
-	padding: 0 30px 0 280px;
-	">
-		<span style="font-size: 14px; line-height: 33px;" class="mapname">Testmap.otqm</span>
-		<span style="font-size: 13px; line-height: 33px; margin-left: 0.5em; padding-left: 0.5em; border-left: 1px solid #ddd;"><i class="icon-download"></i>Download OTBM</span>
-		<span style="font-size: 13px; line-height: 33px; margin-left: 0.5em; padding-left: 0.5em; border-left: 1px solid #ddd;"><i class="icon-share"></i>Share</span>
-		<span style="font-size: 13px; line-height: 33px; margin-left: 0.5em; padding-left: 0.5em; border-left: 1px solid #ddd;"><a href="http://html2canvas.hertzen.com/examples.html" target="_blank"><i class="icon-camera"></i>Screenshot</a></span>
-		<span style="font-size: 12px; line-height: 33px; float: right;">
+	<div class="toolbar" id="menu">
+		<span style="font-size: 14px; line-height: 33px; padding-right: 1em;" class="mapname">Testmap.otwm</span>
+		<a>
+			<i class="icon-download"></i>Download OTBM
+		</a><a>
+			<i class="icon-share"></i>Share
+		</a><a href="http://html2canvas.hertzen.com/examples.html" target="_blank">
+			<i class="icon-camera"></i>Screenshot
+		</a>
+		<span style="float: right;">
 			<a href="#">
 				<i class="icon-logout"></i>Logout
 				<?php
@@ -69,12 +63,12 @@
 				?>
 			</a>
 		</span>
-		<span style="font-size: 12px; line-height: 33px; margin-right: 0.5em; padding-right: 0.5em; border-right: 1px solid #ddd; float: right;"><i class="icon-help-circled"></i>Help</span>
+		<span style="font-size: 12px; line-height: 33px; margin-right: 0.5em; padding-right: 0.5em; float: right;"><i class="icon-help-circled"></i>Help</span>
 	</div>
 	<div id="viewport">
 		<div id="canvas"></div>
 	</div>
-	<div class="toolbar" id="brushes" style="width: 250px; left: 0px; top: 0px; bottom: 0px; opacity: 0; overflow-y: scroll;">
+	<div class="toolbar" id="brushes" style="width: 250px; left: 0px; top: 0px; bottom: 0px; overflow-y: scroll;">
 		<ul id="itemlist">
 		</ul>
 	</div>
@@ -101,7 +95,7 @@
 			<?php if($allowed){ ?>
 			<div class="row">
 				<div class="push_six six columns center-text">
-					<div class="large danger btn"><a href="#welcome-listmaps">Get started</a></div>
+					<div class="large danger btn"><a href="#">Get started</a></div>
 				</div>
 			</div>
 			<?php } ?>
