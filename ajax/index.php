@@ -65,7 +65,6 @@ try{
 							('.$tiles_or.')
 						ORDER BY posz, posx, posy
 					');
-					$output['tilesor'] = $tiles_or;
 					
 					//posz, posx, posy
 					$output['tiles'] = array();
