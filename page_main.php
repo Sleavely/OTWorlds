@@ -20,10 +20,16 @@
 		file_put_contents('facebook.log', $logtext, FILE_APPEND);
 		
 		$allowed_usernames = array(
-			'eliascarlsson',
 			'joakim.hedlund',
+			'eliascarlsson',
 			'joran.haagsma',
 			'micke.hafner',
+			//'gunsnroses4201',
+			//'NathanMJacobs',
+			//'labrisanty', // VanessaX
+			//'adi.sliwinski1', // LLburn
+			//'anyza116', //kuzyn
+			//'mindrage',
 		);
 		if(in_array($profile['username'], $allowed_usernames)) $allowed = true;
 		
