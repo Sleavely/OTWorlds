@@ -8,9 +8,14 @@
 	<link rel="shortcut icon" href="img/spellbook-16x16.png" type="image/x-icon" />
 	<link rel="stylesheet" href="css/style.css" />
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	
 	<script src="js/jquery.pep.js"></script>
 	<script src="js/jquery.infinitedrag/jquery.infinitedrag.js"></script>
 	
+	<script src="js/vex/js/vex.combined.min.js"></script>
+	<script>vex.defaultOptions.className = 'vex-theme-os';</script>
+	<link rel="stylesheet" href="js/vex/css/vex.css" />
+	<link rel="stylesheet" href="js/vex/css/vex-theme-os.css" />
 	<?php
 	$allowed = false;
 	if(isset($facebook)){
@@ -85,10 +90,8 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="six columns">
+				<div class="twelve columns">
 					<p>Because this is a work in progress, and features are being removed as quickly as they were added, we only allow approved beta-testers to use the editor.</p>
-				</div>
-				<div class="six columns">
 					<p>If you want to get in on the action or just want to support the project, drop a greeting to <a href="http://twitter.com/Sleavely" target="_blank" title="@sleavely on Twitter">@Sleavely</a>.</p>
 				</div>
 			</div>

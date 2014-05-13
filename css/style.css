@@ -85,22 +85,6 @@ html, body{
 	width: 32px;
 }
 
-#welcome{
-	background-color: rgba(40, 40, 40, 0.6);
-	bottom: 0;
-	left: 0;
-	position: fixed;
-	right: 0;
-	top: 0;
-}
-#welcome > div{
-	background-color: #E8E8E8;
-	border: 1px solid rgb(30, 30, 30);
-	border-radius: 4px;
-	margin: 10% 10% auto 10%;
-	padding: 1em;
-}
-
 #viewport{
 	background-image: url(../img/transparent.png);
 	height: calc(100% - 36px);
@@ -145,4 +129,8 @@ html, body{
 	position: absolute;
 	top: 0px;
 	width: 32px;
+}
+
+#welcome{
+	display: none;
 }

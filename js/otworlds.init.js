@@ -19,11 +19,20 @@ jQuery(document).ready(function(){
 	}else{
 		_gaq.push(['_trackPageview', '/welcome']);
 		
-		jQuery('#welcome .btn a').click(function(){
-			jQuery("#welcome").animate({'opacity': 0}, 300, function(){
+		//Move the welcome div into a dialog
+		var $welcomeVex = vex.open({
+			content: jQuery("#welcome").html(), //TODO: there shouldnt even be a #welcome
+			showCloseButton: false,
+			escapeButtonCloses: false,
+			overlayClosesOnClick: false,
+			afterOpen: function($vexContent) {
 				jQuery("#welcome").remove();
-			});
-			return false;
+				$vexContent.on({
+					click: function(){
+						vex.close($welcomeVex.data().vex.id);
+					}
+				}, '.btn a');
+			}
 		});
 	}
 	
