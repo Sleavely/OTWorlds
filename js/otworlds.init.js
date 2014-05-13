@@ -9,10 +9,8 @@ jQuery(document).ready(function(){
 	$canvas = jQuery("#canvas");
 	
 	function showmap(id) {
-		jQuery(".toolbar").animate({'opacity': 1}, 300, function(){
-			Mapeditor.load(id);
-			_gaq.push(['_trackPageview', '/maps/'+id]);
-		});
+		Mapeditor.load(id);
+		_gaq.push(['_trackPageview', '/maps/'+id]);
 	}
 	
 	if (window.location.hash.substr(1, 5) == 'mapid') {
@@ -21,49 +19,36 @@ jQuery(document).ready(function(){
 	}else{
 		_gaq.push(['_trackPageview', '/welcome']);
 		
-		jQuery('#welcome a[href="#welcome-listmaps"]').click(function(){
-			jQuery.ajax(Mapeditor.config.urls.backend, {
-				dataType: "json",
-				data: {
-					'action' : 'listMaps',
-				},
-				success: function(data){
-					var $box = jQuery("#welcome > div");
-					var list = '<h2>Available maps</h2>';
-					list += '<ul>';
-					jQuery.each(data.maps, function(key, val){
-						list += '<li><a href="#mapid-'+ val.id +'" class="loadmap" data-id="'+ val.id +'">'+ val.name +'</a></li>';
-					});
-					list += '</ul>';
-					$box.html(list);
-					_gaq.push(['_trackPageview', '/maps']);
-				}
-			});
-		});
-		
-		jQuery("#welcome").delegate('a.loadmap', 'click', function(){
-			var $this = jQuery(this);
-			showmap($this.attr('data-id'));
+		jQuery('#welcome .btn a').click(function(){
 			jQuery("#welcome").animate({'opacity': 0}, 300, function(){
 				jQuery("#welcome").remove();
 			});
+			return false;
 		});
 	}
+	
+	//Populate the map list modal
+	jQuery.ajax(Mapeditor.config.urls.backend, {
+		dataType: "json",
+		data: {
+			'action' : 'listMaps',
+		},
+		success: function(data){
+			//var $box = jQuery("#welcome > div");
+			//var list = '<h2>Available maps</h2>';
+			//list += '<ul>';
+			//jQuery.each(data.maps, function(key, val){
+			//	list += '<li><a href="#mapid-'+ val.id +'" class="loadmap" data-id="'+ val.id +'">'+ val.name +'</a></li>';
+			//});
+			//list += '</ul>';
+			//$box.html(list);
+			//_gaq.push(['_trackPageview', '/maps']);
+		}
+	});
 	
 	//Keep track of whether we need to lookup ".tile.hovered" all the time
 	var hoveredElements = 0;
 	var mouseIsPressed = false;
-	var lastPainted = {
-		brush: {
-			name: 'null',
-			'server_lookid': 0
-		},
-		pos: {
-			x: 0,
-			y: 0,
-			z: 0
-		}
-	};
 	$viewport.on({
 		mousemove: function(e) {
 			if (Mapeditor.isEditing) {
