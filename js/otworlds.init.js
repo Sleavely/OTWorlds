@@ -101,7 +101,7 @@ jQuery(document).ready(function(){
 	}, '.tile');
 	jQuery(window).keyup(function(e) {
 		//Spacebar
-		if (e.which == 32) {
+		if (e.which == 32 && Mapeditor.map.meta.id) {
 			Mapeditor.toggleEdit();
 			e.preventDefault();
 			e.stopPropagation();
