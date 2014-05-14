@@ -25,11 +25,12 @@
 			'joran.haagsma',
 			'micke.hafner',
 			//'gunsnroses4201',
-			//'NathanMJacobs',
+			//'NathanMJacobs', //STiX
 			//'labrisanty', // VanessaX
 			//'adi.sliwinski1', // LLburn
 			//'anyza116', //kuzyn
 			//'mindrage',
+			//'ranisalt', //Lordfire
 		);
 		if(in_array($profile['username'], $allowed_usernames)) $allowed = true;
 		
