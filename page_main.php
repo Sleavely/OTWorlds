@@ -29,8 +29,9 @@
 			'eliascarlsson',
 			'joran.haagsma',
 			'micke.hafner',
-			//'gunsnroses4201',
-			//'NathanMJacobs', //STiX
+			'robbie.scott.79',
+			'gunsnroses4201', //Kilaco
+			'NathanMJacobs', //STiX
 			//'labrisanty', // VanessaX
 			//'adi.sliwinski1', // LLburn
 			//'anyza116', //kuzyn
