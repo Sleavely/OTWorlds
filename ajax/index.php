@@ -10,7 +10,8 @@ try{
 		
 		//TODO: verify that user is logged in (and part of beta group?)
 		if(isset($_REQUEST['action'])){
-			if($_REQUEST['action'] == 'listMaps'){
+			if($_REQUEST['action'] == 'listMaps')
+			{
 				
 				$output['maps'] = array();
 				$maps_query = $db->query('SELECT * FROM maps');
@@ -18,7 +19,9 @@ try{
 					$output['maps'][] = $map;
 				}
 				
-			}elseif($_REQUEST['action'] == 'init' && isset($_REQUEST['map'])){
+			}
+			else if($_REQUEST['action'] == 'init' && isset($_REQUEST['map']))
+			{
 				
 				$map_id = intval($_REQUEST['map']);
 				
@@ -39,7 +42,9 @@ try{
 					throw new Exception('Invalid map ID.');
 				}
 				
-			}elseif($_REQUEST['action'] == 'loadtiles' && isset($_REQUEST['map']) && isset($_REQUEST['tiles'])){
+			}
+			elseif($_REQUEST['action'] == 'loadtiles' && isset($_REQUEST['map']) && isset($_REQUEST['tiles']))
+			{
 				
 				$map_id = intval($_REQUEST['map']);
 				//Find the map in DB
@@ -76,7 +81,9 @@ try{
 					throw new Exception('Invalid map ID.');
 				}
 				
-			}else{
+			}
+			else
+			{
 				throw new Exception('Invalid action.');
 			}
 		}else{
