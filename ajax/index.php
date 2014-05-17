@@ -10,7 +10,8 @@ try{
 		
 		//TODO: verify that user is logged in (and part of beta group?)
 		if(isset($_REQUEST['action'])){
-			if($_REQUEST['action'] == 'listMaps'){
+			if($_REQUEST['action'] == 'listMaps')
+			{
 				
 				$output['maps'] = array();
 				$maps_query = $db->query('SELECT * FROM maps');
@@ -18,7 +19,9 @@ try{
 					$output['maps'][] = $map;
 				}
 				
-			}elseif($_REQUEST['action'] == 'init' && isset($_REQUEST['map'])){
+			}
+			else if($_REQUEST['action'] == 'init' && isset($_REQUEST['map']))
+			{
 				
 				$map_id = intval($_REQUEST['map']);
 				
@@ -39,7 +42,9 @@ try{
 					throw new Exception('Invalid map ID.');
 				}
 				
-			}elseif($_REQUEST['action'] == 'loadtiles' && isset($_REQUEST['map']) && isset($_REQUEST['tiles'])){
+			}
+			elseif($_REQUEST['action'] == 'loadtiles' && isset($_REQUEST['map']) && isset($_REQUEST['tiles']))
+			{
 				
 				$map_id = intval($_REQUEST['map']);
 				//Find the map in DB
@@ -76,7 +81,32 @@ try{
 					throw new Exception('Invalid map ID.');
 				}
 				
-			}else{
+			}
+			elseif($_REQUEST['action'] == 'savetiles' && isset($_REQUEST['map']) && isset($_REQUEST['tiles']))
+			{
+				//Lets validate the data
+				$map_id = intval($_REQUEST['map']);
+				$map_query = $db->query('SELECT * FROM maps WHERE id = '.$map_id);
+				if($map_query->num_rows === 1){
+					if(!is_array($_REQUEST['tiles'])) {
+						throw new Exception('No tile array found.');
+					}
+					
+					foreach($_REQUEST['tiles'] as $tile) {
+						$ins_or_upd = 'INSERT INTO tiles (mapid, posx, posy, posz, itemid) 
+							VALUES ('.$map_id.', '.intval($tile['x']).', '.intval($tile['y']).', '.intval($tile['z']).', '.intval($tile['itemid']).')
+							ON DUPLICATE KEY UPDATE
+							itemid='.intval($tile['itemid']);
+						$db->query($ins_or_upd);
+					}
+					$output['status'] = 'Success!';
+					
+				}else{
+					throw new Exception('Invalid map ID.');
+				}
+			}
+			else
+			{
 				throw new Exception('Invalid action.');
 			}
 		}else{

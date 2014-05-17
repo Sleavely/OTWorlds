@@ -183,8 +183,9 @@
 		Mapeditor.lastPainted.pos.x = Tile.x;
 		Mapeditor.lastPainted.pos.y = Tile.y;
 		Mapeditor.lastPainted.pos.z = Tile.z;
+		console.log('Painting '+Brush.name+' on '+Tile.x+', '+Tile.y+', '+Mapeditor.map.currentFloor);
 		Tile.draw();
 		
-		console.log('Painting '+Brush.name+' on '+Tile.x+', '+Tile.y+', '+Mapeditor.map.currentFloor);
+		Tile.save();
 	}
 };
