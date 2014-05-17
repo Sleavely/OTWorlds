@@ -55,7 +55,7 @@
 			<span>Testmap.otwm</span>
 			<ul>
 				<li><a class="disabled">New map</a></li>
-				<li><a href="#">Load map</a></li>
+				<li><a href="#" onclick="showmaps()">Load map</a></li>
 			</ul>
 		</span>
 		<a class="disabled">

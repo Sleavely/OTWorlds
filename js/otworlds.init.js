@@ -37,23 +37,30 @@ jQuery(document).ready(function(){
 	}
 	
 	//Populate the map list modal
-	jQuery.ajax(Mapeditor.config.urls.backend, {
-		dataType: "json",
-		data: {
-			'action' : 'listMaps',
-		},
-		success: function(data){
-			//var $box = jQuery("#welcome > div");
-			//var list = '<h2>Available maps</h2>';
-			//list += '<ul>';
-			//jQuery.each(data.maps, function(key, val){
-			//	list += '<li><a href="#mapid-'+ val.id +'" class="loadmap" data-id="'+ val.id +'">'+ val.name +'</a></li>';
-			//});
-			//list += '</ul>';
-			//$box.html(list);
-			//_gaq.push(['_trackPageview', '/maps']);
-		}
-	});
+	window.showmaps = function(){
+		jQuery.ajax(Mapeditor.config.urls.backend, {
+			dataType: "json",
+			data: {
+				'action' : 'listMaps',
+			},
+			success: function(data){
+				
+				maplist = '';
+				jQuery.each(data.maps, function(key, val){
+					maplist += '<option value="'+ val.id +'">'+ val.name +'</option>';
+				});
+				
+				vex.dialog.open({
+					message: 'Select a map',
+					input: '<select name="mapid">'+ maplist +'</select>',
+					callback: function(selected){
+						if(selected) Mapeditor.load(selected.mapid);
+					}
+				});
+				_gaq.push(['_trackPageview', '/maps']);
+			}
+		});
+	};
 	
 	//Keep track of whether we need to lookup ".tile.hovered" all the time
 	var hoveredElements = 0;
