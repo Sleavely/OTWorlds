@@ -21,7 +21,7 @@ html, body{
 	min-height: 36px;
 	padding: 0 30px 0 280px;
 }
-#menu.toolbar a{
+#menu.toolbar > a{
 	border-left: 1px solid #dddddd;
 	display: inline-block;
 	font-size: 13px;
@@ -30,9 +30,45 @@ html, body{
 	padding-left: 0.5em;
 	padding-right: 1em;
 }
-#menu.toolbar a:hover{
+#menu.toolbar > a:hover{
 	border-bottom: 2px solid #4A6FE5;
+	cursor: pointer;
 }
+#menu .mapname {
+	cursor: pointer;
+	display: inline-block;
+	font-size: 14px;
+	line-height: 36px;
+	padding-right: 1em;
+	position: relative;
+}
+#menu .mapname > i {
+	color: #4A6FE5;
+}
+#menu .mapname ul {
+	background-color: #fdfdfd;
+	border: 1px solid #d9d9d9;
+	cursor: auto;
+	display: none;
+	font-size: 0.9em;
+	left: -5px;
+	padding: 6px 0 2px;
+	position: absolute;
+	right: -5px;
+	top: 36px;
+	z-index: 2;
+}
+#menu .mapname:hover ul {
+	display: block;
+}
+#menu .mapname:hover ul a {
+	display: block;
+	padding-left: 1em;
+}
+#menu .mapname:hover ul a:hover {
+	background-color: #eeeeee;
+}
+
 
 #brushes.toolbar{
 	background-color: #f9f9f9;

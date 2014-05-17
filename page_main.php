@@ -50,25 +50,30 @@
 </head>
 <body id="page-main">
 	<div class="toolbar" id="menu">
-		<span style="font-size: 14px; line-height: 33px; padding-right: 1em;" class="mapname">Testmap.otwm</span>
+		<span class="mapname">
+			<i class="icon-down-open"></i>
+			Testmap.otwm
+			<ul>
+				<li><a href="#">New map</a></li>
+				<li><a href="#">Load map</a></li>
+			</ul>
+		</span>
 		<a>
 			<i class="icon-download"></i>Download OTBM
 		</a><a>
 			<i class="icon-share"></i>Share
 		</a><a href="http://html2canvas.hertzen.com/examples.html" target="_blank">
 			<i class="icon-camera"></i>Screenshot
+		</a><a>
+			<i class="icon-help-circled"></i>Help
+		</a><a href="#">
+			<i class="icon-logout"></i>Logout
+			<?php
+			if(isset($facebook)){
+				print htmlentities($profile['username'], ENT_COMPAT, 'UTF-8');
+			}
+			?>
 		</a>
-		<span style="float: right;">
-			<a href="#">
-				<i class="icon-logout"></i>Logout
-				<?php
-				if(isset($facebook)){
-					print htmlentities($profile['username'], ENT_COMPAT, 'UTF-8');
-				}
-				?>
-			</a>
-		</span>
-		<span style="font-size: 12px; line-height: 33px; margin-right: 0.5em; padding-right: 0.5em; float: right;"><i class="icon-help-circled"></i>Help</span>
 	</div>
 	<div id="viewport">
 		<div id="canvas"></div>
@@ -97,7 +102,7 @@
 			</div>
 			<?php if($allowed){ ?>
 			<div class="row">
-				<div class="push_six six columns center-text">
+				<div class="push_five seven columns center-text">
 					<div class="large danger btn"><a href="#">Get started</a></div>
 				</div>
 			</div>
