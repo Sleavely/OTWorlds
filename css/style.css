@@ -39,6 +39,7 @@ html, body{
 	display: inline-block;
 	font-size: 14px;
 	line-height: 36px;
+	min-width: 140px;
 	padding-right: 1em;
 	position: relative;
 }

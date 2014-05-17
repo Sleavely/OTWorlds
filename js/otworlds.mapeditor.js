@@ -69,7 +69,7 @@
 					Mapeditor.map.meta.height = data.height;
 					
 					document.title = Mapeditor.map.meta.name + ' - OTWorlds Mapeditor';
-					jQuery('#menu .mapname').text(Mapeditor.map.meta.name);
+					jQuery('#menu .mapname > span').text(Mapeditor.map.meta.name);
 					
 					Mapeditor.Materials.load('xml/materials.xml', function(){
 						Mapeditor.internals.infinitedrag = jQuery.infinitedrag("#canvas", {cursor: false},
