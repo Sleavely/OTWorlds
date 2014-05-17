@@ -59,7 +59,7 @@
 	<div class="toolbar" id="menu">
 		<span class="mapname">
 			<i class="icon-down-open"></i>
-			<span>Testmap.otwm</span>
+			<span><em>No map loaded</em></span>
 			<ul>
 				<li><a class="disabled">New map</a></li>
 				<li><a href="#" onclick="showmaps()">Load map</a></li>
