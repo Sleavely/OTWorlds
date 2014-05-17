@@ -72,7 +72,37 @@ Mapeditor.Tiles.download = Mapeditor.internals.createDebouncer(function(){
 }, 500);
 
 
-Mapeditor.Tiles.upload = function(){};
+Mapeditor.Tiles.upload = Mapeditor.internals.createDebouncer(function(){
+  console.log('Saving '+Mapeditor.Tiles.queue.upload.length+' tiles'+(Mapeditor.Tiles.queue.upload.length > 100 ? ' in chunks of 100' : '')+'.');
+  
+  //Split requests into chunks of 100 tiles at a time
+  var limitedArray = [];
+  while (Mapeditor.Tiles.queue.upload.length) {
+    limitedArray = Mapeditor.Tiles.queue.upload.splice(0, 100);
+    
+    jQuery.ajax(Mapeditor.config.urls.backend, {
+      dataType: "json",
+      type: "POST",
+      data: {
+        'action' : 'savetiles',
+        'map' : Mapeditor.map.meta.id,
+        'tiles' : limitedArray
+      },
+      success: function(data){
+        if (data.error) {
+          console.log('Something went wrong on the server while saving.');
+        }
+      },
+      error: function(){
+        console.log('Failed to save.');
+      }
+    });
+    limitedArray = [];
+  }
+  
+  //Clear the queue as soon as the requests has been sent
+  Mapeditor.Tiles.queue.upload = [];
+}, 750);
 
 // Storage for the down- and uploaders.
 Mapeditor.Tiles.queue = {};

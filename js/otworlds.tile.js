@@ -20,7 +20,18 @@ Mapeditor.Tile.load = function(){
     Mapeditor.Tiles.queue.download.push(this.x+','+this.y+','+this.z);
     Mapeditor.Tiles.download();
   }
-}
+};
+
+Mapeditor.Tile.save = function(){
+	var savedata = {
+		x: this.x,
+		y: this.y,
+		z: this.z,
+		itemid: this.itemid
+	};
+	Mapeditor.Tiles.queue.upload.push(savedata);
+	Mapeditor.Tiles.upload();
+};
 
 /**
  * Repaint the $element with current Tile() values
@@ -37,4 +48,4 @@ Mapeditor.Tile.draw = function(){
 			$child.appendTo(_this.$element);
 		});
 	}
-}
+};

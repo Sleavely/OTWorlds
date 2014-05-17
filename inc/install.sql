@@ -99,8 +99,8 @@ CREATE TABLE `tiles` (
   `protectionzone` int(11) NOT NULL DEFAULT '0',
   `nologout` int(11) NOT NULL,
   `pvp` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`mapid`,`tileid`),
-  UNIQUE KEY `tileid_UNIQUE` (`tileid`)
+  PRIMARY KEY (`tileid`,`mapid`),
+  UNIQUE KEY `tile_UNIQUE` (`mapid` ASC, `posx` ASC, `posy` ASC, `posz` ASC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
