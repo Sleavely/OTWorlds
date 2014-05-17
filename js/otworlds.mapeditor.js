@@ -69,7 +69,7 @@
 					Mapeditor.map.meta.height = data.height;
 					
 					document.title = Mapeditor.map.meta.name + ' - OTWorlds Mapeditor';
-					jQuery('#menu .mapname').text(Mapeditor.map.meta.name);
+					jQuery('#menu .mapname > span').text(Mapeditor.map.meta.name);
 					
 					Mapeditor.Materials.load('xml/materials.xml', function(){
 						Mapeditor.internals.infinitedrag = jQuery.infinitedrag("#canvas", {cursor: false},
@@ -126,14 +126,21 @@
 		},
 	},
 	reset: function(){
+		console.log('Resetting editor');
+		//Remove map
 		Mapeditor.map.currentFloor = 7;
 		Mapeditor.map.meta = {};
 		for (var i = 0; i < 17; i++) {
 			if(Mapeditor.map["_"+i] !== undefined) Mapeditor.map["_"+i] = undefined;
 		}
-		jQuery(".tile, #brushes .brush").remove();
 		Mapeditor.internals.infinitedrag = {};
+		//Clear brushes
+		jQuery(".tile, #brushes .brush").remove();
 		Mapeditor.Materials.Brushes = {};
+		//Turn off painting
+		Mapeditor.isEditing = false;
+		$canvas.removeClass('editing');
+		Mapeditor.lastPainted.pos = {x: 0, y: 0, z: 0};
 	},
 	isEditing: false,
 	toggleEdit: function(){

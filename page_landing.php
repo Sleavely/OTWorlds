@@ -26,7 +26,7 @@
 		
 		var availableSpace = windowHeight - boxHeight;
 		if (availableSpace > 0) {
-			jQuery("body > .container").css("paddingTop", availableSpace/2);
+			jQuery("body > .container").css("paddingTop", (availableSpace/2)-40);
 		}
 	}
 	</script>

@@ -9,10 +9,8 @@ jQuery(document).ready(function(){
 	$canvas = jQuery("#canvas");
 	
 	function showmap(id) {
-		jQuery(".toolbar").animate({'opacity': 1}, 300, function(){
-			Mapeditor.load(id);
-			_gaq.push(['_trackPageview', '/maps/'+id]);
-		});
+		Mapeditor.load(id);
+		_gaq.push(['_trackPageview', '/maps/'+id]);
 	}
 	
 	if (window.location.hash.substr(1, 5) == 'mapid') {
@@ -21,49 +19,52 @@ jQuery(document).ready(function(){
 	}else{
 		_gaq.push(['_trackPageview', '/welcome']);
 		
-		jQuery('#welcome a[href="#welcome-listmaps"]').click(function(){
-			jQuery.ajax(Mapeditor.config.urls.backend, {
-				dataType: "json",
-				data: {
-					'action' : 'listMaps',
-				},
-				success: function(data){
-					var $box = jQuery("#welcome > div");
-					var list = '<h2>Available maps</h2>';
-					list += '<ul>';
-					jQuery.each(data.maps, function(key, val){
-						list += '<li><a href="#mapid-'+ val.id +'" class="loadmap" data-id="'+ val.id +'">'+ val.name +'</a></li>';
-					});
-					list += '</ul>';
-					$box.html(list);
-					_gaq.push(['_trackPageview', '/maps']);
-				}
-			});
-		});
-		
-		jQuery("#welcome").delegate('a.loadmap', 'click', function(){
-			var $this = jQuery(this);
-			showmap($this.attr('data-id'));
-			jQuery("#welcome").animate({'opacity': 0}, 300, function(){
+		//Move the welcome div into a dialog
+		var $welcomeVex = vex.open({
+			content: jQuery("#welcome").html(), //TODO: there shouldnt even be a #welcome
+			showCloseButton: false,
+			escapeButtonCloses: false,
+			overlayClosesOnClick: false,
+			afterOpen: function($vexContent) {
 				jQuery("#welcome").remove();
-			});
+				$vexContent.on({
+					click: function(){
+						vex.close($welcomeVex.data().vex.id);
+					}
+				}, '.btn a');
+			}
 		});
 	}
+	
+	//Populate the map list modal
+	window.showmaps = function(){
+		jQuery.ajax(Mapeditor.config.urls.backend, {
+			dataType: "json",
+			data: {
+				'action' : 'listMaps',
+			},
+			success: function(data){
+				
+				maplist = '';
+				jQuery.each(data.maps, function(key, val){
+					maplist += '<option value="'+ val.id +'">'+ val.name +'</option>';
+				});
+				
+				vex.dialog.open({
+					message: 'Select a map',
+					input: '<select name="mapid">'+ maplist +'</select>',
+					callback: function(selected){
+						if(selected) Mapeditor.load(selected.mapid);
+					}
+				});
+				_gaq.push(['_trackPageview', '/maps']);
+			}
+		});
+	};
 	
 	//Keep track of whether we need to lookup ".tile.hovered" all the time
 	var hoveredElements = 0;
 	var mouseIsPressed = false;
-	var lastPainted = {
-		brush: {
-			name: 'null',
-			'server_lookid': 0
-		},
-		pos: {
-			x: 0,
-			y: 0,
-			z: 0
-		}
-	};
 	$viewport.on({
 		mousemove: function(e) {
 			if (Mapeditor.isEditing) {
@@ -101,7 +102,7 @@ jQuery(document).ready(function(){
 	}, '.tile');
 	jQuery(window).keyup(function(e) {
 		//Spacebar
-		if (e.which == 32) {
+		if (e.which == 32 && Mapeditor.map.meta.id) {
 			Mapeditor.toggleEdit();
 			e.preventDefault();
 			e.stopPropagation();
