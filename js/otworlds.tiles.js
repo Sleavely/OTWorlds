@@ -102,7 +102,7 @@ Mapeditor.Tiles.upload = Mapeditor.internals.createDebouncer(function(){
   
   //Clear the queue as soon as the requests has been sent
   Mapeditor.Tiles.queue.upload = [];
-}, 750);
+}, 500);
 
 // Storage for the down- and uploaders.
 Mapeditor.Tiles.queue = {};
