@@ -69,6 +69,10 @@ html, body{
 	background-color: #eeeeee;
 }
 
+a.disabled {
+	color: #888888 !important;
+	cursor: default !important;
+}
 
 #brushes.toolbar{
 	background-color: #f9f9f9;

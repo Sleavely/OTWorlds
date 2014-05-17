@@ -54,19 +54,19 @@
 			<i class="icon-down-open"></i>
 			Testmap.otwm
 			<ul>
-				<li><a href="#">New map</a></li>
+				<li><a class="disabled">New map</a></li>
 				<li><a href="#">Load map</a></li>
 			</ul>
 		</span>
-		<a>
+		<a class="disabled">
 			<i class="icon-download"></i>Download OTBM
-		</a><a>
+		</a><a class="disabled">
 			<i class="icon-share"></i>Share
 		</a><a href="http://html2canvas.hertzen.com/examples.html" target="_blank">
 			<i class="icon-camera"></i>Screenshot
-		</a><a>
+		</a><a class="disabled">
 			<i class="icon-help-circled"></i>Help
-		</a><a href="#">
+		</a><a class="disabled">
 			<i class="icon-logout"></i>Logout
 			<?php
 			if(isset($facebook)){
