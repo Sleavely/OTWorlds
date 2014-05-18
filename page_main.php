@@ -54,6 +54,21 @@
 		<script src="js/otworlds.init.js"></script>
 	<?php
 	}
+	else
+	{
+		?>
+		<script>
+		jQuery(document).ready(function(){
+			vex.open({
+			content: jQuery("#welcome").html(),
+			showCloseButton: false,
+			escapeButtonCloses: false,
+			overlayClosesOnClick: false
+			});
+		});
+		</script>
+		<?php
+	}
 	?>
 </head>
 <body id="page-main">
