@@ -129,6 +129,6 @@ jQuery(document).ready(function(){
 				}
 			}
 		}
-	}, '.brush')
+	}, '.brush');
 	
 });
