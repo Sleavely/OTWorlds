@@ -172,6 +172,11 @@ a.disabled {
 	width: 32px;
 }
 
+/* Very annoying because translate3d() makes it lie about its position */
+.togetherjs-cursor {
+    display: none;
+}
+
 #welcome{
 	display: none;
 }
