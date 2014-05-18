@@ -16,6 +16,7 @@
 	<script>vex.defaultOptions.className = 'vex-theme-os';</script>
 	<link rel="stylesheet" href="js/vex/css/vex.css" />
 	<link rel="stylesheet" href="js/vex/css/vex-theme-os.css" />
+	
 	<?php
 	$allowed = false;
 	if(isset($facebook)){
@@ -32,24 +33,42 @@
 			'robbie.scott.79',
 			'gunsnroses4201', //Kilaco
 			'NathanMJacobs', //STiX
-			//'labrisanty', // VanessaX
-			//'adi.sliwinski1', // LLburn
-			//'anyza116', //kuzyn
-			//'mindrage',
-			//'ranisalt', //Lordfire
+			'labrisanty', // VanessaX
+			'adi.sliwinski1', // LLburn
+			'anyza116', //kuzyn
+			'mindrage', //mindrage
+			'ranisalt', //Lordfire
 		);
 		if(in_array($profile['username'], $allowed_usernames)) $allowed = true;
 		
-	}elseif($_SERVER['HTTP_HOST'] == 'localhost'){
+	}elseif(in_array($_SERVER['HTTP_HOST'], array('localhost', 'cipc'))){
 		$allowed = true;
 	}
 	if($allowed){
 	?>
-	
+		<!-- build:js js/otworlds.min.js -->
 		<script src="js/otworlds.mapeditor.js"></script>
 		<script src="js/otworlds.materials.js"></script>
 		<script src="js/otworlds.tile.js"></script>
 		<script src="js/otworlds.tiles.js"></script>
+		<script src="js/otworlds.multiplayer.js"></script>
+		<!-- endbuild -->
+		
+		<script>
+		var TogetherJSConfig_siteName = 'OTWorlds';
+		var TogetherJSConfig_suppressJoinConfirmation = true;
+		//var TogetherJSConfig_suppressInvite = true;
+		var TogetherJSConfig_includeHashInUrl = true;
+		var TogetherJSConfig_dontShowClicks = true;
+		<?php
+		if(isset($facebook)){
+			print 'var TogetherJSConfig_getUserName = "'.$profile['username'].'";';
+			print 'var TogetherJSConfig_getUserAvatar = "http://graph.facebook.com/'.$profile['username'].'/picture?width=40&height=40";';
+		}
+		?>
+		sessionStorage.removeItem("togetherjs-session.status");
+		</script>
+		<script src="https://togetherjs.com/togetherjs-min.js"></script>
 		
 		<script src="js/otworlds.init.js"></script>
 	<?php
@@ -78,7 +97,7 @@
 			<span><em>No map loaded</em></span>
 			<ul>
 				<li><a class="disabled">New map</a></li>
-				<li><a href="#" onclick="showmaps()">Load map</a></li>
+				<li><a href="#" onclick="showmaps(); return false;">Load map</a></li>
 			</ul>
 		</span>
 		<a class="disabled">
