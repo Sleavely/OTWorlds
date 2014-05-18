@@ -24,10 +24,7 @@ module.exports = function(grunt) {
       generated: {
         files: 
           {
-            dest: 'js/otworlds.min.js',
-            src: [
-              'js/otworlds.concat.js'
-            ]
+            'js/otworlds.min.js': 'js/otworlds.concat.js'
           }
         
       }
