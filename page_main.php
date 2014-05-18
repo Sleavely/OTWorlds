@@ -60,7 +60,7 @@
 		var TogetherJSConfig_dontShowClicks = true;
 		<?php
 		if(isset($facebook)){
-			print 'var TogetherJSConfig_getUserName = "'.$profile['username'].'"';
+			print 'var TogetherJSConfig_getUserName = "'.$profile['username'].'";';
 			print 'var TogetherJSConfig_getUserAvatar = "http://graph.facebook.com/'.$profile['username'].'/picture?width=40&height=40";';
 		}
 		?>
