@@ -34,6 +34,7 @@ jQuery(document).ready(function(){
 					$vexContent.on({
 						click: function(){
 							vex.close($welcomeVex.data().vex.id);
+							return false;
 						}
 					}, '.btn a');
 				}
