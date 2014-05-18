@@ -51,6 +51,7 @@
 		<script src="js/otworlds.materials.js"></script>
 		<script src="js/otworlds.tile.js"></script>
 		<script src="js/otworlds.tiles.js"></script>
+		<script src="js/otworlds.multiplayer.js"></script>
 		
 		<script>
 		var TogetherJSConfig_siteName = 'OTWorlds';
@@ -67,7 +68,6 @@
 		sessionStorage.removeItem("togetherjs-session.status");
 		</script>
 		<script src="https://togetherjs.com/togetherjs-min.js"></script>
-		<script src="js/otworlds.multiplayer.js"></script>
 		
 		<script src="js/otworlds.init.js"></script>
 	<?php

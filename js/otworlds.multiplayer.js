@@ -14,18 +14,20 @@ Mapeditor.Multiplayer.emit = function(eventName, jsonData){
   TogetherJS.send(delivery);
 };
 
-/**
- * React to when other players paint. Works much like onCreate()
- */
-TogetherJS.hub.on("Mapeditor.paint", function(msg){
-  console.log('Received paint event');
-  var Tile = Mapeditor.Tiles.find(msg.Tile.x, msg.Tile.y, msg.Tile.z);
-  if (!Tile) {
-    //Do nothing because if the tile doesnt exist it will be downloaded when needed
-  } else {
-    console.log('Tile existed');
-    Mapeditor.Tiles.add(msg.Tile);
-    //This will force it to be redrawn
-    Tile.load();
-  }
+jQuery(document).ready(function(){
+  /**
+   * React to when other players paint. Works much like onCreate()
+   */
+  TogetherJS.hub.on("Mapeditor.paint", function(msg){
+    console.log('Received paint event');
+    var Tile = Mapeditor.Tiles.find(msg.Tile.x, msg.Tile.y, msg.Tile.z);
+    if (!Tile) {
+      //Do nothing because if the tile doesnt exist it will be downloaded when needed
+    } else {
+      console.log('Tile existed');
+      Mapeditor.Tiles.add(msg.Tile);
+      //This will force it to be redrawn
+      Tile.load();
+    }
+  });
 });
