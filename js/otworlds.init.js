@@ -9,32 +9,40 @@ jQuery(document).ready(function(){
 	$canvas = jQuery("#canvas");
 	
 	function showmap(id) {
-		Mapeditor.load(id);
 		_gaq.push(['_trackPageview', '/maps/'+id]);
+		history.pushState('', '', '#mapid-'+id);
+		Mapeditor.load(id);
 	}
 	
-	if (window.location.hash.substr(1, 5) == 'mapid') {
-		jQuery("#welcome").remove();
-		showmap(window.location.hash.substr(7));
-	}else{
-		_gaq.push(['_trackPageview', '/welcome']);
-		
-		//Move the welcome div into a dialog
-		var $welcomeVex = vex.open({
-			content: jQuery("#welcome").html(), //TODO: there shouldnt even be a #welcome
-			showCloseButton: false,
-			escapeButtonCloses: false,
-			overlayClosesOnClick: false,
-			afterOpen: function($vexContent) {
-				jQuery("#welcome").remove();
-				$vexContent.on({
-					click: function(){
-						vex.close($welcomeVex.data().vex.id);
-					}
-				}, '.btn a');
-			}
-		});
+	function readWindowState(){
+		if (window.location.hash.substr(1, 5) == 'mapid') {
+			jQuery("#welcome").remove();
+			showmap(window.location.hash.substr(7));
+		}else{
+			_gaq.push(['_trackPageview', '/welcome']);
+			
+			//Move the welcome div into a dialog
+			var $welcomeVex = vex.open({
+				content: jQuery("#welcome").html(), //TODO: there shouldnt even be a #welcome
+				showCloseButton: false,
+				escapeButtonCloses: false,
+				overlayClosesOnClick: false,
+				afterOpen: function($vexContent) {
+					jQuery("#welcome").remove();
+					$vexContent.on({
+						click: function(){
+							vex.close($welcomeVex.data().vex.id);
+						}
+					}, '.btn a');
+				}
+			});
+		}
 	}
+	jQuery(window).on('popstate', function(e){
+		//Remember that this will cause the popup to appear every time a # link is clicked
+		readWindowState();
+	});
+	readWindowState();
 	
 	//Populate the map list modal
 	window.showmaps = function(){
@@ -54,7 +62,7 @@ jQuery(document).ready(function(){
 					message: 'Select a map',
 					input: '<select name="mapid">'+ maplist +'</select>',
 					callback: function(selected){
-						if(selected) Mapeditor.load(selected.mapid);
+						if(selected) showmap(selected.mapid);
 					}
 				});
 				_gaq.push(['_trackPageview', '/maps']);
