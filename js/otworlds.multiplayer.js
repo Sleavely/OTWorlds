@@ -21,15 +21,7 @@ TogetherJS.hub.on("Mapeditor.paint", function(msg){
   console.log('Received paint event');
   var Tile = Mapeditor.Tiles.find(msg.Tile.x, msg.Tile.y, msg.Tile.z);
   if (!Tile) {
-    console.log('Creating tile');
-    Tile = Object.create(Mapeditor.Tile);
-    Tile.x = msg.Tile.x;
-    Tile.y = msg.Tile.y;
-    Tile.z = msg.Tile.z;
-    Tile.itemid = msg.Tile.itemid;
-    
-    Mapeditor.Tiles.add(Tile);
-    //Because the tile hasnt already been created by infinitedrag, it doesnt have an $element
+    //Do nothing because if the tile doesnt exist it will be downloaded when needed
   } else {
     console.log('Tile existed');
     Mapeditor.Tiles.add(msg.Tile);
