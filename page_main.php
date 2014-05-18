@@ -33,11 +33,11 @@
 			'robbie.scott.79',
 			'gunsnroses4201', //Kilaco
 			'NathanMJacobs', //STiX
-			//'labrisanty', // VanessaX
-			//'adi.sliwinski1', // LLburn
-			//'anyza116', //kuzyn
-			//'mindrage',
-			//'ranisalt', //Lordfire
+			'labrisanty', // VanessaX
+			'adi.sliwinski1', // LLburn
+			'anyza116', //kuzyn
+			'mindrage', //mindrage
+			'ranisalt', //Lordfire
 		);
 		if(in_array($profile['username'], $allowed_usernames)) $allowed = true;
 		
