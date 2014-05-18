@@ -1,4 +1,4 @@
 git checkout master
 git checkout -- .
-git pull origin master
+git pull --no-edit origin master
 grunt build
