@@ -16,6 +16,7 @@
 	<script>vex.defaultOptions.className = 'vex-theme-os';</script>
 	<link rel="stylesheet" href="js/vex/css/vex.css" />
 	<link rel="stylesheet" href="js/vex/css/vex-theme-os.css" />
+	
 	<?php
 	$allowed = false;
 	if(isset($facebook)){
@@ -40,7 +41,7 @@
 		);
 		if(in_array($profile['username'], $allowed_usernames)) $allowed = true;
 		
-	}elseif($_SERVER['HTTP_HOST'] == 'localhost'){
+	}elseif(in_array($_SERVER['HTTP_HOST'], array('localhost', 'cipc'))){
 		$allowed = true;
 	}
 	if($allowed){
@@ -50,6 +51,23 @@
 		<script src="js/otworlds.materials.js"></script>
 		<script src="js/otworlds.tile.js"></script>
 		<script src="js/otworlds.tiles.js"></script>
+		
+		<script>
+		var TogetherJSConfig_siteName = 'OTWorlds';
+		var TogetherJSConfig_suppressJoinConfirmation = true;
+		//var TogetherJSConfig_suppressInvite = true;
+		var TogetherJSConfig_includeHashInUrl = true;
+		var TogetherJSConfig_dontShowClicks = true;
+		<?php
+		if(isset($facebook)){
+			print 'var TogetherJSConfig_getUserName = "'.$profile['username'].'"';
+			print 'var TogetherJSConfig_getUserAvatar = "http://graph.facebook.com/'.$profile['username'].'/picture?width=40&height=40";';
+		}
+		?>
+		sessionStorage.removeItem("togetherjs-session.status");
+		</script>
+		<script src="https://togetherjs.com/togetherjs-min.js"></script>
+		<script src="js/otworlds.multiplayer.js"></script>
 		
 		<script src="js/otworlds.init.js"></script>
 	<?php

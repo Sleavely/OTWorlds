@@ -187,5 +187,14 @@
 		Tile.draw();
 		
 		Tile.save();
+		
+		Mapeditor.Multiplayer.emit('Mapeditor.paint', {
+			Tile: {
+				x: Tile.x,
+				y: Tile.y,
+				z: Tile.z,
+				itemid: Tile.itemid
+			}
+		});
 	}
 };

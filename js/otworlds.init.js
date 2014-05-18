@@ -12,6 +12,8 @@ jQuery(document).ready(function(){
 		_gaq.push(['_trackPageview', '/maps/'+id]);
 		history.pushState('', '', '#mapid-'+id);
 		Mapeditor.load(id);
+		TogetherJS.config('findRoom', 'otworlds_mapid-'+id);
+		TogetherJS();
 	}
 	
 	function readWindowState(){
@@ -39,7 +41,7 @@ jQuery(document).ready(function(){
 		}
 	}
 	jQuery(window).on('popstate', function(e){
-		//Remember that this will cause the popup to appear every time a # link is clicked
+		//This will cause the (empty) popup to appear every time a # link is clicked
 		readWindowState();
 	});
 	readWindowState();

@@ -11,7 +11,7 @@ Mapeditor.Tile = function(){};
 Mapeditor.Tile.load = function(){
 	
   //Use itemid to see if the tile has actual data on it
-  if (this.itemid) {
+  if (this.itemid && this.$element) {
     //Yep, alles good. Draw the tile.
     this.draw();
     
