@@ -1,5 +1,17 @@
 # Set up OTWorlds
 
 1. Clone repo
-4. Import `inc/install.sql`
-5. Configure database connection in `inc/db.php`
+2. Install *Laravel* dependencies (requires *composer*) `composer install`
+You may have to modify your php.ini and set `opcache.fast_shutdown=0` if you receive an error about `zend_mm_heap`.
+3. Install *grunt* (requires *npm*) `npm install --save-dev`
+4. Configure `app/config/app.php` to your liking, especially the crypto-key
+5. Configure `app/config/database.php`
+6. Run `php artisan migrate`
+
+Optionally, you can populate the database with some dummy data by running `php artisan otworlds:populate`
+
+
+# Deploying to production
+
+1. Checkout unminified HTML templates:  `git checkout -- .`
+2. Minify the JS and modify HTML references: `grunt build`
