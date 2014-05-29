@@ -79,5 +79,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	{
 		return $this->email;
 	}
+	
+	/**
+	 * Allow a user to be connected to Facebook profiles
+	 */
+	public function profiles()
+	{
+		return $this->hasMany('Profile');
+	}
 
 }

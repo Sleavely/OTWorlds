@@ -5,7 +5,7 @@
 You may have to modify your php.ini and set `opcache.fast_shutdown=0` if you receive an error about `zend_mm_heap`.
 3. Install *grunt* (requires *npm*) `npm install --save-dev`
 4. Configure `app/config/app.php` to your liking, especially the crypto-key
-5. Configure `app/config/database.php`
+5. Create a database and configure `app/config/database.php`
 6. Configure `app/config/facebook.php`
 7. Run `php artisan migrate`
 
