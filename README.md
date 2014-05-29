@@ -13,5 +13,7 @@ Optionally, you can populate the database with some dummy data by running `php a
 
 # Deploying to production
 
-1. Checkout unminified HTML templates:  `git checkout -- .`
+Either run `deploy.sh` or the following:
+
+1. Checkout unminified HTML templates:  `git checkout -- app/views/`
 2. Minify the JS and modify HTML references: `grunt build`
