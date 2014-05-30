@@ -11,7 +11,21 @@ class DatabaseSeeder extends Seeder {
 	{
 		Eloquent::unguard();
 
-		// $this->call('UserTableSeeder');
+		$this->call('MapSeeder');
+		$this->command->info('Maps table seeded!');
 	}
 
+}
+
+class MapSeeder extends Seeder {
+	public function run()
+	{
+		Map::create(array(
+			'name' => 'Testmap',
+			'description' => 'This is a test map from the MapSeeder class',
+			'width' => 1024,
+			'height' => 1024,
+			'version' => 960
+		));
+	}
 }

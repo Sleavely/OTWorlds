@@ -10,7 +10,7 @@ You may have to modify your php.ini and set `opcache.fast_shutdown=0` if you rec
 7. Configure `app/config/facebook.php`
 8. Run `php artisan migrate`
 
-Optionally, you can populate the database with some dummy data by running `php artisan otworlds:populate`
+Optionally, you can populate the database with some dummy data by running `php artisan db:seed`
 
 
 # Deploying to production
