@@ -24,11 +24,16 @@ Route::get('/', function()
 	}
 });
 
-// Routes that only respond to authed requests
-Route::any('ajax', array('before' => 'auth', function()
+// Routes that only respond to logged-in requests
+Route::group(array('prefix' => 'api', 'before' => 'auth.api'), function()
 {
-	// TODO: (legacy) this should be split up into smaller routes instead of a wrapper
-}));
+	Route::any('maps', function()
+	{
+		$output = array();
+		$output['maps'] = Map::all()->toArray();
+		return Response::json($output);
+	});
+});
 
 /**
  * Facebook

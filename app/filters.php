@@ -38,6 +38,11 @@ Route::filter('auth', function()
 	if (Auth::guest()) return Redirect::guest('login');
 });
 
+Route::filter('auth.api', function()
+{
+	if (Auth::guest()) App::abort(401);
+});
+
 
 Route::filter('auth.basic', function()
 {
