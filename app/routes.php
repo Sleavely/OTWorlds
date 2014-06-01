@@ -33,6 +33,8 @@ Route::group(array('prefix' => 'api', 'before' => 'auth.api'), function()
 		$output['maps'] = Map::all()->toArray();
 		return Response::json($output);
 	});
+	
+	Route::controller('map/{mapid}', 'MapController');
 });
 
 /**
