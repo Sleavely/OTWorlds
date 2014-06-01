@@ -1,7 +1,7 @@
 ﻿var Mapeditor = {
 	config: {
 		urls: {
-			backend: 'ajax/',
+			backend: 'api/',
 			sprites: 'http://cdn.otworlds.com/sprites/%sprite%.gif'
 		}
 	},
@@ -54,12 +54,8 @@
 		Mapeditor.reset();
 		
 		//Load the map and fire up the grid
-		jQuery.ajax(Mapeditor.config.urls.backend, {
+		jQuery.ajax(Mapeditor.config.urls.backend + 'map/' + id + '/init', {
 			dataType: "json",
-			data: {
-				'action' : 'init',
-				'map' : id
-			},
 			success: function(data){
 				if (data.id) {
 					Mapeditor.map.meta.id = data.id;

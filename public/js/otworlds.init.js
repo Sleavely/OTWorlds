@@ -9,7 +9,7 @@ jQuery(document).ready(function(){
 	$canvas = jQuery("#canvas");
 	
 	function showmap(id) {
-		_gaq.push(['_trackPageview', '/maps/'+id]);
+		_gaq.push(['_trackPageview', '/map/'+id]);
 		history.pushState('', '', '#mapid-'+id);
 		Mapeditor.load(id);
 		TogetherJS.config('findRoom', 'otworlds_mapid-'+id);
@@ -49,11 +49,8 @@ jQuery(document).ready(function(){
 	
 	//Populate the map list modal
 	window.showmaps = function(){
-		jQuery.ajax(Mapeditor.config.urls.backend, {
+		jQuery.ajax(Mapeditor.config.urls.backend + 'maps', {
 			dataType: "json",
-			data: {
-				'action' : 'listMaps',
-			},
 			success: function(data){
 				
 				maplist = '';
