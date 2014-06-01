@@ -19,31 +19,28 @@
 	
 	<?php
 	$allowed = false;
-	if(isset($facebook)){
-		$profile = $facebook->api('/me');
-		
-		$logtext = '['.date('d-M-Y H:i:s').'] '.$profile['link'].PHP_EOL;
-		file_put_contents('facebook.log', $logtext, FILE_APPEND);
-		
-		$allowed_usernames = array(
-			'joakim.hedlund',
-			'eliascarlsson',
-			'joran.haagsma',
-			'micke.hafner',
-			'robbie.scott.79',
-			'gunsnroses4201', //Kilaco
-			'NathanMJacobs', //STiX
-			'labrisanty', // VanessaX
-			'adi.sliwinski1', // LLburn
-			'anyza116', //kuzyn
-			'mindrage', //mindrage
-			'ranisalt', //Lordfire
-		);
-		if(in_array($profile['username'], $allowed_usernames)) $allowed = true;
-		
-	}elseif(in_array($_SERVER['HTTP_HOST'], array('localhost', 'cipc'))){
-		$allowed = true;
-	}
+	$user = Auth::user();
+	$profile = Profile::where('user_id', $user->id)->orderBy('updated_at', 'DESC')->first();
+	
+	$logtext = '['.date('d-M-Y H:i:s').'] '.$profile->username.PHP_EOL;
+	file_put_contents(storage_path().'/logs/facebook.log', $logtext, FILE_APPEND);
+	
+	$allowed_usernames = array(
+		'joakim.hedlund',
+		'eliascarlsson',
+		'joran.haagsma',
+		'micke.hafner',
+		'robbie.scott.79',
+		'gunsnroses4201', //Kilaco
+		'NathanMJacobs', //STiX
+		'labrisanty', // VanessaX
+		'adi.sliwinski1', // LLburn
+		'anyza116', //kuzyn
+		'mindrage', //mindrage
+		'ranisalt', //Lordfire
+	);
+	if(in_array($profile->username, $allowed_usernames)) $allowed = true;
+	
 	if($allowed){
 	?>
 		<!-- build:js js/otworlds.min.js -->
@@ -61,10 +58,8 @@
 		var TogetherJSConfig_includeHashInUrl = true;
 		var TogetherJSConfig_dontShowClicks = true;
 		<?php
-		if(isset($facebook)){
-			print 'var TogetherJSConfig_getUserName = "'.$profile['username'].'";';
-			print 'var TogetherJSConfig_getUserAvatar = "http://graph.facebook.com/'.$profile['username'].'/picture?width=40&height=40";';
-		}
+		print 'var TogetherJSConfig_getUserName = "'.$user->name.'";';
+		print 'var TogetherJSConfig_getUserAvatar = "'.$user->photo.'";';
 		?>
 		sessionStorage.removeItem("togetherjs-session.status");
 		</script>
@@ -109,12 +104,7 @@
 		</a><a class="disabled">
 			<i class="icon-help-circled"></i>Help
 		</a><a class="disabled">
-			<i class="icon-logout"></i>Logout
-			<?php
-			if(isset($facebook)){
-				print htmlentities($profile['username'], ENT_COMPAT, 'UTF-8');
-			}
-			?>
+			<i class="icon-logout"></i>Logout <?php	print $profile->username; ?>
 		</a>
 	</div>
 	<div id="viewport">
@@ -128,12 +118,7 @@
 		<div>
 			<div class="row" id="hero">
 				<div class="twelve columns">
-					<h1 class="center-text">Welcome<?php
-					if(isset($facebook)){
-						print ', ';
-						print htmlentities($profile['first_name'], ENT_COMPAT, 'UTF-8');
-					}
-					?>!</h1>
+					<h1 class="center-text">Welcome!</h1>
 				</div>
 			</div>
 			<div class="row">
