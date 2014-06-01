@@ -2,7 +2,12 @@
 
 class MapController extends BaseController {
   
+  /**
+   * Helper. Shaves off bytes by only storing each X once.
+   * //TODO: should be moved to a helper class
+   */
   private function addTileToArray(&$array, $tile) {
+    //Convert to array because objects are references in eternity...
     $tile = (array) $tile;
     if(!isset($array[$tile['posz']])){
       $array[$tile['posz']] = array();
@@ -29,6 +34,7 @@ class MapController extends BaseController {
 	 */
 	public function getInit($mapid)
 	{
+    //TODO: these two lines are used basically every time, use __construct?
 		$mapid = intval($mapid);
     $map = Map::findOrFail($mapid);
     return Response::json($map->toArray());
@@ -38,6 +44,7 @@ class MapController extends BaseController {
   {
     $mapid = intval($mapid);
     $map = Map::findOrFail($mapid);
+    //Because PHP scope doesn't work like JS
     $GLOBALS['tiles'] = Input::get('tiles');
     
     if(!is_array($GLOBALS['tiles'])) {
