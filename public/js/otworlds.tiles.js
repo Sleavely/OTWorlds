@@ -40,12 +40,14 @@ Mapeditor.Tiles.download = Mapeditor.internals.createDebouncer(function(){
   while (Mapeditor.Tiles.queue.download.length) {
     limitedArray = Mapeditor.Tiles.queue.download.splice(0, 500);
     
-    jQuery.ajax(Mapeditor.config.urls.backend, {
+    jQuery.ajax(
+      Mapeditor.config.urls.backend +
+      'map/' + Mapeditor.map.meta.id +
+      '/chunk',
+    {
       dataType: "json",
       type: "POST",
       data: {
-        'action' : 'loadtiles',
-        'map' : Mapeditor.map.meta.id,
         'tiles' : limitedArray
       },
       success: function(data){
