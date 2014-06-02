@@ -35,6 +35,11 @@ Route::group(array('prefix' => 'api', 'before' => 'auth.api'), function()
 	});
 	
 	Route::controller('map/{mapid}', 'MapController');
+	Route::get('map/create', function()
+	{
+		MapController::create();
+		return Response::json(array('status' => 'Success'));
+	});
 });
 
 /**

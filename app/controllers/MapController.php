@@ -2,6 +2,29 @@
 
 class MapController extends BaseController {
   
+  public static function create()
+  {
+    if (!Input::has('name')) App::abort(400);
+    
+    $user = Auth::user();
+    
+    $map = new Map;
+    $map->width = 512;
+    $map->height = 512;
+    $map->name = Input::get('name');
+    $map->description = '';
+    $map->version = 960;
+    $map->save();
+    
+    $ownership = new Permission;
+    $ownership->mapid = $map->id;
+    $ownership->userid = $user->id;
+    $ownership->owner = true;
+    $ownership->edit = true;
+    $ownership->view = true;
+    $ownership = $map->permissions()->save($ownership);
+  }
+  
   /**
    * Helper. Shaves off bytes by only storing each X once.
    * //TODO: should be moved to a helper class
