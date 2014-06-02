@@ -37,6 +37,12 @@ Route::group(array('prefix' => 'api', 'before' => 'auth.api'), function()
 	Route::controller('map/{mapid}', 'MapController');
 });
 
+Route::get('logout', function()
+{
+	Auth::logout();
+	return Redirect::to('/')->with('loggedout', true);
+});
+
 /**
  * Facebook
  */

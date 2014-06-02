@@ -32,7 +32,10 @@
 	</script>
 </head>
 <body id="page-login">
-	<?php if(!isset($exception)){ ?>
+	<?php
+	if (!Session::has('loggedout'))
+	{
+		?>
 		<div id="fb-root"></div>
 		<script>
 		
@@ -81,7 +84,14 @@
 		}
 		/**/
 		</script>
-	<?php } ?>
+		<?php
+	}
+	else
+	{
+		//Assume that the user only wanted to be logged out once
+		Session::forget('loggedout');
+	}
+	?>
 	<div class="container">
 		<div class="row" id="hero">
 			<div class="twelve columns">
