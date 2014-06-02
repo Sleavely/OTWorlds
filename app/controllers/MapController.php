@@ -78,4 +78,29 @@ class MapController extends BaseController {
     
     return Response::json($output);
   }
+  
+  public function postSave($mapid)
+  {
+    
+    $mapid = intval($mapid);
+    $map = Map::findOrFail($mapid);
+    
+    //Lets validate the data
+    $GLOBALS['tiles'] = Input::get('tiles');
+    if(!is_array($GLOBALS['tiles'])) {
+      throw new Exception('No tile array found.');
+    }
+    
+    foreach($GLOBALS['tiles'] as $tile) {
+      $ins_or_upd = 'INSERT INTO tiles (mapid, posx, posy, posz, itemid) 
+        VALUES ('.$mapid.', '.intval($tile['x']).', '.intval($tile['y']).', '.intval($tile['z']).', '.intval($tile['itemid']).')
+        ON DUPLICATE KEY UPDATE
+        itemid='.intval($tile['itemid']);
+      DB::statement($ins_or_upd);
+    }
+    //No exceptions, no prisoners!
+    $output = array();
+    $output['status'] = 'Success!';
+    return Response::json($output);
+  }
 }

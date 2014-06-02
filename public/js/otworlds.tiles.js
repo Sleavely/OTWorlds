@@ -82,12 +82,14 @@ Mapeditor.Tiles.upload = Mapeditor.internals.createDebouncer(function(){
   while (Mapeditor.Tiles.queue.upload.length) {
     limitedArray = Mapeditor.Tiles.queue.upload.splice(0, 100);
     
-    jQuery.ajax(Mapeditor.config.urls.backend, {
+    jQuery.ajax(
+      Mapeditor.config.urls.backend +
+      'map/' + Mapeditor.map.meta.id +
+      '/save',
+    {
       dataType: "json",
       type: "POST",
       data: {
-        'action' : 'savetiles',
-        'map' : Mapeditor.map.meta.id,
         'tiles' : limitedArray
       },
       success: function(data){
