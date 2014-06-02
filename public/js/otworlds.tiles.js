@@ -43,7 +43,7 @@ Mapeditor.Tiles.download = Mapeditor.internals.createDebouncer(function(){
     jQuery.ajax(
       Mapeditor.config.urls.backend +
       'map/' + Mapeditor.map.meta.id +
-      '/chunk',
+      '/load',
     {
       dataType: "json",
       type: "POST",

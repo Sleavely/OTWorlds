@@ -40,7 +40,7 @@ class MapController extends BaseController {
     return Response::json($map->toArray());
 	}
   
-  public function postChunk($mapid)
+  public function postLoad($mapid)
   {
     $mapid = intval($mapid);
     $map = Map::findOrFail($mapid);
