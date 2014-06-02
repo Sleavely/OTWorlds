@@ -103,7 +103,7 @@
 			<i class="icon-camera"></i>Screenshot
 		</a><a class="disabled">
 			<i class="icon-help-circled"></i>Help
-		</a><a class="disabled">
+		</a><a href="/logout">
 			<i class="icon-logout"></i>Logout <?php	print $profile->username; ?>
 		</a>
 	</div>
