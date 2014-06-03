@@ -70,6 +70,32 @@ jQuery(document).ready(function(){
 		});
 	};
 	
+	//Let user create a map
+	window.createmap = function(){
+		vex.dialog.open({
+			message: 'Create new map',
+			input: '<input name="name" type="text" placeholder="Map name" required />\n<input name="description" type="text" placeholder="Description" />',
+			callback: function(inputdata) {
+				if (inputdata !== false) {
+					jQuery.ajax(
+						Mapeditor.config.urls.backend + 'map/create',
+						{
+							dataType: "json",
+							type: "POST",
+							data: {
+								'name' : inputdata.name,
+								'description' : inputdata.description
+							},
+							success: function(responsedata){
+								showmap(responsedata.id);
+							}
+						}
+					);
+				}
+			}
+		});
+	};
+	
 	//Keep track of whether we need to lookup ".tile.hovered" all the time
 	var hoveredElements = 0;
 	var mouseIsPressed = false;

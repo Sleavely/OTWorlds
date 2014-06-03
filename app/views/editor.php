@@ -91,7 +91,7 @@
 			<i class="icon-down-open"></i>
 			<span><em>No map loaded</em></span>
 			<ul>
-				<li><a class="disabled">New map</a></li>
+				<li><a href="#" onclick="createmap(); return false;">New map</a></li>
 				<li><a href="#" onclick="showmaps(); return false;">Load map</a></li>
 			</ul>
 		</span>

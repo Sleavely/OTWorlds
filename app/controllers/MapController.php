@@ -12,7 +12,7 @@ class MapController extends BaseController {
     $map->width = 512;
     $map->height = 512;
     $map->name = Input::get('name');
-    $map->description = '';
+    $map->description = (Input::has('description') ? Input::get('description') : '');
     $map->version = 960;
     $map->save();
     
@@ -23,6 +23,8 @@ class MapController extends BaseController {
     $ownership->edit = true;
     $ownership->view = true;
     $ownership = $map->permissions()->save($ownership);
+    
+    return $map->id;
   }
   
   /**
