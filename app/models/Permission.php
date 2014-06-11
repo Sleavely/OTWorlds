@@ -2,7 +2,6 @@
 
 class Permission extends Eloquent {
   protected $fillable = array('mapid', 'userid');
-  public $timestamps = false;
   public $primaryKey = 'pid';
   
   public function map()
