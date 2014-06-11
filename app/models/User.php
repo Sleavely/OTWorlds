@@ -94,7 +94,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
   }
 	
 	/**
-	 * Query for maps this user has permission to view
+	 * Retrieve the collection of maps this user has permission to view
 	 */
 	public function viewableMaps()
 	{
@@ -105,6 +105,40 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 				->whereRaw('permissions.mapid = maps.id')
 				->whereRaw('permissions.userid = '.$this->id)
 				->whereRaw('permissions.view = 1');
+		})
+		->get();
+		return $permittedMaps;
+	}
+	
+	/**
+	 * Get the collection of maps this user has right to edit
+	 */
+	public function editableMaps()
+	{
+		$permittedMaps = Map::whereExists(function($query)
+		{
+			$query->select(DB::raw(1))
+				->from('permissions')
+				->whereRaw('permissions.mapid = maps.id')
+				->whereRaw('permissions.userid = '.$this->id)
+				->whereRaw('permissions.edit = 1');
+		})
+		->get();
+		return $permittedMaps;
+	}
+	
+	/**
+	 * Fetch the collection of maps the user owns
+	 */
+	public function ownedMaps()
+	{
+		$permittedMaps = Map::whereExists(function($query)
+		{
+			$query->select(DB::raw(1))
+				->from('permissions')
+				->whereRaw('permissions.mapid = maps.id')
+				->whereRaw('permissions.userid = '.$this->id)
+				->whereRaw('permissions.owner = 1');
 		})
 		->get();
 		return $permittedMaps;
