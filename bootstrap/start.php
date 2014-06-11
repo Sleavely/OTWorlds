@@ -23,12 +23,17 @@ $app = new Illuminate\Foundation\Application;
 | given environment, then we will automatically detect it for you.
 |
 */
-
-$env = $app->detectEnvironment(array(
-
-	'local' => array('your-machine-name'),
-
-));
+$env = $app->detectEnvironment(function()
+{
+  // Use the name the server was configured as
+  $hostname = $_SERVER['SERVER_NAME'];
+  
+  $is_local = false;
+  $is_local = (strpos($hostname, 'otworlds.localhost') !== false || $is_local);
+  $is_local = (strpos($hostname, 'local.otworlds.com') !== false || $is_local);
+  
+  return ($is_local ? 'local' : 'production');
+});
 
 /*
 |--------------------------------------------------------------------------
