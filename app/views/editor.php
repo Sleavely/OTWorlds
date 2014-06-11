@@ -61,6 +61,7 @@
 		print 'var TogetherJSConfig_getUserName = "'.$user->name.'";';
 		print 'var TogetherJSConfig_getUserAvatar = "'.$user->photo.'";';
 		?>
+		//Remove any sessions that may remain open from other maps
 		sessionStorage.removeItem("togetherjs-session.status");
 		</script>
 		<script src="https://togetherjs.com/togetherjs-min.js"></script>

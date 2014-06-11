@@ -9,6 +9,11 @@ jQuery(document).ready(function(){
 	$canvas = jQuery("#canvas");
 	
 	function showmap(id) {
+		//If a map is already loaded then so is probably TogetherJS. Unload it
+		if (TogetherJS.running) {
+			TogetherJS();
+			TogetherJS.require("storage").tab.clear("status");
+		}
 		_gaq.push(['_trackPageview', '/map/'+id]);
 		history.pushState('', '', '#mapid-'+id);
 		Mapeditor.load(id);
