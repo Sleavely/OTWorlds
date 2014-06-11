@@ -92,5 +92,22 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
   {
     return $this->hasMany('Permission', 'userid', 'id');
   }
+	
+	/**
+	 * Query for maps this user has permission to view
+	 */
+	public function viewableMaps()
+	{
+		$permittedMaps = Map::whereExists(function($query)
+		{
+			$query->select(DB::raw(1))
+				->from('permissions')
+				->whereRaw('permissions.mapid = maps.id')
+				->whereRaw('permissions.userid = '.$this->id)
+				->whereRaw('permissions.view = 1');
+		})
+		->get();
+		return $permittedMaps;
+	}
 
 }

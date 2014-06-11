@@ -30,7 +30,7 @@ Route::group(array('prefix' => 'api', 'before' => 'auth.api'), function()
 	Route::any('maps', function()
 	{
 		$output = array();
-		$output['maps'] = Map::all()->toArray();
+		$output['maps'] = Auth::user()->viewableMaps()->toArray();
 		return Response::json($output);
 	});
 	

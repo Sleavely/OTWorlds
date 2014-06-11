@@ -97,7 +97,7 @@
 		</span>
 		<a class="disabled">
 			<i class="icon-download"></i>Download OTBM
-		</a><a class="disabled">
+		</a><a href="#" onclick="sharemap(); return false;">
 			<i class="icon-share"></i>Share
 		</a><a href="http://html2canvas.hertzen.com/examples.html" target="_blank">
 			<i class="icon-camera"></i>Screenshot

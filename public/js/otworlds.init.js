@@ -96,6 +96,49 @@ jQuery(document).ready(function(){
 		});
 	};
 	
+	//Sharing dialog
+	window.sharemap = function(){
+		if (!Mapeditor.map.meta.id) {
+			vex.dialog.alert('No map is loaded. You can\'t share what doesn\'t exist!');
+			return;
+		}
+		vex.dialog.open({
+			message: 'Enter an email to share with:',
+			input: '<input name="username" type="text" placeholder="Email" required />\n\
+							<label for="permissions-radio-view"><input type="radio" name="permissions" value="view" id="permissions-radio-view" checked /> View</label>\
+							<label for="permissions-radio-edit"><input type="radio" name="permissions" value="edit" id="permissions-radio-edit" /> View + Edit</label>\
+							<label for="permissions-radio-owner"><input type="radio" name="permissions" value="owner" id="permissions-radio-owner" /> Owner</label>',
+			buttons: [
+				$.extend({}, vex.dialog.buttons.YES, {
+					text: 'Share'
+				}), $.extend({}, vex.dialog.buttons.NO, {
+					text: 'Back'
+				})
+			],
+			callback: function(data) {
+				if (data !== false) {
+					jQuery.ajax(
+						Mapeditor.config.urls.backend + 'map/' + Mapeditor.map.meta.id + '/share',
+						{
+							dataType: "json",
+							type: "POST",
+							data: {
+								'username' : data.username,
+								'permissions' : data.permissions
+							},
+							success: function(responsedata){
+								vex.dialog.alert('The map has been shared');
+							},
+							error: function(){
+								vex.dialog.alert('Something went wrong. You sure you entered the right username?');
+							}
+						}
+					);
+				}
+			}
+		});
+	};
+	
 	//Keep track of whether we need to lookup ".tile.hovered" all the time
 	var hoveredElements = 0;
 	var mouseIsPressed = false;

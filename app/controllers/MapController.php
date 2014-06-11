@@ -128,4 +128,26 @@ class MapController extends BaseController {
     $output['status'] = 'Success!';
     return Response::json($output);
   }
+  
+  public function postShare($mapid)
+  {
+    $mapid = intval($mapid);
+    $map = Map::findOrFail($mapid);
+    
+    $user = User::where('email', '=', Input::get('username'))->firstOrFail();
+    
+    
+    $ownership = Permission::firstOrNew(array('mapid' => $map->id, 'userid' => $user->id));
+    
+    $permissions = Input::get('permissions');
+    $ownership->owner = ($permissions === 'owner');
+    $ownership->edit = ($permissions === 'owner' || $permissions === 'edit');
+    $ownership->view = true;
+    
+    $ownership = $map->permissions()->save($ownership);
+    $output = array(
+      'status' => 'probably ok'
+    );
+    return Response::json($output);
+  }
 }
