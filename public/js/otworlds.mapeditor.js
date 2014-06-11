@@ -63,6 +63,7 @@
 					Mapeditor.map.meta.description = data.description;
 					Mapeditor.map.meta.width = data.width;
 					Mapeditor.map.meta.height = data.height;
+					Mapeditor.canEdit = data.edit;
 					
 					document.title = Mapeditor.map.meta.name + ' - OTWorlds Mapeditor';
 					jQuery('#menu .mapname > span').text(Mapeditor.map.meta.name);
@@ -138,12 +139,19 @@
 		$canvas.removeClass('editing');
 		Mapeditor.lastPainted.pos = {x: 0, y: 0, z: 0};
 	},
+	canEdit: false,
 	isEditing: false,
 	toggleEdit: function(){
-		$canvas.toggleClass('editing');
-		Mapeditor.isEditing = !Mapeditor.isEditing;
-		Mapeditor.internals.infinitedrag.disabled(Mapeditor.isEditing);
-		console.log('Toggling canvasmode. Now '+(Mapeditor.isEditing ? 'editing' : 'viewing'));
+		if (Mapeditor.canEdit) {
+			$canvas.toggleClass('editing');
+			Mapeditor.isEditing = !Mapeditor.isEditing;
+			Mapeditor.internals.infinitedrag.disabled(Mapeditor.isEditing);
+			console.log('Toggling canvasmode. Now '+(Mapeditor.isEditing ? 'editing' : 'viewing'));
+		}else{
+			$canvas.removeClass('editing');
+			Mapeditor.isEditing = false;
+			console.log('Tried to toggle canvasmode but editing not allowed.');
+		}
 	},
 	lastPainted: {
 		brush: {

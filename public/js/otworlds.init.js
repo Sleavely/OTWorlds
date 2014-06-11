@@ -135,7 +135,7 @@ jQuery(document).ready(function(){
 								vex.dialog.alert('The map has been shared');
 							},
 							error: function(){
-								vex.dialog.alert('Something went wrong. You sure you entered the right username?');
+								vex.dialog.alert('Something went wrong. Are you sure you entered the right username? If you are not the owner of the map you are not allowed to share it.');
 							}
 						}
 					);

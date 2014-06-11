@@ -62,13 +62,23 @@ class MapController extends BaseController {
     //TODO: these two lines are used basically every time, use __construct?
 		$mapid = intval($mapid);
     $map = Map::findOrFail($mapid);
-    return Response::json($map->toArray());
+    
+    //Enforce ACL
+    if(!$this->userCanView($map)) App::abort(403);
+    
+    $arrayMap = $map->toArray();
+    $arrayMap['edit'] = $this->userCanEdit($map);
+    return Response::json($arrayMap);
 	}
   
   public function postLoad($mapid)
   {
     $mapid = intval($mapid);
     $map = Map::findOrFail($mapid);
+    
+    //Enforce ACL
+    if(!$this->userCanView($map)) App::abort(403);
+    
     //Because PHP scope doesn't work like JS
     $GLOBALS['tiles'] = Input::get('tiles');
     
@@ -110,6 +120,9 @@ class MapController extends BaseController {
     $mapid = intval($mapid);
     $map = Map::findOrFail($mapid);
     
+    //Enforce ACL
+    if(!$this->userCanEdit($map)) App::abort(403);
+    
     //Lets validate the data
     $GLOBALS['tiles'] = Input::get('tiles');
     if(!is_array($GLOBALS['tiles'])) {
@@ -134,8 +147,10 @@ class MapController extends BaseController {
     $mapid = intval($mapid);
     $map = Map::findOrFail($mapid);
     
-    $user = User::where('email', '=', Input::get('username'))->firstOrFail();
+    //Enforce ACL
+    if(!$this->userIsOwner($map)) App::abort(403);
     
+    $user = User::where('email', '=', Input::get('username'))->firstOrFail();
     
     $ownership = Permission::firstOrNew(array('mapid' => $map->id, 'userid' => $user->id));
     
@@ -149,5 +164,42 @@ class MapController extends BaseController {
       'status' => 'probably ok'
     );
     return Response::json($output);
+  }
+  
+  private function userCanView(Map $map)
+  {
+    return (
+      DB::table('permissions')
+        ->where('mapid', $map->id)
+        ->where('userid', Auth::user()->id)
+        ->where('view', 1)
+        ->count()
+      >
+      0
+    );
+  }
+  private function userCanEdit(Map $map)
+  {
+    return (
+      DB::table('permissions')
+        ->where('mapid', $map->id)
+        ->where('userid', Auth::user()->id)
+        ->where('edit', 1)
+        ->count()
+      >
+      0
+    );
+  }
+  private function userIsOwner(Map $map)
+  {
+    return (
+      DB::table('permissions')
+        ->where('mapid', $map->id)
+        ->where('userid', Auth::user()->id)
+        ->where('owner', 1)
+        ->count()
+      >
+      0
+    );
   }
 }
