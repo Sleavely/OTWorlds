@@ -21,4 +21,12 @@ class Map extends Eloquent {
   {
     return $this->hasMany('Permission', 'mapid', 'id');
   }
+  
+  public function minimapPath($external = false)
+  {
+    $encrypted_name = md5('SECRET_SAUCE-'.$this->id.'-'.$this->name);
+    $encrypted_name = preg_replace('/[^a-z0-9]/i', '', $encrypted_name);
+    $encrypted_name = substr($encrypted_name, 0, 32);/**/
+    return ($external ? '' : public_path()) . '/img/maps/'.$encrypted_name.'.png';
+  }
 }

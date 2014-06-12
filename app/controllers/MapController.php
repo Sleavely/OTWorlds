@@ -24,6 +24,10 @@ class MapController extends BaseController {
     $ownership->view = true;
     $ownership = $map->permissions()->save($ownership);
     
+    Minimap::$filename = $map->minimapPath();
+    Minimap::create(512, 512);
+    Minimap::save();
+    
     return $map->id;
   }
   
@@ -124,18 +128,24 @@ class MapController extends BaseController {
     if(!$this->userCanEdit($map)) App::abort(403);
     
     //Lets validate the data
-    $GLOBALS['tiles'] = Input::get('tiles');
-    if(!is_array($GLOBALS['tiles'])) {
+    $tiles = Input::get('tiles');
+    if(!is_array($tiles)) {
       throw new Exception('No tile array found.');
     }
     
-    foreach($GLOBALS['tiles'] as $tile) {
+    foreach($tiles as $tile) {
       $ins_or_upd = 'INSERT INTO tiles (mapid, posx, posy, posz, itemid) 
         VALUES ('.$mapid.', '.intval($tile['x']).', '.intval($tile['y']).', '.intval($tile['z']).', '.intval($tile['itemid']).')
         ON DUPLICATE KEY UPDATE
         itemid='.intval($tile['itemid']);
       DB::statement($ins_or_upd);
     }
+    
+    Queue::push('Minimap@queuePaint', array(
+      'mapid' => $map->id,
+      'tiles' => $tiles,
+    ));
+    
     //No exceptions, no prisoners!
     $output = array();
     $output['status'] = 'Success!';
@@ -164,6 +174,18 @@ class MapController extends BaseController {
       'status' => 'probably ok'
     );
     return Response::json($output);
+  }
+  
+  public function getMinimap($mapid)
+  {
+    $mapid = intval($mapid);
+    $map = Map::findOrFail($mapid);
+    
+    //Enforce ACL
+    if(!$this->userCanView($map)) App::abort(403);
+    
+    $png = file_get_contents( $map->minimapPath() );
+    return Response::make($png, 200, array('content-type' => 'image/png'));
   }
   
   private function userCanView(Map $map)
