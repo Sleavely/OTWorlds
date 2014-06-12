@@ -146,6 +146,11 @@ class OTS_ItemsList extends OTS_FileLoader implements IteratorAggregate, Countab
  */
     const ITEM_ATTR_SPEED = 20;
 /**
+ * Minimap color.
+ */
+    //Sleavely: Additional attribute for fun and profit
+    const ITEM_ATTR_MINIMAPCOLOR = 33;
+/**
  * Light.
  * 
  * @version 0.0.8
@@ -167,7 +172,7 @@ class OTS_ItemsList extends OTS_FileLoader implements IteratorAggregate, Countab
  * @since 0.0.8
  * @var array
  */
-    private $items = array();
+    public $items = array();
 
 /**
  * OTB version.
@@ -252,16 +257,41 @@ class OTS_ItemsList extends OTS_FileLoader implements IteratorAggregate, Countab
             foreach( $xml->documentElement->getElementsByTagName('item') as $tag)
             {
                 // composes basic item info
-                $item = new OTS_ItemType( $tag->getAttribute('id') );
-                $item->setName( $tag->getAttribute('name') );
-
-                // reads attributes
-                foreach( $tag->getElementsByTagName('attribute') as $attribute)
+                if($tag->getAttribute('id'))
                 {
-                    $item->setAttribute( $attribute->getAttribute('key'), $attribute->getAttribute('value') );
+                  $item = new OTS_ItemType( $tag->getAttribute('id') );
+                  $item->setName( $tag->getAttribute('name') );
+  
+                  // reads attributes
+                  foreach( $tag->getElementsByTagName('attribute') as $attribute)
+                  {
+                      $item->setAttribute( $attribute->getAttribute('key'), $attribute->getAttribute('value') );
+                  }
+  
+                  $this->items[ $item->getId() ] = $item;
                 }
-
-                $this->items[ $item->getId() ] = $item;
+                else if($tag->getAttribute('fromid') && $tag->getAttribute('toid'))
+                {
+                  $from = (int) $tag->getAttribute('fromid');
+                  $to = (int) $tag->getAttribute('toid');
+                  for($current = $from; $current <= $to; $current++)
+                  {
+                    $item = new OTS_ItemType( $current );
+                    $item->setName( $tag->getAttribute('name') );
+    
+                    // reads attributes
+                    foreach( $tag->getElementsByTagName('attribute') as $attribute)
+                    {
+                        $item->setAttribute( $attribute->getAttribute('key'), $attribute->getAttribute('value') );
+                    }
+    
+                    $this->items[ $current ] = $item;
+                  }
+                }
+                else
+                {
+                  throw new Exception('Item tag could not be parsed. Its probably retarded and its parents never loved it.');
+                }
             }
         }
 
@@ -318,6 +348,8 @@ class OTS_ItemsList extends OTS_FileLoader implements IteratorAggregate, Countab
             $lightLevel = null;
             $lightColor = null;
             $topOrder = null;
+            //Sleavely: map that minimap, yo!
+            $minimapColor = null;
 
             // reads flags
             $flags = $node->getLong();
@@ -386,6 +418,18 @@ class OTS_ItemsList extends OTS_FileLoader implements IteratorAggregate, Countab
                         $topOrder = $node->getChar();
                         break;
 
+                    //Sleavely: need to consider minimap colors
+                    // Minimap color
+                    case self::ITEM_ATTR_MINIMAPCOLOR:
+                        // checks length
+                        if($length != 2)
+                        {
+                            throw E_OTS_FileLoaderError(E_OTS_FileLoaderError::ERROR_INVALID_FORMAT);
+                        }
+
+                        $minimapColor = $node->getShort();
+                        break;
+
                     // skips unknown attributes
                     default:
                         $node->skip($length);
@@ -423,6 +467,12 @@ class OTS_ItemsList extends OTS_FileLoader implements IteratorAggregate, Countab
                 if( isset($topOrder) )
                 {
                     $type->setAttribute('topOrder', $topOrder);
+                }
+
+                //Sleavely: more minimap logic, should be the last of it. maybe.
+                if( isset($minimapColor) )
+                {
+                    $type->setAttribute('minimapColor', $minimapColor);
                 }
 
                 switch( $node->getType() )
