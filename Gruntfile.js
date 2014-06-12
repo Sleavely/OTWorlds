@@ -8,13 +8,13 @@ module.exports = function(grunt) {
       generated: {
         files: [
           {
-            dest: 'js/otworlds.concat.js',
+            dest: 'public/js/otworlds.concat.js',
             src: [
-              'js/otworlds.mapeditor.js',
-              'js/otworlds.materials.js',
-              'js/otworlds.tile.js',
-              'js/otworlds.tiles.js',
-              'js/otworlds.multiplayer.js'
+              'public/js/otworlds.mapeditor.js',
+              'public/js/otworlds.materials.js',
+              'public/js/otworlds.tile.js',
+              'public/js/otworlds.tiles.js',
+              'public/js/otworlds.multiplayer.js'
             ]
           }
         ]
@@ -24,7 +24,7 @@ module.exports = function(grunt) {
       generated: {
         files: 
           {
-            'js/otworlds.min.js': 'js/otworlds.concat.js'
+            'public/js/otworlds.min.js': 'public/js/otworlds.concat.js'
           }
         
       }
