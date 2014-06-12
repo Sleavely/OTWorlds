@@ -5,10 +5,13 @@
 You may have to modify your php.ini and set `opcache.fast_shutdown=0` if you receive an error about `zend_mm_heap`.
 3. Make sure dependencies like Facebook SDK is included by running `composer update`
 4. Install *grunt* (requires *npm*) `npm install --save-dev`
-5. Configure `app/config/app.php` to your liking, especially the crypto-key
-6. Create a database and configure `app/config/database.php`
-7. Configure `app/config/facebook.php`
-8. Run `php artisan migrate`
+5. Generate a unique crypto-key with `php artisan key:generate`
+6. Configure `app/config/app.php` to your liking
+7. Create a database and configure `app/config/database.php`
+8. Configure `app/config/facebook.php`
+9. Run `php artisan migrate`
+
+You may need to set permissions on the storage folder: `chown -R www-data:www-data app/storage/`. The *user:group* combo may be different on your system.
 
 Optionally, you can populate the database with some dummy data by running `php artisan db:seed`
 
