@@ -2,7 +2,7 @@ module.exports = function(grunt) {
   
   grunt.initConfig({
     useminPrepare: {
-      html: ['page_main.php']
+      html: ['app/views/editor.php']
     },
     concat: {
       generated: {
@@ -30,7 +30,7 @@ module.exports = function(grunt) {
       }
     },
     usemin: {
-      html: ['page_main.php']
+      html: ['app/views/editor.php']
     }
   });
   
