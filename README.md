@@ -15,6 +15,7 @@ You may need to set permissions on the storage folder: `chown -R www-data:www-da
 
 Optionally, you can populate the database with some dummy data by running `php artisan db:seed`
 
+Sometimes you may need to run `composer dump-autoload` after updating. This applies when classes have moved or been added.
 
 # Deploying to production
 
