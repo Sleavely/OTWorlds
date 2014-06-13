@@ -13,6 +13,7 @@ class CreateMinimaps extends Migration {
 	public function up()
 	{
 		mkdir(public_path() . '/img/maps');
+    chmod(public_path() . '/img/maps', 0777);
     
     $maps = Map::all();
     foreach($maps as $map)
