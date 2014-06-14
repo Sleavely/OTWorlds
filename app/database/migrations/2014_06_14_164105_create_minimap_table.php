@@ -22,10 +22,13 @@ class CreateMinimapTable extends Migration {
     });
     
     // Alter map table to so we can compare updated_at later
-    Schema::table('maps', function($table)
+    if(!Schema::hasColumn('maps', 'updated_at'))
     {
-      $table->timestamps();
-    });
+      Schema::table('maps', function($table)
+      {
+        $table->timestamps();
+      });
+    }
     
     // Create entries for each map
     $maps = Map::all();
@@ -33,8 +36,7 @@ class CreateMinimapTable extends Migration {
     {
       $minimap = new Minimap;
       $minimap->mapid = $map->id;
-      $minimap->updated_at = new \DateTime;
-      $minimap = $map->minimap->save($minimap);
+      $minimap = $map->minimap()->save($minimap);
     }
 	}
 
