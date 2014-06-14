@@ -25,12 +25,24 @@ $app = new Illuminate\Foundation\Application;
 */
 $env = $app->detectEnvironment(function()
 {
-  // Use the name the server was configured as
-  $hostname = $_SERVER['SERVER_NAME'];
-  
   $is_local = false;
-  $is_local = (strpos($hostname, 'otworlds.localhost') !== false || $is_local);
-  $is_local = (strpos($hostname, 'local.otworlds.com') !== false || $is_local);
+  if(isset($_SERVER['SERVER_NAME']))
+  {
+    // Use the name the server was configured as
+    $hostname = $_SERVER['SERVER_NAME'];
+    
+    $is_local = (strpos($hostname, 'otworlds.localhost') !== false || $is_local);
+    $is_local = (strpos($hostname, 'local.otworlds.com') !== false || $is_local);
+  }
+  
+  if(isset($_SERVER['logonserver']))
+  {
+    $dev_machines = array(
+      '\\CIP-PC',
+      '\\JoakimHedlund',
+    );
+    if(in_array($_SERVER['logonserver'], $dev_machines)) $is_local = true;
+  }
   
   return ($is_local ? 'local' : 'production');
 });
