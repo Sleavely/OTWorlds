@@ -141,10 +141,10 @@ class MapController extends BaseController {
       DB::statement($ins_or_upd);
     }
     
-    Queue::push('Minimap@queuePaint', array(
-      'mapid' => $map->id,
-      'tiles' => $tiles,
-    ));
+    //Queue::push('Minimap@queuePaint', array(
+    //  'mapid' => $map->id,
+    //  'tiles' => $tiles,
+    //));
     
     //No exceptions, no prisoners!
     $output = array();
