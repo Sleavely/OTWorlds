@@ -36,30 +36,6 @@ class MapController extends BaseController {
     return $map->id;
   }
   
-  /**
-   * Helper. Shaves off bytes by only storing each X once.
-   * //TODO: should be moved to a helper class
-   */
-  private function addTileToArray(&$array, $tile) {
-    //Convert to array because objects are references in eternity...
-    $tile = (array) $tile;
-    if(!isset($array[$tile['posz']])){
-      $array[$tile['posz']] = array();
-    }
-    if(!isset($array[$tile['posz']][$tile['posx']])){
-      $array[$tile['posz']][$tile['posx']] = array();
-    }
-    if(!isset($array[$tile['posz']][$tile['posx']][$tile['posy']])){
-      $array[$tile['posz']][$tile['posx']][$tile['posy']] = $tile;
-    }
-    
-    //Remove redundant data
-    unset($array[$tile['posz']][$tile['posx']][$tile['posy']]['mapid']);
-    unset($array[$tile['posz']][$tile['posx']][$tile['posy']]['posz']);
-    unset($array[$tile['posz']][$tile['posx']][$tile['posy']]['posx']);
-    unset($array[$tile['posz']][$tile['posx']][$tile['posy']]['posy']);
-  }
-  
 	/**
 	 * Display the specified resource.
 	 *
@@ -117,7 +93,7 @@ class MapController extends BaseController {
     $output = array();
     $output['tiles'] = array();
     foreach($tiles as $tile){
-      $this->addTileToArray($output['tiles'], $tile);
+      \OTWorlds\Tiles::addTileToArray($output['tiles'], $tile);
     }
     
     return Response::json($output);
