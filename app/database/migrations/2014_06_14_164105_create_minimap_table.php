@@ -34,7 +34,7 @@ class CreateMinimapTable extends Migration {
       $minimap = new Minimap;
       $minimap->mapid = $map->id;
       $minimap->updated_at = new \DateTime;
-      $minimap = $map->minimap()->save($minimap);
+      $minimap = $map->minimap->save($minimap);
     }
 	}
 

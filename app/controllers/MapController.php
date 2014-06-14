@@ -27,7 +27,7 @@ class MapController extends BaseController {
     $minimap = new Minimap;
     $minimap->mapid = $map->id;
     $minimap->updated_at = new \DateTime;
-    $minimap = $map->minimap()->save($minimap);
+    $minimap = $map->minimap->save($minimap);
     
     \OTWorlds\MinimapPainter::$filename = $minimap->path();
     \OTWorlds\MinimapPainter::create(512, 512);
@@ -168,7 +168,8 @@ class MapController extends BaseController {
     //Enforce ACL
     if(!$this->userCanView($map)) App::abort(403);
     
-    $png = file_get_contents( $map->minimap()->path() );
+    $minimap_path = $map->minimap->path;
+    $png = file_get_contents( $minimap_path );
     return Response::make($png, 200, array('content-type' => 'image/png'));
   }
   

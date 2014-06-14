@@ -96,6 +96,8 @@ class MinimapPainter {
     {
       self::$image = imagecreatefrompng(self::$filename);
     }
+    imagealphablending(self::$image, true);
+    imagesavealpha(self::$image, true);
   }
   
   public static function save()
@@ -118,8 +120,6 @@ class MinimapPainter {
   public static function paint($x, $y, $itemid)
   {
     if(!self::$image) self::load();
-    imagealphablending(self::$image, true);
-    imagesavealpha(self::$image, true);
     
     $rgb = self::itemColor($itemid);
     if(!$rgb) return false;
@@ -135,7 +135,7 @@ class MinimapPainter {
   public function queuePaint($job, $data)
   {
     $map = Map::findOrFail($data['mapid']);
-    self::$filename = $map->minimap()->path();
+    self::$filename = $map->minimap->path;
     self::load();
     foreach($data['tiles'] as $tile)
     {
@@ -162,8 +162,8 @@ class MinimapPainter {
   {
     if(!isset(self::$items[$itemid]))
     {
-      if(!POT::areItemsLoaded()) POT::loadItems( public_path().'/xml' );
-      $list = POT::getItemsList();
+      if(!\POT::areItemsLoaded()) \POT::loadItems( public_path().'/xml' );
+      $list = \POT::getItemsList();
       if($list->hasItemTypeId($itemid))
       {
         $item = $list->getItemType($itemid);

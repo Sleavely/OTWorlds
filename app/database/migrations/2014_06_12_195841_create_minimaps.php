@@ -19,7 +19,7 @@ class CreateMinimaps extends Migration {
     $maps = Map::all();
     foreach($maps as $map)
     {
-      Minimap::$filename = $map->minimap()->path();
+      Minimap::$filename = $map->minimap->path;
       Minimap::create($map->width, $map->height);
       $tiles = Tile::where('mapid', $map->id)->where('posz', 7)->get();
       foreach($tiles as $tile)

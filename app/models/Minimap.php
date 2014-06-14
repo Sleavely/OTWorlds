@@ -8,6 +8,11 @@ class Minimap extends Eloquent {
   public $timestamps = false;
   
   /**
+   * Tell Eloquent we have an attribute that doesnt come from DB
+   */
+  protected $appends = array('path');
+  
+  /**
    * What would a minimap be without a map?
    */
   public function map()
@@ -19,12 +24,12 @@ class Minimap extends Eloquent {
    * Get the path to the actual image.
    * External requests _should_ go through /api/map/{mapid}/minimap
    * but could be used like for publically sharing:
-   * $minimap_url = asset($map->minimap()->path(true))
+   * $minimap_url = asset($map->minimap->path(true))
    *
    * @param bool $external
    * @return string
    */
-  public function path($external = false)
+  public function getPathAttribute($external = false)
   {
     $encrypted_name = md5('SECRET_SAUCE-'.$this->map->id.'-'.$this->map->name);
     $encrypted_name = preg_replace('/[^a-z0-9]/i', '', $encrypted_name);
