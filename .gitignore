@@ -1,5 +1,6 @@
 
 public/facebook.log
+public/img/maps/*.png
 public/js/otworlds.concat.js
 public/js/otworlds.min.js
 node_modules/
