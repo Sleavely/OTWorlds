@@ -29,7 +29,7 @@ class MapController extends BaseController {
     $minimap->updated_at = new \DateTime;
     $minimap = $map->minimap()->save($minimap);
     
-    \OTWorlds\MinimapPainter::$filename = $minimap->path();
+    \OTWorlds\MinimapPainter::$filename = $minimap->path;
     \OTWorlds\MinimapPainter::create(512, 512);
     \OTWorlds\MinimapPainter::save();
     
