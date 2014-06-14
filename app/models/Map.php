@@ -22,20 +22,8 @@ class Map extends Eloquent {
     return $this->hasMany('Permission', 'mapid', 'id');
   }
   
-  /**
-   * Get the path to the actual image.
-   * External requests _should_ go through /api/map/{mapid}/minimap
-   * but could be used like for publically sharing:
-   * $minimap_url = asset($map->minimapPath(true))
-   *
-   * @param bool $external
-   * @return string
-   */
-  public function minimapPath($external = false)
+  public function minimap()
   {
-    $encrypted_name = md5('SECRET_SAUCE-'.$this->id.'-'.$this->name);
-    $encrypted_name = preg_replace('/[^a-z0-9]/i', '', $encrypted_name);
-    $encrypted_name = substr($encrypted_name, 0, 32);/**/
-    return ($external ? '' : public_path().'/') . 'img/maps/'.$encrypted_name.'.png';
+    return $this->hasOne('Minimap', 'mapid', 'id');
   }
 }
