@@ -1,6 +1,8 @@
 <?php
 
-class Minimap {
+namespace OTWorlds;
+
+class MinimapPainter {
   
   public static $rgbs = array(
     array(0,0,0),    array(0,0,0),      array(0,0,0),      array(0,0,0),       //0
@@ -133,7 +135,7 @@ class Minimap {
   public function queuePaint($job, $data)
   {
     $map = Map::findOrFail($data['mapid']);
-    self::$filename = $map->minimapPath();
+    self::$filename = $map->minimap()->path();
     self::load();
     foreach($data['tiles'] as $tile)
     {

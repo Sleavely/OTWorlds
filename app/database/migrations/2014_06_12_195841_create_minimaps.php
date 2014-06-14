@@ -12,13 +12,14 @@ class CreateMinimaps extends Migration {
 	 */
 	public function up()
 	{
+    /*
 		mkdir(public_path() . '/img/maps');
     chmod(public_path() . '/img/maps', 0777);
     
     $maps = Map::all();
     foreach($maps as $map)
     {
-      Minimap::$filename = $map->minimapPath();
+      Minimap::$filename = $map->minimap()->path();
       Minimap::create($map->width, $map->height);
       $tiles = Tile::where('mapid', $map->id)->where('posz', 7)->get();
       foreach($tiles as $tile)
@@ -27,6 +28,7 @@ class CreateMinimaps extends Migration {
       }
       Minimap::save();
     }
+    */
 	}
 
 	/**
@@ -37,12 +39,14 @@ class CreateMinimaps extends Migration {
 	public function down()
 	{
 		//
+    /*
     $files = glob(public_path() . '/img/maps/*'); // get all file names
     foreach($files as $file)
     {
       if(is_file($file)) unlink($file);
     }
     rmdir(public_path() . '/img/maps');
+    */
 	}
 
 }
