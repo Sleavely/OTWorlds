@@ -21,6 +21,12 @@ class CreateMinimapTable extends Migration {
       $table->boolean('locked')->default(false);
     });
     
+    // Alter map table to so we can compare updated_at later
+    Schema::table('maps', function($table)
+    {
+      $table->timestamps();
+    });
+    
     // Create entries for each map
     $maps = Map::all();
     foreach($maps as $map)

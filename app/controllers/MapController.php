@@ -146,6 +146,9 @@ class MapController extends BaseController {
       DB::statement($ins_or_upd);
     }
     
+    $map->updated_at = new \DateTime;
+    $map->save();
+    
     //Queue::push('Minimap@queuePaint', array(
     //  'mapid' => $map->id,
     //  'tiles' => $tiles,

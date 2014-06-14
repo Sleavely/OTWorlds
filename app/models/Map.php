@@ -12,11 +12,6 @@ class Map extends Eloquent {
    */
   protected $softDelete = true;
   
-  /**
-   * Disable created_at and updated_at
-   */
-  public $timestamps = false;
-  
   public function permissions()
   {
     return $this->hasMany('Permission', 'mapid', 'id');
