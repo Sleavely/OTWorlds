@@ -75,7 +75,7 @@
 							{
 								cursor: false,
 								stop: function(eventObj, pepObj){
-									if (Mapeditor.Minimap && Mapeditor.Minimap.loaded) {
+									if (Mapeditor.Minimap.loaded) {
 										var $img = jQuery('#minimap img');
 										var currX = parseInt($img.css('left'));
 										var currY = parseInt($img.css('top'));
