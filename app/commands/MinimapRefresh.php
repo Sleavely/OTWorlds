@@ -3,6 +3,7 @@
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Carbon\Carbon;
 
 class MinimapRefresh extends Command {
 
@@ -44,7 +45,8 @@ class MinimapRefresh extends Command {
 		if(!$minimap->locked || $this->option('force'))
 		{
 			// Call dibs on editing this minimap
-			$this->info('Locking and processing map '.$map->id);
+			$supernow = new Carbon;
+			$this->info('['.Carbon::now().'] Locking and processing map '.$map->id);
 			$minimap->updated_at = new \DateTime;
 			$minimap->locked = true;
 			$minimap->save();
@@ -71,7 +73,8 @@ class MinimapRefresh extends Command {
 			// Let other processes edit this map again
 			$minimap->locked = false;
 			$minimap->save();
-			$this->info('Done. Processed '.$tiles->count().' tiles.');
+			$donenow = new Carbon;
+			$this->info('['.$donenow->now().'] Done. Processed '.$tiles->count().' tiles in '.$donenow->diffInSeconds($supernow).' seconds.');
 		}
 		else
 		{

@@ -3,6 +3,7 @@
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Carbon\Carbon;
 
 class MinimapCron extends Command {
 
@@ -37,8 +38,7 @@ class MinimapCron extends Command {
 	 */
 	public function fire()
 	{
-		$this->info('Looking for maps to update.');
-		$five_mins_ago = \Carbon\Carbon::now()->subMinutes(5);
+		$five_mins_ago = Carbon::now()->subMinutes(5);
 		$formatted_date = $five_mins_ago->toDateTimeString();
 		
 		$minimaps = Minimap::where('locked', 0)->where('updated_at', '<', $formatted_date)->get();
@@ -48,11 +48,10 @@ class MinimapCron extends Command {
 			// Skip if the actual map hasn't been updated since last repaint
 			if($minimap->map->updated_at->lt( $minimap->updated_at )) continue;
 			
-			$this->info('Found minimap belonging to '.$minimap->map->name.' (id: '.$minimap->map->id.')');
-			$this->info('Calling for refresh.');
+			$this->info('['.Carbon::now().'] Found minimap belonging to '.$minimap->map->name.' (id: '.$minimap->map->id.')');
+			$this->info('['.Carbon::now().'] Calling for refresh.');
 			$this->call('minimap:refresh', array('map' => $minimap->map->id));
 		}
-		$this->info('All done!');
 	}
 
 	/**
