@@ -12,9 +12,11 @@ module.exports = function(grunt) {
             src: [
               'public/js/otworlds.mapeditor.js',
               'public/js/otworlds.materials.js',
+              'public/js/otworlds.minimap.js',
+              'public/js/otworlds.multiplayer.js',
               'public/js/otworlds.tile.js',
               'public/js/otworlds.tiles.js',
-              'public/js/otworlds.multiplayer.js'
+              'public/js/otworlds.shepherd.js'
             ]
           }
         ]
