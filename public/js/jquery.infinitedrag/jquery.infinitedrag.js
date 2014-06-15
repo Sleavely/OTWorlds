@@ -1,35 +1,14 @@
 /*
  * jQuery Infinite Drag
- * Version 0.6
  * Copyright (c) 2010 Ian Li (http://ianli.com)
  * Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
  *
- * Requires:
- * jQuery	http://jquery.com
+ * Requires jQuery with either jQuery UI Draggable or jQuery Pep
  *
  * Reference:
- * http://ianli.com/infinitedrag/ for Usage
- *
- * Versions:
- * 0.6
- * - Added get_tile_dimensions public function - @JoeAO
- * 0.5
- * - Improved remove_tiles() - @JoeAO
- * 0.4b
- * - V0.4a Test code was actually fixing a problem, just badly. Reapplied and cleaned.
- * 0.4a
- * - Fixed bug caused by test code which wasn't deleted
- * 0.4
- * - Refactored additions in V0.3 - @JoeAO
- * 0.3
- * - Added removal of tiles that aren't visible - @JoeAO
- * 0.2
- * - Fixed problem with IE 8.0
- * 0.1
- * - Initial implementation
+ * http://ianli.com/infinitedrag/ for usage and examples
+ * http://github.com/Sleavely/jquery-infinitedrag/ for additional documentation
  */
-
-//= require jquery.ui.draggable
 
 (function($) {
 	/**
@@ -38,8 +17,6 @@
 	$.infinitedrag = function(draggable, draggable_options, tile_options) {
 		return new InfiniteDrag(draggable, draggable_options, tile_options);
 	};
-
-	$.infinitedrag.VERSION = 0.6;
 
 	$.infinitedrag.serializeTiles = function(tiles) {
 		var pairs = [];
@@ -185,25 +162,33 @@
 		}
 
 		// Updates the containment box wherein the draggable can be dragged.
-		var update_containment = function() {
+		self.update_containment = function() {
 			// Update viewport info.
-			viewport_width = $viewport.width() + _to.margin * 2,
-			viewport_height = $viewport.height() + _to.margin * 2,
-			viewport_cols = Math.ceil(viewport_width / _to.width),
+			viewport_zoom = $viewport.css('zoom');
+			viewport_width = $viewport.width() + _to.margin * 2;
+			viewport_height = $viewport.height() + _to.margin * 2;
+			viewport_cols = Math.ceil(viewport_width / _to.width);
 			viewport_rows = Math.ceil(viewport_height / _to.height);
 
 			// Create containment box.
 			var half_width = _to.width / 2,
 				half_height = _to.height / 2,
 				viewport_offset = $viewport.offset(),
-				viewport_draggable_width = viewport_width - _to.width,
-				viewport_draggable_height = viewport_height - _to.height;
+				viewport_draggable_width = (viewport_width / viewport_zoom) - _to.width,
+				viewport_draggable_height = (viewport_height / viewport_zoom) - _to.height;
 
 			var containment = [
-				(-_to.range_col[1] * _to.width) + viewport_offset.left + viewport_draggable_width, (-_to.range_row[1] * _to.height) + viewport_offset.top + viewport_draggable_height, (-_to.range_col[0] * _to.width) + viewport_offset.left, (-_to.range_row[0] * _to.height) + viewport_offset.top, ];
+				(-_to.range_col[1] * _to.width) + viewport_offset.left + viewport_draggable_width,
+				(-_to.range_row[1] * _to.height) + viewport_offset.top + viewport_draggable_height,
+				(-_to.range_col[0] * _to.width) + viewport_offset.left,
+				(-_to.range_row[0] * _to.height) + viewport_offset.top,
+			];
 			if (_to.draggable_lib == "draggable") {
 				$draggable.draggable("option", "containment", containment);
 			}
+			// Force check for new tiles in visible area,
+			// in case the containment was triggered by a zoom change.
+			update_tiles();
 		};
 
 		var last_cleaned_tiles = {
@@ -354,7 +339,8 @@
 			});
 		}
 
-		var viewport_width = $viewport.width() + _to.margin * 2,
+		var viewport_zoom = $viewport.css('zoom'),
+			viewport_width = $viewport.width() + _to.margin * 2,
 			viewport_height = $viewport.height() + _to.margin * 2,
 			viewport_cols = Math.ceil(viewport_width / _to.width),
 			viewport_rows = Math.ceil(viewport_height / _to.height);
@@ -379,7 +365,7 @@
 			// HACK:
 			// Update the containment when the window is resized
 			// because the containment boundaries depend on the offset of the viewport.
-			update_containment();
+			self.update_containment();
 		});
 
 		// The drag event handler.
@@ -388,6 +374,6 @@
 		};
 		$draggable[_to.draggable_lib](_do);
 
-		update_containment();
+		self.update_containment();
 	};
 })(jQuery);
