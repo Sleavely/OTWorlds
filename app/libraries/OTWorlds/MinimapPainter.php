@@ -1,6 +1,8 @@
 <?php
 
-class Minimap {
+namespace OTWorlds;
+
+class MinimapPainter {
   
   public static $rgbs = array(
     array(0,0,0),    array(0,0,0),      array(0,0,0),      array(0,0,0),       //0
@@ -94,6 +96,8 @@ class Minimap {
     {
       self::$image = imagecreatefrompng(self::$filename);
     }
+    imagealphablending(self::$image, true);
+    imagesavealpha(self::$image, true);
   }
   
   public static function save()
@@ -116,8 +120,6 @@ class Minimap {
   public static function paint($x, $y, $itemid)
   {
     if(!self::$image) self::load();
-    imagealphablending(self::$image, true);
-    imagesavealpha(self::$image, true);
     
     $rgb = self::itemColor($itemid);
     if(!$rgb) return false;
@@ -133,7 +135,7 @@ class Minimap {
   public function queuePaint($job, $data)
   {
     $map = Map::findOrFail($data['mapid']);
-    self::$filename = $map->minimapPath();
+    self::$filename = $map->minimap->path;
     self::load();
     foreach($data['tiles'] as $tile)
     {
@@ -160,8 +162,8 @@ class Minimap {
   {
     if(!isset(self::$items[$itemid]))
     {
-      if(!POT::areItemsLoaded()) POT::loadItems( public_path().'/xml' );
-      $list = POT::getItemsList();
+      if(!\POT::areItemsLoaded()) \POT::loadItems( public_path().'/xml' );
+      $list = \POT::getItemsList();
       if($list->hasItemTypeId($itemid))
       {
         $item = $list->getItemType($itemid);

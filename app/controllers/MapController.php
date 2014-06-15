@@ -24,35 +24,16 @@ class MapController extends BaseController {
     $ownership->view = true;
     $ownership = $map->permissions()->save($ownership);
     
-    Minimap::$filename = $map->minimapPath();
-    Minimap::create(512, 512);
-    Minimap::save();
+    $minimap = new Minimap;
+    $minimap->mapid = $map->id;
+    $minimap->updated_at = new \DateTime;
+    $minimap = $map->minimap()->save($minimap);
+    
+    \OTWorlds\MinimapPainter::$filename = $minimap->path;
+    \OTWorlds\MinimapPainter::create(512, 512);
+    \OTWorlds\MinimapPainter::save();
     
     return $map->id;
-  }
-  
-  /**
-   * Helper. Shaves off bytes by only storing each X once.
-   * //TODO: should be moved to a helper class
-   */
-  private function addTileToArray(&$array, $tile) {
-    //Convert to array because objects are references in eternity...
-    $tile = (array) $tile;
-    if(!isset($array[$tile['posz']])){
-      $array[$tile['posz']] = array();
-    }
-    if(!isset($array[$tile['posz']][$tile['posx']])){
-      $array[$tile['posz']][$tile['posx']] = array();
-    }
-    if(!isset($array[$tile['posz']][$tile['posx']][$tile['posy']])){
-      $array[$tile['posz']][$tile['posx']][$tile['posy']] = $tile;
-    }
-    
-    //Remove redundant data
-    unset($array[$tile['posz']][$tile['posx']][$tile['posy']]['mapid']);
-    unset($array[$tile['posz']][$tile['posx']][$tile['posy']]['posz']);
-    unset($array[$tile['posz']][$tile['posx']][$tile['posy']]['posx']);
-    unset($array[$tile['posz']][$tile['posx']][$tile['posy']]['posy']);
   }
   
 	/**
@@ -112,7 +93,7 @@ class MapController extends BaseController {
     $output = array();
     $output['tiles'] = array();
     foreach($tiles as $tile){
-      $this->addTileToArray($output['tiles'], $tile);
+      \OTWorlds\Tiles::addTileToArray($output['tiles'], $tile);
     }
     
     return Response::json($output);
@@ -140,6 +121,9 @@ class MapController extends BaseController {
         itemid='.intval($tile['itemid']);
       DB::statement($ins_or_upd);
     }
+    
+    $map->updated_at = new \DateTime;
+    $map->save();
     
     //Queue::push('Minimap@queuePaint', array(
     //  'mapid' => $map->id,
@@ -184,7 +168,8 @@ class MapController extends BaseController {
     //Enforce ACL
     if(!$this->userCanView($map)) App::abort(403);
     
-    $png = file_get_contents( $map->minimapPath() );
+    $minimap_path = $map->minimap->path;
+    $png = file_get_contents( $minimap_path );
     return Response::make($png, 200, array('content-type' => 'image/png'));
   }
   

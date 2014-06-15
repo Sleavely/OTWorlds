@@ -33,6 +33,9 @@ Mapeditor.Tiles.find = function(x, y, z){
 };
 
 Mapeditor.Tiles.download = Mapeditor.internals.createDebouncer(function(){
+  // Remove duplicate tiles to save bandwidth
+  Mapeditor.Tiles.queue.upload = Mapeditor.Tiles.unique(Mapeditor.Tiles.queue.upload);
+  
   console.log('Requesting '+Mapeditor.Tiles.queue.download.length+' tiles'+(Mapeditor.Tiles.queue.download.length > 500 ? ' in chunks of 500' : '')+'.');
   
   //Split requests into chunks of 500 tiles at a time
@@ -75,6 +78,9 @@ Mapeditor.Tiles.download = Mapeditor.internals.createDebouncer(function(){
 
 
 Mapeditor.Tiles.upload = Mapeditor.internals.createDebouncer(function(){
+  // Remove duplicate tiles to save bandwidth
+  Mapeditor.Tiles.queue.upload = Mapeditor.Tiles.unique(Mapeditor.Tiles.queue.upload);
+  
   console.log('Saving '+Mapeditor.Tiles.queue.upload.length+' tiles'+(Mapeditor.Tiles.queue.upload.length > 100 ? ' in chunks of 100' : '')+'.');
   
   //Split requests into chunks of 100 tiles at a time
@@ -112,3 +118,26 @@ Mapeditor.Tiles.upload = Mapeditor.internals.createDebouncer(function(){
 Mapeditor.Tiles.queue = {};
 Mapeditor.Tiles.queue.download = [];
 Mapeditor.Tiles.queue.upload = [];
+
+/**
+ * Remove duplicate tiles from either the up- or download queues.
+ * Only the last entry is kept.
+ *
+ * @param array queueArr
+ */
+Mapeditor.Tiles.unique = function(tilesArray){
+  var uniqueArr = tilesArray.filter(function(tile, pos){
+    // Look ahead in the array to see if we can find dupes
+    for (var i = pos+1; i < tilesArray.length; i++) {
+      if (
+        tile.x == tilesArray[i].x &&
+        tile.y == tilesArray[i].y &&
+        tile.z == tilesArray[i].z
+      ) {
+        return false;
+      }
+    }
+    return true;
+  });
+  return uniqueArr;
+};

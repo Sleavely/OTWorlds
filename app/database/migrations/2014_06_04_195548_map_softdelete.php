@@ -27,7 +27,7 @@ class MapSoftdelete extends Migration {
 	{
 		Schema::table('maps', function($table)
     {
-      $table->dropColumn('votes');
+      $table->dropColumn('deleted_at');
     });
 	}
 
