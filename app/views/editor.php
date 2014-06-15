@@ -17,6 +17,9 @@
 	<link rel="stylesheet" href="js/vex/css/vex.css" />
 	<link rel="stylesheet" href="js/vex/css/vex-theme-os.css" />
 	
+	<link rel="stylesheet" href="js/shepherd/css/shepherd-theme-arrows.css" />
+	<script src="js/shepherd/shepherd.min.js"></script>
+	
 	<?php
 	$allowed = false;
 	$user = Auth::user();
@@ -49,6 +52,7 @@
 		<script src="js/otworlds.tile.js"></script>
 		<script src="js/otworlds.tiles.js"></script>
 		<script src="js/otworlds.multiplayer.js"></script>
+		<script src="js/otworlds.shepherd.js"></script>
 		<!-- endbuild -->
 		
 		<script>
@@ -98,11 +102,11 @@
 		</span>
 		<a class="disabled">
 			<i class="icon-download"></i>Download OTBM
-		</a><a href="#" onclick="sharemap(); return false;">
+		</a><a href="#share" onclick="sharemap(); return false;">
 			<i class="icon-share"></i>Share
 		</a><a href="http://html2canvas.hertzen.com/examples.html" target="_blank">
 			<i class="icon-camera"></i>Screenshot
-		</a><a class="disabled">
+		</a><a href="#" onclick="Mapeditor.Shepherd.tour.start(); return false;">
 			<i class="icon-help-circled"></i>Help
 		</a><a href="/logout">
 			<i class="icon-logout"></i>Logout <?php	print $profile->username; ?>

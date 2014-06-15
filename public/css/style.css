@@ -5,6 +5,13 @@ html, body{
 	overflow: hidden;
 }
 
+kbd {
+	background-color: rgba(0,0,0,0.1);
+	font-family: monospace;
+	padding-left: 0.3em;
+	padding-right: 0.3em;
+}
+
 .toolbar ul{
 	margin: 0;
 }
@@ -170,6 +177,10 @@ a.disabled {
 	position: absolute;
 	top: 0px;
 	width: 32px;
+}
+
+.shepherd-element{
+	max-width: 500px !important;
 }
 
 /* Very annoying because translate3d() makes it lie about its position */
