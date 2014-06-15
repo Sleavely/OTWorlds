@@ -68,12 +68,7 @@
 					document.title = Mapeditor.map.meta.name + ' - OTWorlds Mapeditor';
 					jQuery('#menu .mapname > span').text(Mapeditor.map.meta.name);
 					
-					jQuery('#minimap img')
-						.attr('src', Mapeditor.config.urls.backend + 'map/' + id + '/minimap?' + new Date().getTime())
-						.css({
-								left: (100)-(Mapeditor.map.meta.width/2),
-								top: (100)-(Mapeditor.map.meta.height/2)
-							});
+					Mapeditor.Minimap.loadStatic();
 					
 					Mapeditor.Materials.load('xml/materials.xml', function(){
 						Mapeditor.internals.infinitedrag = jQuery.infinitedrag("#canvas", {cursor: false},

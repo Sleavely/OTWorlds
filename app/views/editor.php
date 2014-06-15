@@ -46,9 +46,10 @@
 		<!-- build:js js/otworlds.min.js -->
 		<script src="js/otworlds.mapeditor.js"></script>
 		<script src="js/otworlds.materials.js"></script>
+		<script src="js/otworlds.minimap.js"></script>
+		<script src="js/otworlds.multiplayer.js"></script>
 		<script src="js/otworlds.tile.js"></script>
 		<script src="js/otworlds.tiles.js"></script>
-		<script src="js/otworlds.multiplayer.js"></script>
 		<!-- endbuild -->
 		
 		<script>
@@ -123,11 +124,14 @@
     border-left: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
     background: #333;
-"><div class="" style="
-    width: 200px;
-    overflow: hidden;
-    height: 200px;
-"><img src="/img/transparent.png" style="max-width: none;position: relative;top: -10px;left:-10px;"></div></div>
+	">
+		<div class="content" style="
+			width: 200px;
+			overflow: hidden;
+			height: 200px;
+		">
+		</div>
+	</div>
 	<div id="welcome">
 		<div>
 			<div class="row" id="hero">
