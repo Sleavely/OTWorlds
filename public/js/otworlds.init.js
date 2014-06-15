@@ -182,6 +182,23 @@ jQuery(document).ready(function(){
 			}
 		}
 	}, '.tile');
+	$viewport.on('mousewheel', function(e){
+		if (!Mapeditor.map.meta.id) return;
+		
+		var viewport_zoom = parseFloat($viewport.css('zoom'));
+		// Turn scrolling into small increments of zoom change
+		var delta_change = parseFloat(e.originalEvent.wheelDeltaY / 1000);
+		
+		// Round the floats to 2 decimals
+		viewport_zoom = Math.round((viewport_zoom + delta_change) * 100) / 100;
+		
+		// Min and max zoom level. Wont be exact since we deal with floats.
+		if(viewport_zoom >= 0.5 && viewport_zoom <= 1.25)
+		{
+			$viewport.css('zoom', viewport_zoom);
+			Mapeditor.internals.infinitedrag.update_containment();
+		}
+	});
 	jQuery(window).keyup(function(e) {
 		//Spacebar
 		if (e.which == 32 && Mapeditor.map.meta.id) {
