@@ -126,6 +126,21 @@ a.disabled {
 	width: 32px;
 }
 
+#minimap.toolbar{
+	background: #333;
+	border-bottom-left-radius: 3px;
+	border-bottom: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+	position: fixed;
+	right: 0px;
+	top: 38px;
+}
+#minimap.toolbar .content{
+	height: 200px;
+	overflow: hidden;
+	width: 200px;
+}
+
 #viewport{
 	background-image: url(../img/transparent.png);
 	height: calc(100% - 36px);

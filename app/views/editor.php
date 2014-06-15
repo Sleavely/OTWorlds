@@ -116,20 +116,8 @@
 		<ul id="itemlist">
 		</ul>
 	</div>
-	<div class="toolbar" id="minimap" style="
-    position: fixed;
-    right: 0px;
-    top: 38px;
-    border-bottom-left-radius: 3px;
-    border-left: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-    background: #333;
-	">
-		<div class="content" style="
-			width: 200px;
-			overflow: hidden;
-			height: 200px;
-		">
+	<div class="toolbar" id="minimap">
+		<div class="content">
 		</div>
 	</div>
 	<div id="welcome">
