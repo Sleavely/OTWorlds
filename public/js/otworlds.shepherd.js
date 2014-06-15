@@ -65,6 +65,29 @@ Mapeditor.Shepherd.tour.addStep('shepherd-canedit', {
   ]
 });
 
+Mapeditor.Shepherd.tour.addStep('shepherd-minimap', {
+  text: ['The minimap is loaded when you load a map.', 'Click somewhere to move the viewport.', '<span style="font-size: 0.75em;">It currently does not update when you paint. =(</span>'],
+  attachTo: {
+    element: '#minimap',
+    on: 'left'
+  },
+  buttons: [
+    {
+      text: 'Hide tour',
+      classes: 'shepherd-button-secondary',
+      action: Mapeditor.Shepherd.tour.cancel
+    },
+    {
+      text: 'Previous',
+      action: Mapeditor.Shepherd.tour.back
+    },
+    {
+      text: 'Next',
+      action: Mapeditor.Shepherd.tour.next
+    }
+  ]
+});
+
 Mapeditor.Shepherd.tour.addStep('shepherd-sharing', {
   text: ['If you are the owner of a map you can share it with other users to take advantage of the multiplayer experience.'],
   
