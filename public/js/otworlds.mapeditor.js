@@ -68,6 +68,8 @@
 					document.title = Mapeditor.map.meta.name + ' - OTWorlds Mapeditor';
 					jQuery('#menu .mapname > span').text(Mapeditor.map.meta.name);
 					
+					Mapeditor.Minimap.loadStatic();
+					
 					Mapeditor.Materials.load('xml/materials.xml', function(){
 						Mapeditor.internals.infinitedrag = jQuery.infinitedrag("#canvas", {cursor: false},
 							{
@@ -75,8 +77,8 @@
 								height: 32,
 								range_col: [0, Mapeditor.map.meta.width],
 								range_row: [0, Mapeditor.map.meta.height],
-								start_col: (Mapeditor.map.meta.width/2)-(Math.round((jQuery(window).width() / 32) / 2)),
-								start_row: (Mapeditor.map.meta.height/2) - (Math.round((jQuery(window).height() / 32) / 2)),
+								start_col: (Mapeditor.map.meta.width/2)-(Math.round(($viewport.width() / 32) / 2)),
+								start_row: (Mapeditor.map.meta.height/2) - (Math.round(($viewport.height() / 32) / 2)),
 								class_name: 'tile',
 								oncreate: function($element, col, row) {
 									//See if the tile is already stored from earlier.

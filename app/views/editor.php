@@ -46,9 +46,10 @@
 		<!-- build:js js/otworlds.min.js -->
 		<script src="js/otworlds.mapeditor.js"></script>
 		<script src="js/otworlds.materials.js"></script>
+		<script src="js/otworlds.minimap.js"></script>
+		<script src="js/otworlds.multiplayer.js"></script>
 		<script src="js/otworlds.tile.js"></script>
 		<script src="js/otworlds.tiles.js"></script>
-		<script src="js/otworlds.multiplayer.js"></script>
 		<!-- endbuild -->
 		
 		<script>
@@ -114,6 +115,10 @@
 	<div class="toolbar" id="brushes" style="width: 250px; left: 0px; top: 0px; bottom: 0px; overflow-y: scroll;">
 		<ul id="itemlist">
 		</ul>
+	</div>
+	<div class="toolbar" id="minimap">
+		<div class="content">
+		</div>
 	</div>
 	<div id="welcome">
 		<div>
