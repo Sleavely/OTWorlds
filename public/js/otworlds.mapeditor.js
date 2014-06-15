@@ -71,22 +71,23 @@
 					Mapeditor.Minimap.loadStatic();
 					
 					Mapeditor.Materials.load('xml/materials.xml', function(){
-						Mapeditor.internals.infinitedrag = jQuery.infinitedrag("#canvas", {
-							cursor: false,
-							stop: function(eventObj, pepObj){
-								if (Mapeditor.Minimap && Mapeditor.Minimap.loaded) {
-									var $img = jQuery('#minimap img');
-									var currX = parseInt($img.css('left'));
-									var currY = parseInt($img.css('top'));
-									var movedX = parseInt((eventObj.pageX - pepObj.startX) / 32);
-									var movedY = parseInt((eventObj.pageY - pepObj.startY) / 32);
-									$img.css({
-										left: currX + movedX,
-										top: currY + movedY
-									});
+						Mapeditor.internals.infinitedrag = jQuery.infinitedrag("#canvas",
+							{
+								cursor: false,
+								stop: function(eventObj, pepObj){
+									if (Mapeditor.Minimap && Mapeditor.Minimap.loaded) {
+										var $img = jQuery('#minimap img');
+										var currX = parseInt($img.css('left'));
+										var currY = parseInt($img.css('top'));
+										var movedX = parseInt((eventObj.pageX - pepObj.startX) / 32);
+										var movedY = parseInt((eventObj.pageY - pepObj.startY) / 32);
+										$img.css({
+											left: currX + movedX,
+											top: currY + movedY
+										});
+									}
 								}
-							}
-						},
+							},
 							{
 								width: 32,
 								height: 32,
