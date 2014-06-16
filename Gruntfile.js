@@ -23,6 +23,12 @@ module.exports = function(grunt) {
       }
     },
     uglify: {
+      options: {
+        // This will make Mapeditor.Materials.load into a.Materials.load
+        //mangle: {
+        //  toplevel: true
+        //}
+      },
       generated: {
         files: 
           {
