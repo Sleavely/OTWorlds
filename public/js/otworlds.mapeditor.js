@@ -153,8 +153,11 @@
 			if(Mapeditor.map["_"+i] !== undefined) Mapeditor.map["_"+i] = undefined;
 		}
 		Mapeditor.internals.infinitedrag = {};
+		$canvas.html('');
+		$viewport.css('zoom', 1);
+		jQuery('#minimap img').remove();
 		//Clear brushes
-		jQuery(".tile, #brushes .brush").remove();
+		jQuery("#brushes li").remove();
 		Mapeditor.Materials.Brushes = {};
 		Mapeditor.Materials.Tilesets = {};
 		jQuery('#brush-selectors select#tileset-selector').prop('disabled', true);
