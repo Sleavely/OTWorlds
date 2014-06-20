@@ -83,6 +83,7 @@ Mapeditor.Materials.parseBrush = function(node){
 			// Lets go through the items and their chances
 			brush.items = [];
 			brush.totalchance = 0;
+			brush.type = $brush.attr('type');
 			$brush.children().each(function(){
 				if (this.tagName == 'item')
 				{
