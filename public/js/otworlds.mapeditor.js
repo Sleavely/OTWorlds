@@ -73,7 +73,7 @@
 					Mapeditor.Materials.load('xml/materials.xml', function(){
 						
 						jQuery('#brush-selectors select').prop('disabled', false);
-						jQuery('#brush-selectors select').change();
+						jQuery('#brush-selectors #palette-selector').change();
 						
 						Mapeditor.internals.infinitedrag = jQuery.infinitedrag("#canvas",
 							{
