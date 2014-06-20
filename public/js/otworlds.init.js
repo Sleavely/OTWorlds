@@ -158,7 +158,7 @@ jQuery(document).ready(function(){
 				if (Mapeditor.isEditing && mouseIsPressed) {
 					var activeBrush = Mapeditor.Materials.Brushes[ Mapeditor.Materials.Brushes.active ];
 					
-					Mapeditor.paint(Tile, activeBrush);
+					Mapeditor.Painter.paintTile(Tile, activeBrush);
 				}
 			}
 		},
@@ -168,7 +168,7 @@ jQuery(document).ready(function(){
 				var activeBrush = Mapeditor.Materials.Brushes[ Mapeditor.Materials.Brushes.active ];
 				var Tile = Mapeditor.internals.figureOutTile(e);
 				
-				Mapeditor.paint(Tile, activeBrush);
+				Mapeditor.Painter.paintTile(Tile, activeBrush);
 			}
 		},
 		mousedown: function(e) {

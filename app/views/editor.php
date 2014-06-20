@@ -51,6 +51,7 @@
 		<script src="js/otworlds.materials.js"></script>
 		<script src="js/otworlds.minimap.js"></script>
 		<script src="js/otworlds.multiplayer.js"></script>
+		<script src="js/otworlds.painter.js"></script>
 		<script src="js/otworlds.tile.js"></script>
 		<script src="js/otworlds.tiles.js"></script>
 		<script src="js/otworlds.shepherd.js"></script>
