@@ -117,6 +117,15 @@
 		<div id="canvas"></div>
 	</div>
 	<div class="toolbar" id="brushes" style="width: 250px; left: 0px; top: 0px; bottom: 0px; overflow-y: scroll;">
+		<div id="brush-selectors">
+			<select id="palette-selector" disabled>
+				<option data-palette="terrain">Terrain Palette</option>
+				<option data-palette="doodad">Doodad Palette</option>
+				<option data-palette="item">Item Palette</option>
+				<option data-palette="raw">RAW Palette</option>
+			</select>
+			<select id="tileset-selector" disabled></select>
+		</div>
 		<ul id="itemlist">
 		</ul>
 	</div>

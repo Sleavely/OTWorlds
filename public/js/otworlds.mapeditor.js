@@ -71,6 +71,10 @@
 					Mapeditor.Minimap.loadStatic();
 					
 					Mapeditor.Materials.load('xml/materials.xml', function(){
+						
+						jQuery('#brush-selectors select').prop('disabled', false);
+						jQuery('#brush-selectors select').change();
+						
 						Mapeditor.internals.infinitedrag = jQuery.infinitedrag("#canvas",
 							{
 								cursor: false,
@@ -152,6 +156,8 @@
 		//Clear brushes
 		jQuery(".tile, #brushes .brush").remove();
 		Mapeditor.Materials.Brushes = {};
+		Mapeditor.Materials.Tilesets = {};
+		jQuery('#brush-selectors select#tileset-selector').prop('disabled', true);
 		//Turn off painting
 		Mapeditor.isEditing = false;
 		$canvas.removeClass('editing');

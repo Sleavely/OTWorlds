@@ -90,6 +90,14 @@ a.disabled {
 	font-size: 0.75em;
 	position: fixed;
 }
+
+#brushes #brush-selectors select {
+	display: block;
+	margin: 0.5em auto;
+	padding: 0.3em;
+	width: 80%;
+}
+
 #brushes.toolbar li{
 	border-bottom: 1px solid #e5e5e5;
 	border-top: 1px solid #fcfcfc;

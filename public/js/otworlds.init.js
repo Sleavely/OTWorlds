@@ -207,6 +207,19 @@ jQuery(document).ready(function(){
 			e.stopPropagation();
 		}
 	});
+	jQuery('#brush-selectors').on({
+		change: function(e){
+			var $this = jQuery(this);
+			
+			if ($this.attr('id') == 'palette-selector')
+			{
+				Mapeditor.Materials.switchPalette(jQuery('option:selected', this).data('palette'));
+			}
+			else if ($this.attr('id') == 'tileset-selector') {
+				Mapeditor.Materials.switchTileset(jQuery('option:selected', this).text());
+			}
+		}
+	}, 'select');
 	jQuery('#brushes').on({
 		click: function(e) {
 			var $this = jQuery(this);
