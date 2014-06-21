@@ -134,7 +134,7 @@ a.disabled {
 #brushes.toolbar li:hover a{
 	color: #4A6FE5;
 }
-#brushes.toolbar .brush img{
+#brushes.toolbar li img{
 	margin: 0 1em;
 	max-width: none;
 	vertical-align: middle;
