@@ -27,7 +27,8 @@ Mapeditor.Tile.save = function(){
 		x: this.x,
 		y: this.y,
 		z: this.z,
-		itemid: this.itemid
+		itemid: this.itemid,
+		items: this.items
 	};
 	Mapeditor.Tiles.queue.upload.push(savedata);
 	Mapeditor.Tiles.upload();
@@ -41,6 +42,10 @@ Mapeditor.Tile.draw = function(){
   this.$element.css("background-image", "url("+ Mapeditor.config.urls.sprites.replace('%sprite%', this.itemid) +")");
 	
 	if(this.items){
+		// reset before re-draw
+		this.$element.children().remove();
+		
+		var _this = this;
 		jQuery.each(this.items, function(itemIndex, itemValue){
 			var $child = jQuery('<div />');
 			$child.addClass('item');
