@@ -77,9 +77,10 @@
 		// This testAPI() function is only called in those cases. 
 		function testAPI() {
 			FB.api('/me', function(response) {
+				var fbPath = 'login/fb' + (window.location.hash.substr(1, 5) == 'mapid' ? '?loadmap='+window.location.hash.substr(7) : '');
 				jQuery("#login .btn a").remove();
-				jQuery("#login .btn").html('<a href="login/fb">Logged in as '+ response.name +'</a>');
-				window.location = 'login/fb';
+				jQuery("#login .btn").html('<a href="'+fbPath+'">Logged in as '+ response.name +'</a>');
+				window.location = fbPath;
 			});
 		}
 		/**/

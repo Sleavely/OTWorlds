@@ -52,6 +52,14 @@ Route::get('logout', function()
  * Facebook
  */
 Route::get('login/fb', function() {
+	
+	// Sometimes the user comes from #mapid-X and want to end up there later
+	if (Input::has('loadmap'))
+	{
+		$mapToGoBackTo = intval(Input::get('loadmap'));
+		Session::put('loadmap', $mapToGoBackTo);
+	}
+	
 	Facebook::$CURL_OPTS[CURLOPT_SSL_VERIFYPEER] = false;
 	$facebook = new Facebook(Config::get('facebook'));
 	$params = array(
@@ -95,5 +103,13 @@ Route::get('login/fb/callback', function() {
 
 	Auth::login($user);
 
-	return Redirect::to('/')->with('message', 'Logged in with Facebook');
+	// Remember that map we tucked away in the session? See if it's still there.
+	$mapToGoBackTo = '';
+	if (Session::has('loadmap'))
+	{
+		$mapToGoBackTo = '#mapid-'.Session::get('loadmap');
+		Session::forget('loadmap');
+	}
+	
+	return Redirect::to('/'.$mapToGoBackTo)->with('message', 'Logged in with Facebook');
 });
