@@ -121,7 +121,7 @@
 				<div class="large primary btn">
 					<a href="login/fb">
 						Log in with Facebook
-						<p>Only your name and an ID to find your maps is used. We do not request your email or friends list.</p>
+						<p>Don't worry, nobody's stealing your wedding photos.</p>
 					</a>
 				</div>
 			</div>
