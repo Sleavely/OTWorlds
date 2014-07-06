@@ -27,69 +27,33 @@
 	
 	$logtext = '['.date('d-M-Y H:i:s').'] '.$profile->username.PHP_EOL;
 	file_put_contents(storage_path().'/logs/facebook.log', $logtext, FILE_APPEND);
-	
-	$allowed_usernames = array(
-		'joakim.hedlund',
-		'eliascarlsson',
-		'joran.haagsma',
-		'micke.hafner',
-		'robbie.scott.79',
-		'gunsnroses4201', //Kilaco
-		'NathanMJacobs', //STiX
-		'labrisanty', // VanessaX
-		'adi.sliwinski1', // LLburn
-		'anyza116', //kuzyn
-		'mindrage', //mindrage
-		'ranisalt', //Lordfire
-	);
-	if(in_array($profile->username, $allowed_usernames)) $allowed = true;
-	
-	if($allowed){
 	?>
-		<!-- build:js js/otworlds.min.js -->
-		<script src="js/otworlds.mapeditor.js"></script>
-		<script src="js/otworlds.materials.js"></script>
-		<script src="js/otworlds.minimap.js"></script>
-		<script src="js/otworlds.multiplayer.js"></script>
-		<script src="js/otworlds.tile.js"></script>
-		<script src="js/otworlds.tiles.js"></script>
-		<script src="js/otworlds.shepherd.js"></script>
-		<!-- endbuild -->
-		
-		<script>
-		var TogetherJSConfig_siteName = 'OTWorlds';
-		var TogetherJSConfig_suppressJoinConfirmation = true;
-		//var TogetherJSConfig_suppressInvite = true;
-		var TogetherJSConfig_includeHashInUrl = true;
-		var TogetherJSConfig_dontShowClicks = true;
-		<?php
-		print 'var TogetherJSConfig_getUserName = "'.$user->name.'";';
-		print 'var TogetherJSConfig_getUserAvatar = "'.$user->photo.'";';
-		?>
-		//Remove any sessions that may remain open from other maps
-		sessionStorage.removeItem("togetherjs-session.status");
-		</script>
-		<script src="https://togetherjs.com/togetherjs-min.js"></script>
-		
-		<script src="js/otworlds.init.js"></script>
+	<!-- build:js js/otworlds.min.js -->
+	<script src="js/otworlds.mapeditor.js"></script>
+	<script src="js/otworlds.materials.js"></script>
+	<script src="js/otworlds.minimap.js"></script>
+	<script src="js/otworlds.multiplayer.js"></script>
+	<script src="js/otworlds.tile.js"></script>
+	<script src="js/otworlds.tiles.js"></script>
+	<script src="js/otworlds.shepherd.js"></script>
+	<!-- endbuild -->
+	
+	<script>
+	var TogetherJSConfig_siteName = 'OTWorlds';
+	var TogetherJSConfig_suppressJoinConfirmation = true;
+	//var TogetherJSConfig_suppressInvite = true;
+	var TogetherJSConfig_includeHashInUrl = true;
+	var TogetherJSConfig_dontShowClicks = true;
 	<?php
-	}
-	else
-	{
-		?>
-		<script>
-		jQuery(document).ready(function(){
-			vex.open({
-			content: jQuery("#welcome").html(),
-			showCloseButton: false,
-			escapeButtonCloses: false,
-			overlayClosesOnClick: false
-			});
-		});
-		</script>
-		<?php
-	}
+	print 'var TogetherJSConfig_getUserName = "'.$user->name.'";';
+	print 'var TogetherJSConfig_getUserAvatar = "'.$user->photo.'";';
 	?>
+	//Remove any sessions that may remain open from other maps
+	sessionStorage.removeItem("togetherjs-session.status");
+	</script>
+	<script src="https://togetherjs.com/togetherjs-min.js"></script>
+	
+	<script src="js/otworlds.init.js"></script>
 </head>
 <body id="page-main">
 	<div class="toolbar" id="menu">
@@ -133,17 +97,15 @@
 			</div>
 			<div class="row">
 				<div class="twelve columns">
-					<p>Because this is a work in progress, and features are being removed as quickly as they were added, we only allow approved beta-testers to use the editor.</p>
-					<p>If you want to get in on the action or just want to support the project, drop a greeting to <a href="http://twitter.com/Sleavely" target="_blank" title="@sleavely on Twitter">@Sleavely</a>.</p>
+					<p>I hope you'll enjoy my hobby project. Please remember that this is an experiment in using web technologies and not a drop-in replacement for <a href="http://remeresmapeditor.com/" target="_blank" title="Remeres Map Editor">RME</a>, so all those fancy features you're used to are probably missing. At some point in the future they might get added, but they also might not.</p>
+					<p>If you want to get in on the action or just want to support the project, drop a greeting on <a href="http://opentibia.net/topic/173113-mapeditor-otworlds/" target="_blank" title="OTWorlds on OpenTibia.net">the forum</a> or tweet me directly; <a href="http://twitter.com/Sleavely" target="_blank" title="@sleavely on Twitter">@Sleavely</a>.</p>
 				</div>
 			</div>
-			<?php if($allowed){ ?>
 			<div class="row">
 				<div class="push_five seven columns center-text">
 					<div class="large danger btn"><a href="#">Get started</a></div>
 				</div>
 			</div>
-			<?php } ?>
 		</div>
 	</div>
 	<script type="text/javascript">
