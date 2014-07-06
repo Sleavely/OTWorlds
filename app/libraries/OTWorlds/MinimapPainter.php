@@ -86,11 +86,11 @@ class MinimapPainter {
     imagefill(self::$image, 0, 0, $transparency);
   }
   
-  public static function load()
+  public static function load($width = 512, $height = 512)
   {
     if(!file_exists(self::$filename))
     {
-      self::create();
+      self::create($width, $height);
     }
     else
     {

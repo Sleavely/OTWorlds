@@ -56,7 +56,7 @@ class MinimapRefresh extends Command {
 			
 			// Prepare the canvas, maestro!
 			\OTWorlds\MinimapPainter::$filename = $minimap->path;
-			\OTWorlds\MinimapPainter::load();
+			\OTWorlds\MinimapPainter::load($map->width, $map->height);
 			
 			foreach($tiles as $tile)
 			{
