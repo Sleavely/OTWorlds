@@ -1,3 +1,4 @@
+/app/config/local/facebook.php
 
 public/facebook.log
 public/img/maps/*.png
