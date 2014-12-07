@@ -35,13 +35,13 @@ $env = $app->detectEnvironment(function()
     $is_local = (strpos($hostname, 'local.otworlds.com') !== false || $is_local);
   }
   
-  if(isset($_SERVER['logonserver']))
+  if(isset($_SERVER['LOGONSERVER']))
   {
     $dev_machines = array(
-      '\\CIP-PC',
-      '\\JoakimHedlund',
+      '\\\\CIP-PC',
+      '\\\\JOAKIMHEDLUND',
     );
-    if(in_array($_SERVER['logonserver'], $dev_machines)) $is_local = true;
+    if(in_array($_SERVER['LOGONSERVER'], $dev_machines)) $is_local = true;
   }
   
   return ($is_local ? 'local' : 'production');
