@@ -12,7 +12,7 @@ composer self-update
 composer install
 
 # Run any user-defined upgrades
-php artisan migrate --force
+php artisan migrate
 
 # Minify and Uglify
 grunt build
