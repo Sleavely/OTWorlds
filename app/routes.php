@@ -33,7 +33,7 @@ Route::group(array('prefix' => 'api', 'before' => 'auth.api'), function()
 		$output['maps'] = Auth::user()->viewableMaps()->toArray();
 		return Response::json($output);
 	});
-	
+
 	Route::controller('map/{mapid}', 'MapController');
 	Route::post('map/create', function()
 	{
@@ -52,14 +52,14 @@ Route::get('logout', function()
  * Facebook
  */
 Route::get('login/fb', function() {
-	
+
 	// Sometimes the user comes from #mapid-X and want to end up there later
 	if (Input::has('loadmap'))
 	{
 		$mapToGoBackTo = intval(Input::get('loadmap'));
 		Session::put('loadmap', $mapToGoBackTo);
 	}
-	
+
 	Facebook::$CURL_OPTS[CURLOPT_SSL_VERIFYPEER] = false;
 	$facebook = new Facebook(Config::get('facebook'));
 	$params = array(
@@ -86,13 +86,13 @@ Route::get('login/fb/callback', function() {
 		$user = new User;
 		$user->name = $me['first_name'].' '.$me['last_name'];
 		$user->email = $me['email'];
-		$user->photo = 'https://graph.facebook.com/'.$me['username'].'/picture?type=large';
+		$user->photo = 'https://graph.facebook.com/'.$me['id'].'/picture?type=large';
 
 		$user->save();
 
 		$profile = new Profile();
 		$profile->uid = $uid;
-		$profile->username = $me['username'];
+		$profile->username = $me['id'];
 		$profile = $user->profiles()->save($profile);
 	}
 
@@ -110,6 +110,6 @@ Route::get('login/fb/callback', function() {
 		$mapToGoBackTo = '#mapid-'.Session::get('loadmap');
 		Session::forget('loadmap');
 	}
-	
+
 	return Redirect::to('/'.$mapToGoBackTo)->with('message', 'Logged in with Facebook');
 });
